@@ -1,1 +1,83 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
 /* You can add global styles to this file, and also import other style files */
+
+// General CSS
+.margin10 {
+  margin: 10px !important;
+}
+
+.margin-l10 {
+  margin-left: 10px !important;
+}
+
+.margin-b25 {
+  margin-bottom: 25px !important;
+}
+
+.margin-l30 {
+  margin-left: 30px !important;
+}
+
+.margin-r30 {
+  margin-right: 30px !important;
+}
+
+.margin25 {
+  margin: 25px !important;
+}
+
+.margin30 {
+  margin: 30px !important;
+}
+
+.page-mobile {
+  margin: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.width100 {
+  width: 100% !important;
+}
+
+.width50 {
+  width: 50% !important;
+}
+
+.width75 {
+  width: 75% !important;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pointCursor:hover, .pointCursor {
+  cursor: pointer !important;
+}
+
+.hoverItem:hover {
+  cursor: pointer !important;
+  background-color: nb-theme(color-basic-hover);
+}
+
+.selectedItem {
+  background-color: nb-theme(color-basic-focus);
+}
+
+// Text classes
+.no-decor {
+  text-decoration: none !important;
+}
+
+.center-text {
+  text-align: center;
+}

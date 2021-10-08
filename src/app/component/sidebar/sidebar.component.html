@@ -1,0 +1,16 @@
+<div>
+    <nb-list>
+        <nb-list-item class="hoverItem" [ngClass]="{selectedItem: window.location.pathname === verPatronesRoute}">
+            <app-sidebar-item label="Ver patrones" icon="book-open-outline" [path]="verPatronesRoute" [routerLink]="verPatronesRoute"></app-sidebar-item>
+        </nb-list-item>
+        <nb-list-item class="hoverItem">
+            <app-sidebar-item></app-sidebar-item>
+        </nb-list-item>
+        <nb-list-item class="hoverItem">
+            <app-sidebar-item></app-sidebar-item>
+        </nb-list-item>
+        <nb-list-item class="hoverItem">
+            <app-sidebar-item></app-sidebar-item>
+        </nb-list-item>
+    </nb-list>
+</div>
