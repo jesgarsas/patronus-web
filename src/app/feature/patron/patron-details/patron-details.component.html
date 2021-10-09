@@ -1,1 +1,35 @@
-<p>{{ idPatron }}</p>
+<ng-container *ngIf="patron">
+    <nb-card status="default" class="stretch">
+        <nb-card-header>Patrón: {{ patron.nombre }}</nb-card-header>
+        <nb-card-body>
+            <div style="display: flex;">
+                <div class="width75">
+                    <span [innerHTML]="patron.leccion!.contenido"></span>
+                </div>
+                <div class="headerDivider" style="width: 25%; margin-top: 15px;">
+                    <div class="h-card">
+                        <nb-icon icon="download-outline"></nb-icon>
+                        Proyectos
+                    </div>
+                    <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
+                        <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                            <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size }}
+                                Kb)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <nb-accordion>
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        <nb-icon icon="file-outline" style="margin-right: 5px;"></nb-icon>
+                        Ejercicios
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        Aquí mostrar los ejercicios
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+            </nb-accordion>
+        </nb-card-body>
+    </nb-card>
+</ng-container>

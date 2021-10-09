@@ -1,17 +1,19 @@
 <ng-container *ngIf="item">
     <div>
-        <div style="display: inline-block; width: 100px;">
+        <div style="display: inline-block; width: 80px;">
             <span class="dot">
-                <div class="whiteFont dot-text" style="margin-top: 30px;">
+                <div class="whiteFont dot-text" style="margin-top: 15px;">
                     <label>{{ this.item!.nombre!.substr(0,1).toUpperCase() }}</label>
                 </div>
             </span>
         </div>
-        <div style="display: inline-block;">
-            <h4>{{ this.item!.nombre }}</h4>
+        <div style="display: inline-block; width: 90%;">
+            <h4 style="margin-top: 0px; margin-bottom: 10px;">{{ this.item!.nombre }}</h4>
         </div>
     </div>
-    <p>{{ this.item!.descripcion!.descripcion }}</p>
+    <div style="margin-left: 80px;">
+        <p>{{ this.item!.descripcion!.descripcion }}</p>
+    </div>
     <div class="text-autor">
         Autor: {{ this.item!.autor!.nick | titlecase }}
     </div>

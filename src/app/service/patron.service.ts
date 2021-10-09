@@ -13,4 +13,8 @@ export class PatronService {
   public getAllByLocale(idLocale: number): Observable<any> {
     return this.http.get(`${AppContants.URL_API_PATRON}/all/${idLocale}`);
   }
+
+  public getByIdAndLocale(id: number, idLocale: number) {
+    return this.http.get(`${AppContants.URL_API_PATRON}/${id}/${idLocale}`);
+  }
 }

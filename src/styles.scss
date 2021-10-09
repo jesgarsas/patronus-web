@@ -82,6 +82,12 @@
   //display: flex;
 }
 
+.headerDivider {
+  border-left: 2px solid nb-theme(color-basic-focus);
+  padding-left: 15px;
+  margin-left: 20px;
+}
+
 .list-flex-mobile {
   @extend .width100;
   display: flex;
@@ -98,13 +104,19 @@
   text-decoration: none !important;
 }
 
+.h-card {
+  font-weight: bold !important;
+  font-size: 20px !important;
+  margin-bottom: 20px;
+}
+
 .center-text {
   text-align: center;
 }
 
 .whiteFont {
   color: nb-theme(color-primary-100);
-  font-size: 50px;
+  font-size: 25px;
 }
 
 .dot-text {
@@ -119,8 +131,8 @@
 
 // Forms
 .dot {
-  height: 75px;
-  width: 75px;
+  height: 50px;
+  width: 50px;
   background-color: nb-theme(color-primary-500);
   border-radius: 50%;
   display: inline-block;

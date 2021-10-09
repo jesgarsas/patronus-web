@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -36,7 +36,7 @@ import { PatronDetailsComponent } from './feature/patron/patron-details/patron-d
     NbInputModule,
     NbMenuModule.forRoot(),
     HttpClientModule,
-
+    NbAccordionModule 
   ],
   providers: [
     PatronService
