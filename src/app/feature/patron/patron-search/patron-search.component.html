@@ -9,7 +9,7 @@
             <!-- Lista patrones -->
             <nb-list class="list-flex center" style="display: inline;">
                 <nb-list-item *ngFor="let item of patronesFiltered" class="hoverItem">
-                    <app-patron-listitem [item]=item></app-patron-listitem>
+                    <app-patron-listitem [item]=item (click)="goToDetails(item.id!)"></app-patron-listitem>
                 </nb-list-item>
             </nb-list>
         </div>

@@ -8,13 +8,17 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
 import { PatronListitemComponent } from './feature/patron/patron-search/patron-listitem/patron-listitem.component';
+import { PatronService } from './service/patron.service';
+import { HttpClientModule } from '@angular/common/http';
+import { PatronDetailsComponent } from './feature/patron/patron-details/patron-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
     PatronSearchComponent,
-    PatronListitemComponent
+    PatronListitemComponent,
+    PatronDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,9 +34,13 @@ import { PatronListitemComponent } from './feature/patron/patron-search/patron-l
     NbListModule,
     NbCardModule,
     NbInputModule,
-    NbMenuModule.forRoot()
+    NbMenuModule.forRoot(),
+    HttpClientModule,
+
   ],
-  providers: [],
+  providers: [
+    PatronService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

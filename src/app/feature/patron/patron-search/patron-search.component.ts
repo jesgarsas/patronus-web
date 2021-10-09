@@ -1,6 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
+import { PatronService } from 'src/app/service/patron.service';
 import { AppContants } from 'src/app/utils/app-constants';
+import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
    selector: 'app-patron-search',
@@ -12,65 +15,15 @@ export class PatronSearchComponent implements OnInit {
    public mobile: boolean = false;
    public patronesFiltered: PatronDTO[] = [];
    
-   public patrones: any = [
-      {
-         "id": 1,
-         "nombre": "Observable",
-         "fechaCreacion": "2021-01-10",
-         "autor": {
-            "id": 5,
-            "nick": "profesor"
-         },
-         "descripcion": {
-            "id": 1,
-            "descripcion": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            "locale": {
-               "id": 1,
-               "code": "es"
-            }
-         }
-      },
-      {
-         "id": 2,
-         "nombre": "Patron",
-         "fechaCreacion": "2021-02-21",
-         "autor": {
-            "id": 3,
-            "nick": "pepe"
-         },
-         "descripcion": {
-            "id": 2,
-            "descripcion": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            "locale": {
-               "id": 1,
-               "code": "es"
-            }
-         }
-      },
-      {
-         "id": 3,
-         "nombre": "Controller",
-         "fechaCreacion": "2021-05-21",
-         "autor": {
-            "id": 3,
-            "nick": "pepe"
-         },
-         "descripcion": {
-            "id": 3,
-            "descripcion": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            "locale": {
-               "id": 1,
-               "code": "es"
-            }
-         }
-      }
-   ];
-
-   constructor() { }
+   public patrones: PatronDTO[] = []
+   constructor(
+      private patronService: PatronService,
+      private router: Router
+      ) { }
 
    ngOnInit(): void {
       this.resizeInteface();
-      this.patronesFiltered = this.patrones;
+      this.getAllPatrones();
    }
 
    @HostListener('window:resize', ['$event'])
@@ -93,8 +46,20 @@ export class PatronSearchComponent implements OnInit {
       this.patronesFiltered = array;
    }
 
+   public goToDetails(idPatron: number) {
+      console.log(idPatron)
+      this.router.navigate(['/patron/detalles'], { queryParams: { id: idPatron }, queryParamsHandling: 'merge' });
+   }
+
    private resizeInteface() {
       this.mobile = window.innerWidth <= AppContants.minWidthPhone;
+   }
+
+   private getAllPatrones() {
+      this.patronService.getAllByLocale(1).pipe(take(1)).subscribe(data => {
+         this.patrones = data;
+         this.patronesFiltered = this.patrones;
+      });
    }
 
 }
