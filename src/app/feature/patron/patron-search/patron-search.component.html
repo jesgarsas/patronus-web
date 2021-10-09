@@ -1,17 +1,17 @@
-<nb-card status="default">
+<nb-card status="default" class="stretch">
     <nb-card-header>Lista de patrones</nb-card-header>
     <nb-card-body>
         <!-- Buscador -->
-        <div class="width100">
+        <div class="width100" style="height: 100% !important;">
             <div class="margin-b25">
-                <input type="text" class="width75 center" nbInput fieldSize="large" placeholder="Buscar por nombre...">
+                <input type="text" (input)="filterList($event)" class="width75 center" nbInput fieldSize="large" placeholder="Buscar por nombre...">
             </div>
-            <div>
-                <nb-list>
-                    <nb-list-item class="hoverItem">
-                    </nb-list-item>
-                </nb-list>
-            </div>
+            <!-- Lista patrones -->
+            <nb-list class="list-flex center" style="display: inline;">
+                <nb-list-item *ngFor="let item of patronesFiltered" class="hoverItem">
+                    <app-patron-listitem [item]=item></app-patron-listitem>
+                </nb-list-item>
+            </nb-list>
         </div>
     </nb-card-body>
 </nb-card>

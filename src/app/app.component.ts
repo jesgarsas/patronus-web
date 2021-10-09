@@ -1,5 +1,6 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { NbSidebarService } from '@nebular/theme';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { NbSidebarComponent, NbSidebarService } from '@nebular/theme';
+import { AppContants } from './utils/app-constants';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,9 @@ import { NbSidebarService } from '@nebular/theme';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  @ViewChild('sidebar')
+  public sidebar!: NbSidebarComponent;
 
   public mobile: boolean = false;
 
@@ -25,12 +29,20 @@ export class AppComponent {
   }
   
   private resizeInteface() {
-    if (window.innerWidth <= 1140) {
-      this.sidebarService.collapse('left');
+    if (window.innerWidth <= AppContants.minWidthPhone) {
       this.mobile = true;
+      this.toggleSidebarFixed();
+      this.sidebarService.collapse('left');
     } else {
-      this.sidebarService.expand('left');
       this.mobile = false;
+      this.toggleSidebarFixed();
+      this.sidebarService.expand('left');
+    }
+  }
+
+  private toggleSidebarFixed() {
+    if (this.sidebar) {
+      this.sidebar.fixed = this.mobile;
     }
   }
 }
