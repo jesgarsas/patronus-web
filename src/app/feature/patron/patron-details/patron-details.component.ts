@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
+import { AppContants } from 'src/app/utils/app-constants';
 
 
 @Component({
@@ -14,13 +15,21 @@ export class PatronDetailsComponent implements OnInit {
 
   public idPatron: number = -1;
   public patron: PatronDTO | undefined = undefined;
+  public mobile: boolean = false;
 
   constructor(
     private patronService: PatronService,
     private route: ActivatedRoute
   ) { }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.resizeInteface();
+  }
+
   ngOnInit(): void {
+    this.resizeInteface();
+
     this.route.queryParams.pipe(take(1)).subscribe(params => {
       this.idPatron = params.id;
     });
@@ -30,4 +39,7 @@ export class PatronDetailsComponent implements OnInit {
     });
   }
 
+  private resizeInteface() {
+    this.mobile = window.innerWidth <= AppContants.minWidthPhone;
+  }
 }

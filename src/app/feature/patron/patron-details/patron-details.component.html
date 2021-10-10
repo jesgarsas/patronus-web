@@ -6,22 +6,43 @@
                 <div class="width75">
                     <span [innerHTML]="patron.leccion!.contenido"></span>
                 </div>
-                <div class="headerDivider" style="width: 25%; margin-top: 15px;">
-                    <div class="h-card">
-                        <nb-icon icon="download-outline"></nb-icon>
-                        Proyectos
+                <!-- Proyectos PC -->
+                <ng-container *ngIf="!mobile">
+                    <div class="headerDivider" style="width: 25%!important; margin-top: 15px;">
+                        <div class="h-card" style="width: 150px;">
+                            <nb-icon icon="download-outline"></nb-icon>
+                            Proyectos
+                        </div>
+                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
+                        <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
+                            <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                                <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
+                                    }}
+                                    Kb)</span>
+                            </p>
+                        </div>
                     </div>
-                    <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
-                        <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
-                            <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size }}
-                                Kb)</span>
-                        </p>
-                    </div>
-                </div>
+                </ng-container>
             </div>
             <nb-accordion>
+                <nb-accordion-item *ngIf="mobile">
+                    <nb-accordion-item-header class="header-blue">
+                        <nb-icon icon="file-outline" style="margin-right: 5px;"></nb-icon>
+                        Proyectos
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
+                        <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
+                            <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                                <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
+                                    }}
+                                    Kb)</span>
+                            </p>
+                        </div>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
                 <nb-accordion-item>
-                    <nb-accordion-item-header>
+                    <nb-accordion-item-header class="header-blue">
                         <nb-icon icon="file-outline" style="margin-right: 5px;"></nb-icon>
                         Ejercicios
                     </nb-accordion-item-header>
