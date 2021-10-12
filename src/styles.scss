@@ -2,6 +2,11 @@
 
 @import '~@nebular/theme/styles/globals';
 
+// Styles datatables
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
 @include nb-install() {
   @include nb-theme-global();
 };
@@ -143,4 +148,8 @@
 .header-blue {
   background-color: nb-theme(color-primary-600) !important;
   color: white !important;
+}
+
+.whithe-back {
+  background-color: white;
 }

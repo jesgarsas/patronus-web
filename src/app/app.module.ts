@@ -11,6 +11,10 @@ import { PatronListitemComponent } from './feature/patron/patron-search/patron-l
 import { PatronService } from './service/patron.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PatronDetailsComponent } from './feature/patron/patron-details/patron-details.component';
+import { PatronManageComponent } from './feature/patron/patron-manage/patron-manage.component';
+import { GenericTableComponent } from './component/generic-table/generic-table.component';
+import { PatronManageTableComponent } from './feature/patron/patron-manage/patron-manage-table/patron-manage-table.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,10 @@ import { PatronDetailsComponent } from './feature/patron/patron-details/patron-d
     SidebarComponent,
     PatronSearchComponent,
     PatronListitemComponent,
-    PatronDetailsComponent
+    PatronDetailsComponent,
+    PatronManageComponent,
+    PatronManageTableComponent,
+    GenericTableComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +43,8 @@ import { PatronDetailsComponent } from './feature/patron/patron-details/patron-d
     NbInputModule,
     NbMenuModule.forRoot(),
     HttpClientModule,
-    NbAccordionModule 
+    NbAccordionModule,
+    NgxDatatableModule
   ],
   providers: [
     PatronService

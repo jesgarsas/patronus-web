@@ -12,6 +12,7 @@ export class SidebarComponent implements OnInit {
   public window: any = window;
 
   public verPatronesRoute: string = "/patron/buscador";
+  public administrarPatronesRoute: string = "/patron/administracion"
 
   public options: NbMenuItem[] = [
     {
@@ -21,8 +22,9 @@ export class SidebarComponent implements OnInit {
       pathMatch: "full"
     },
     {
-      title: 'Opción 2',
-      icon: 'arrowhead-right-outline',
+      title: 'Administrar patrones',
+      icon: 'folder-outline',
+      link: this.administrarPatronesRoute,
       pathMatch: "full"
     },
     {
