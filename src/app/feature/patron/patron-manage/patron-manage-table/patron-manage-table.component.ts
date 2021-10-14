@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 import { TableColumn } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
-import { Moment } from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
+import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
   selector: 'app-patron-manage-table',
@@ -21,7 +21,8 @@ export class PatronManageTableComponent implements OnInit {
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
 
   constructor(private patroneService: PatronService,
-    private dialogService: NbDialogService) { }
+    private dialogService: NbDialogService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.buildColumns();
@@ -40,11 +41,19 @@ export class PatronManageTableComponent implements OnInit {
 
   private deletePatron(value: PatronDTO) {
     if (value.id) {
-      this.patroneService.deleteById(value.id).pipe(take(1)).subscribe(data => {
+      this.patroneService.deleteById(value.id).pipe(take(1)).subscribe((data) => {
         if (data) {
-          this.dialog!.close();
           this.getPatrones();
+          this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
+        } else {
+          this.toastService.showError('Error', 'No se ha podido borrar el patrón');
         }
+        this.dialog!.close();
+      }, (error) => {
+        if (error) {
+          this.toastService.showError('Error', 'No se ha podido borrar el patrón');
+        }
+        this.dialog!.close();
       });
     }
   }

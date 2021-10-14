@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -17,6 +17,7 @@ import { PatronManageTableComponent } from './feature/patron/patron-manage/patro
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PatronManageCreationComponent } from './feature/patron/patron-manage/patron-manage-creation/patron-manage-creation.component';
 import { GenericDialogDeleteComponent } from './component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
+import { ToastService } from './service/toast.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { GenericDialogDeleteComponent } from './component/generic-dialog/generic
     PatronManageTableComponent,
     GenericTableComponent,
     PatronManageCreationComponent,
-    GenericDialogDeleteComponent
+    GenericDialogDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,10 +50,13 @@ import { GenericDialogDeleteComponent } from './component/generic-dialog/generic
     HttpClientModule,
     NbAccordionModule,
     NgxDatatableModule,
-    NbDialogModule.forRoot()
+    NbDialogModule.forRoot(),
+    NbToastrModule.forRoot()
   ],
   providers: [
-    PatronService
+    PatronService,
+    NbToastrService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })
