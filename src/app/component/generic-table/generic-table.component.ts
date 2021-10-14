@@ -46,7 +46,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   }
 
   private setColumnActions() {
-    this.columns.push({ name: 'Acciones', cellTemplate: this.accionesTemplate, flexGrow: 1, headerClass: 'header-blue' });
+    this.columns.push({ name: 'Acciones', sortable: false, cellTemplate: this.accionesTemplate, flexGrow: 1, headerClass: 'header-blue' });
   }
 
 }

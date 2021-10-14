@@ -1,6 +1,11 @@
 <nb-card status="default" class="stretch">
     <nb-card-header>Administración de patrones</nb-card-header>
     <nb-card-body>
+        <div class="button-create width100">
+            <div>
+                <button (click)="crearPatron()" nbButton status="primary" size="large">Crear patrón nuevo</button>
+            </div>
+        </div>
         <app-patron-manage-table></app-patron-manage-table>
     </nb-card-body>
 </nb-card>

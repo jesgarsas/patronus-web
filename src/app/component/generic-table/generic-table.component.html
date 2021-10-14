@@ -4,7 +4,7 @@
         <ng-container *ngFor="let col of columns">
             <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
                 [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
-                headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate">
+                headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate" [sortable]="col.sortable === null ? false : col.sortable!">
                 <ng-template #acciones let-row="row">
                     <div style="display: inline;">
                         <button (click)="onEditClick(row)" nbButton ghost status="primary"
@@ -20,15 +20,3 @@
         </ng-container>
     </ngx-datatable>
 </div>
-
-<!-- <ng-template #acciones>
-    <div style="display: inline;">
-        <button (click)="onEditClick()" nbButton ghost status="primary"
-            style="padding: 0px !important; margin-right: 15px;">
-            <nb-icon icon="edit-outline"></nb-icon>
-        </button>
-        <button nbButton ghost status="danger" style="padding: 0px !important;">
-            <nb-icon icon="trash-2-outline"></nb-icon>
-        </button>
-    </div>
-</ng-template> -->

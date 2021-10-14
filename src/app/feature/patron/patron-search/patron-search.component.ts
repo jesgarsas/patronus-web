@@ -47,7 +47,6 @@ export class PatronSearchComponent implements OnInit {
    }
 
    public goToDetails(idPatron: number) {
-      console.log(idPatron)
       this.router.navigate(['/patron/detalles'], { queryParams: { id: idPatron }, queryParamsHandling: 'merge' });
    }
 
@@ -57,8 +56,10 @@ export class PatronSearchComponent implements OnInit {
 
    private getAllPatrones() {
       this.patronService.getAllByLocale(1).pipe(take(1)).subscribe(data => {
-         this.patrones = data;
-         this.patronesFiltered = this.patrones;
+         if (data) {
+            this.patrones = data;
+            this.patronesFiltered = this.patrones;
+         }
       });
    }
 

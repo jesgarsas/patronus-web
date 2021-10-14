@@ -1,0 +1,10 @@
+<nb-card status="danger">
+    <nb-card-header>Confirmar eliminación</nb-card-header>
+    <nb-card-body>¿Esta seguro que desea eliminar este elemento? Este cambio será permanente.</nb-card-body>
+    <nb-card-footer>
+        <div class="footer-right">
+            <button nbButton status="danger" (click)="accept()">Confirmar</button>
+            <button nbButton (click)="close()">Cancelar</button>
+        </div>
+    </nb-card-footer>
+</nb-card>

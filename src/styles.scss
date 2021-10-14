@@ -104,6 +104,27 @@
   min-height: 100% !important;
 }
 
+.footer-right {
+  display: flex !important;
+  flex-direction: row-reverse;
+  align-items: end !important;
+  gap: 15px;
+}
+
+// Buttons
+.button-create {
+  margin-top: 0px;
+  margin-bottom: 20px;
+  display: flex !important;
+  flex-direction: row-reverse;
+  align-items: end !important;
+}
+
+
+.button-create div button {
+  text-transform: none !important;
+}
+
 // Text classes
 .no-decor {
   text-decoration: none !important;

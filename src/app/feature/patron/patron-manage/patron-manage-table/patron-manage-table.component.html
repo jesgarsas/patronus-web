@@ -1,1 +1,2 @@
-<app-generic-table [actionsColumn]="true" [columns]="columns" [rows]="rows"></app-generic-table>
+<app-generic-table [actionsColumn]="true" [columns]="columns" [rows]="rows" (onEdit)="onEdit($event)"
+    (onDelete)="onDelete($event)"></app-generic-table>

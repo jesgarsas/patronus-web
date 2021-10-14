@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -15,6 +15,8 @@ import { PatronManageComponent } from './feature/patron/patron-manage/patron-man
 import { GenericTableComponent } from './component/generic-table/generic-table.component';
 import { PatronManageTableComponent } from './feature/patron/patron-manage/patron-manage-table/patron-manage-table.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PatronManageCreationComponent } from './feature/patron/patron-manage/patron-manage-creation/patron-manage-creation.component';
+import { GenericDialogDeleteComponent } from './component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     PatronDetailsComponent,
     PatronManageComponent,
     PatronManageTableComponent,
-    GenericTableComponent
+    GenericTableComponent,
+    PatronManageCreationComponent,
+    GenericDialogDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     NbMenuModule.forRoot(),
     HttpClientModule,
     NbAccordionModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NbDialogModule.forRoot()
   ],
   providers: [
     PatronService
