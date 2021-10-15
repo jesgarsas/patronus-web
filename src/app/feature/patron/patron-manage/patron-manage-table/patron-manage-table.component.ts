@@ -4,6 +4,7 @@ import { TableColumn } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
+import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
@@ -17,6 +18,7 @@ export class PatronManageTableComponent implements OnInit {
 
   public columns: TableColumn[] = [];
   public rows: any[] = [];
+  public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
 

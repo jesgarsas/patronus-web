@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { SelectionType, TableColumn } from '@swimlane/ngx-datatable';
+import { ConfigAction } from './model/config-action';
 
 @Component({
   selector: 'app-generic-table',
@@ -11,6 +12,9 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Input() public rows: any[] = [];
   @Input() public columns: TableColumn[] = [];
   @Input() public actionsColumn: boolean = false;
+  @Input() public paginator: boolean = false;
+  @Input() public size: number | undefined = 10;
+  @Input() public configActions: ConfigAction = new ConfigAction({});
 
   @Output() public onEdit: EventEmitter<any> = new EventEmitter();
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();
@@ -19,16 +23,22 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   public accionesTemplate!: TemplateRef<any>;
 
   public columnsTable: any[] = [];
+  public heigthFooter: number = 0;
 
   constructor() { }
 
   ngOnInit(): void {
-    
+    if (this.paginator) {
+      this.size = 10;
+      this.heigthFooter = 50;
+    }
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.setColumnActions();
+      if (this.actionsColumn) {
+        this.setColumnActions();
+      }
       this.setColumnsToTable();
     });
   }

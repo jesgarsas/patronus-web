@@ -18,6 +18,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PatronManageCreationComponent } from './feature/patron/patron-manage/patron-manage-creation/patron-manage-creation.component';
 import { GenericDialogDeleteComponent } from './component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { ToastService } from './service/toast.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { ToastService } from './service/toast.service';
     NbAccordionModule,
     NgxDatatableModule,
     NbDialogModule.forRoot(),
-    NbToastrModule.forRoot()
+    NbToastrModule.forRoot(),
+    ReactiveFormsModule,
+    AngularEditorModule
   ],
   providers: [
     PatronService,

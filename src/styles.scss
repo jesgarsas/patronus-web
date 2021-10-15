@@ -17,6 +17,10 @@
   margin: 10px !important;
 }
 
+.margin-t20 {
+  margin-top: 20px !important;
+}
+
 .margin-l10 {
   margin-left: 10px !important;
 }
@@ -54,6 +58,10 @@
 
 .width50 {
   width: 50% !important;
+}
+
+.width30 {
+  width: 30% !important;
 }
 
 .width75 {
@@ -111,6 +119,14 @@
   gap: 15px;
 }
 
+.col-force {
+  display: flex !important;
+}
+
+.col-force div {
+  flex: 1 1 auto;
+}
+
 // Buttons
 .button-create {
   margin-top: 0px;
@@ -121,7 +137,8 @@
 }
 
 
-.button-create div button {
+.button-create div button,
+.button-lowercase {
   text-transform: none !important;
 }
 
@@ -156,6 +173,11 @@
 }
 
 // Forms
+.label-form {
+  font-size: 16px !important;
+  font-weight: bold !important;
+}
+
 .dot {
   height: 50px;
   width: 50px;

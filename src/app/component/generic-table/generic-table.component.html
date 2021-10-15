@@ -1,19 +1,25 @@
 <div style="width: 100% !important;">
-    <ngx-datatable [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50" [limit]="10"
-        [rowHeight]="50" [footerHeight]="50">
+    <ngx-datatable [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50"
+        [limit]="size" [rowHeight]="50" [footerHeight]="heigthFooter">
         <ng-container *ngFor="let col of columns">
             <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
                 [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
-                headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate" [sortable]="col.sortable === null ? false : col.sortable!">
+                headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate"
+                [sortable]="col.sortable === null ? false : col.sortable!">
                 <ng-template #acciones let-row="row">
                     <div style="display: inline;">
-                        <button (click)="onEditClick(row)" nbButton ghost status="primary"
-                            style="padding: 0px !important; margin-right: 15px;">
-                            <nb-icon icon="edit-outline"></nb-icon>
-                        </button>
-                        <button (click)="onDeleteClick(row)" nbButton ghost status="danger" style="padding: 0px !important;">
-                            <nb-icon icon="trash-2-outline"></nb-icon>
-                        </button>
+                        <ng-container *ngIf="configActions.edit">
+                            <button (click)="onEditClick(row)" nbButton ghost status="primary"
+                                style="padding: 0px !important; margin-right: 15px;">
+                                <nb-icon icon="edit-outline"></nb-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="configActions.delete">
+                            <button (click)="onDeleteClick(row)" nbButton ghost status="danger"
+                                style="padding: 0px !important;">
+                                <nb-icon icon="trash-2-outline"></nb-icon>
+                            </button>
+                        </ng-container>
                     </div>
                 </ng-template>
             </ngx-datatable-column>
