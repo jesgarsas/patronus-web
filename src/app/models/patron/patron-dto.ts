@@ -5,13 +5,14 @@ import { LeccionDTO } from "./leccion-dto";
 import { ProyectoDTO } from "./proyecto-dto";
 
 export class PatronDTO {
+
     constructor(
         public id?: number,
         public nombre?: string,
-        public fechaCreacion?: Moment,
+        public fechaCreacion?: Moment | string,
         public autor?: AutorDTO,
-        public descripcion?: DescripcionDTO,
-        public leccion?: LeccionDTO,
+        public descripciones?: DescripcionDTO[],
+        public lecciones?: LeccionDTO[],
         public proyectos?: ProyectoDTO[]
     ) {}
 }

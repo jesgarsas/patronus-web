@@ -6,4 +6,5 @@ export class LeccionDTO {
         public locale?: LocaleDTO,
         public contenido?: string
     ) {}
+
 }

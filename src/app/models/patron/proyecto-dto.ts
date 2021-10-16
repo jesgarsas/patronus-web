@@ -1,9 +1,9 @@
 
 export class ProyectoDTO {
     constructor(
-        public name: string,
-        public type: string,
-        public size: number,
+        public name?: string,
+        public type?: string,
+        public size?: number,
         public id?: number,
         public link?: string,
         public pos?: number

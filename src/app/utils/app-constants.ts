@@ -39,4 +39,6 @@ export class AppContants {
           'insertVideo',]
         ]
     };
+
+    public static validFormatFile: string = '.zip, .7z, .rar, .tar, .gz, .gzip, .pdf, .txt, .doc, .docx';
 }

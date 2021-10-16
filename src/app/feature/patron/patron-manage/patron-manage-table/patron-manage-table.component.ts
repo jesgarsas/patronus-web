@@ -86,7 +86,7 @@ export class PatronManageTableComponent implements OnInit {
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
       { prop: 'fechaCreacion', name: 'Fecha de creación', resizeable: false, sortable: true, draggable: false, flexGrow: 1 },
       { prop: 'autor.nick', name: 'Autor', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
-      { prop: 'leccion', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
+      { prop: 'lecciones.length', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
       { prop: 'proyectos.length', name: 'Nº Proyectos', resizeable: false, draggable: false, sortable: true, flexGrow: 1 }
     ];
   }

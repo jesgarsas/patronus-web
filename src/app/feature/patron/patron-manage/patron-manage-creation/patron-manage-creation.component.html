@@ -8,7 +8,8 @@
             </div>
             <div class="width100" style="padding-top: 20px;">
                 <p class=label-form>Descripción</p>
-                <textarea style="resize: vertical;" nbInput fullWidth [formControlName]="descripcionFormName" status="basic"></textarea>
+                <textarea style="resize: vertical;" nbInput fullWidth [formControlName]="descripcionFormName"
+                    status="basic"></textarea>
             </div>
             <div class="width100" style="padding-top: 20px;">
                 <p class=label-form>Contenido de la lección</p>
@@ -18,10 +19,17 @@
                 <div style="display: flex; gap: 20px;">
                     <p class=label-form>Proyectos</p>
                     <div style="margin-top: 10px;">
-                        <button nbButton class="button-lowercase" status="info" size="small">Subir</button>
-                    </div>
+                        <button nbButton class="button-lowercase" (click)="fileUpload.click()" status="info" size="small">Subir
+                            <input type="file" id="file" [accept]="fileConfig" #fileUpload style="display: none;" (change)="handleFileInput($event.target)">
+                        </button>
                 </div>
-                <app-generic-table (onDelete)="onDelete($event)" [columns]="columns" [paginator]="false" [actionsColumn]="true" [configActions]="configActions" [rows]="rows"></app-generic-table>
+            </div>
+            <app-generic-table (onDelete)="onDelete($event)" [columns]="columns" [paginator]="false"
+                [actionsColumn]="true" [configActions]="configActions" [rows]="rows"></app-generic-table>
+            </div>
+            <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+                <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
+                <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Cancelar</button>
             </div>
         </form>
     </nb-card-body>

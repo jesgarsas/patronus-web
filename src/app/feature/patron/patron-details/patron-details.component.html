@@ -4,7 +4,7 @@
         <nb-card-body>
             <div style="display: flex;">
                 <div class="width75">
-                    <span [innerHTML]="patron.leccion!.contenido"></span>
+                    <span [innerHTML]="patron.lecciones![0].contenido"></span>
                 </div>
                 <!-- Proyectos PC -->
                 <ng-container *ngIf="!mobile">

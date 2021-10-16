@@ -20,6 +20,7 @@ import { GenericDialogDeleteComponent } from './component/generic-dialog/generic
 import { ToastService } from './service/toast.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { GenericDialogCancelComponent } from './component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     GenericTableComponent,
     PatronManageCreationComponent,
     GenericDialogDeleteComponent,
+    GenericDialogCancelComponent,
   ],
   imports: [
     BrowserModule,

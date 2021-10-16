@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AppContants } from '../utils/app-constants';
 import { Observable } from 'rxjs';
 import { PatronDTO } from '../models/patron/patron-dto';
@@ -22,5 +22,9 @@ export class PatronService {
 
   public deleteById(id: number): Observable<any> {
     return this.http.delete(`${AppContants.URL_API_PATRON}/${id}`);
+  }
+
+  public save(patron: PatronDTO, form: FormData) {
+    return this.http.post(`${AppContants.URL_API_PATRON}/save`, form);
   }
 }
