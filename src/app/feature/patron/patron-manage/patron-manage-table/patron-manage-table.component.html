@@ -1,2 +1,2 @@
-<app-generic-table [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns" [rows]="rows" [paginator]="true" (onEdit)="onEdit($event)"
+<app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns" [rows]="rows" [paginator]="true" (onEdit)="onEdit($event)"
     (onDelete)="onDelete($event)"></app-generic-table>

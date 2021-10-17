@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { SelectionType, TableColumn } from '@swimlane/ngx-datatable';
 import { ConfigAction } from './model/config-action';
+import { Page } from './model/page';
 
 @Component({
   selector: 'app-generic-table',
@@ -16,9 +17,14 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Input() public size: number | undefined = 10;
   @Input() public configActions: ConfigAction = new ConfigAction({});
   @Input() public loading: boolean = false;
+  @Input() public paging: boolean = false;
+  @Input() public sorting: boolean = false;
+  @Input() public page: Page = new Page(0, 10, 1, 1);
 
   @Output() public onEdit: EventEmitter<any> = new EventEmitter();
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();
+  @Output() public onPage: EventEmitter<any> = new EventEmitter();
+  @Output() public onSort: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('acciones')
   public accionesTemplate!: TemplateRef<any>;
@@ -42,6 +48,14 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
       }
       this.setColumnsToTable();
     });
+  }
+
+  public onPageClick(value: any) {
+    this.onPage.emit(value);
+  }
+
+  public onSortClick(value: any) {
+    this.onSort.emit(value);
   }
 
   public onEditClick(value: any) {

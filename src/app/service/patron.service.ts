@@ -4,6 +4,7 @@ import { AppContants } from '../utils/app-constants';
 import { Observable } from 'rxjs';
 import { PatronDTO } from '../models/patron/patron-dto';
 import { take } from 'rxjs/operators';
+import { Page } from '../component/generic-table/model/page';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class PatronService {
 
   public getAllByLocale(idLocale: number): Observable<PatronDTO[]> {
     return this.http.get<PatronDTO[]>(`${AppContants.URL_API_PATRON}/all/${idLocale}`);
+  }
+  
+  public getAllByPageFilter(filter: Page) {
+    return this.http.post<PatronDTO[]>(`${AppContants.URL_API_PATRON}/all/filtered`, filter);
   }
 
   public getByIdAndLocale(id: number, idLocale: number): Observable<PatronDTO> {

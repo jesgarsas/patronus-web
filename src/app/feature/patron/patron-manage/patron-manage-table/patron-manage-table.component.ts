@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
+import { Page } from 'src/app/component/generic-table/model/page';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
@@ -19,6 +20,7 @@ export class PatronManageTableComponent implements OnInit {
 
   public columns: TableColumn[] = [];
   public rows: any[] = [];
+  public page: Page = new Page(0,10,0,1);
   public loading: boolean = false;
   public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
 
@@ -63,18 +65,34 @@ export class PatronManageTableComponent implements OnInit {
     }
   }
 
+  public onSort(value: any) {
+    if (value.sorts && value.sorts[0]) {
+      this.page.sort = value.sorts[0].dir;
+      this.page.column = value.sorts[0].prop;
+      this.page.pageNumber = 0;
+      this.getPatrones();
+    }
+  }
+
+  public onPage(value: any) {
+    this.page.pageNumber = value.offset;
+    this.getPatrones();
+  }
+
   public onEdit(value: PatronDTO) {
     this.router.navigate(['/patron/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private getPatrones() {
     this.loading = true;
-    this.patroneService.getAllByLocale(1).pipe(take(1)).subscribe((data: PatronDTO[]) => {
+    this.patroneService.getAllByPageFilter(this.page).pipe(take(1)).subscribe((data: any) => {
       if (data) {
-        this.rows = data;
+        this.rows = data.patrones;
+        this.page.totalElements = data.totalElements;
+        this.page.totalPages = data.totalPages;
         this.transformData();
-        this.loading = false;
       }
+      this.loading = false;
     },
     (error) => {
       this.loading = false;
@@ -94,9 +112,9 @@ export class PatronManageTableComponent implements OnInit {
     this.columns = [
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
       { prop: 'fechaCreacion', name: 'Fecha de creación', resizeable: false, sortable: true, draggable: false, flexGrow: 1 },
-      { prop: 'autor.nick', name: 'Autor', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
-      { prop: 'lecciones.length', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
-      { prop: 'proyectos.length', name: 'Nº Proyectos', resizeable: false, draggable: false, sortable: true, flexGrow: 1 }
+      { prop: 'autor.nick', name: 'Autor', resizeable: false, draggable: false, sortable: false, flexGrow: 1 },
+      { prop: 'lecciones.length', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: false, flexGrow: 1 },
+      { prop: 'proyectos.length', name: 'Nº Proyectos', resizeable: false, draggable: false, sortable: false, flexGrow: 1 }
     ];
   }
 
