@@ -1,5 +1,5 @@
 <div style="width: 100% !important;">
-    <ngx-datatable [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50"
+    <ngx-datatable  [loadingIndicator]="loading" [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50"
         [limit]="size" [rowHeight]="50" [footerHeight]="heigthFooter">
         <ng-container *ngFor="let col of columns">
             <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"

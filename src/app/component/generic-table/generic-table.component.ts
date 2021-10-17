@@ -15,6 +15,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Input() public paginator: boolean = false;
   @Input() public size: number | undefined = 10;
   @Input() public configActions: ConfigAction = new ConfigAction({});
+  @Input() public loading: boolean = false;
 
   @Output() public onEdit: EventEmitter<any> = new EventEmitter();
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();

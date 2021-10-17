@@ -19,6 +19,7 @@ export class PatronManageTableComponent implements OnInit {
 
   public columns: TableColumn[] = [];
   public rows: any[] = [];
+  public loading: boolean = false;
   public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
@@ -67,11 +68,17 @@ export class PatronManageTableComponent implements OnInit {
   }
 
   private getPatrones() {
+    this.loading = true;
     this.patroneService.getAllByLocale(1).pipe(take(1)).subscribe((data: PatronDTO[]) => {
       if (data) {
         this.rows = data;
         this.transformData();
+        this.loading = false;
       }
+    },
+    (error) => {
+      this.loading = false;
+      this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
     });
   }
 
