@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 import { TableColumn } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
@@ -24,7 +25,8 @@ export class PatronManageTableComponent implements OnInit {
 
   constructor(private patroneService: PatronService,
     private dialogService: NbDialogService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.buildColumns();
@@ -61,7 +63,7 @@ export class PatronManageTableComponent implements OnInit {
   }
 
   public onEdit(value: PatronDTO) {
-
+    this.router.navigate(['/patron/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private getPatrones() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { TableColumn } from '@swimlane/ngx-datatable';
@@ -45,6 +45,7 @@ export class PatronManageCreationComponent implements OnInit {
   private dialog?: NbDialogRef<GenericDialogCancelComponent>;
 
   constructor(private router: Router,
+    private route: ActivatedRoute,
     private dialogService: NbDialogService,
     private patronService: PatronService,
     private toastService: ToastService) { }
@@ -52,6 +53,13 @@ export class PatronManageCreationComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
     this.buildColumns();
+
+    // Recoger los datos del grupo que nos pasan
+    this.route.queryParams.pipe(take(1)).subscribe(params => {
+      if (params.id) {
+        this.getPatron(params.id);
+      }
+    });
   }
 
   onDelete(event: ProyectoDTO) {
@@ -87,6 +95,30 @@ export class PatronManageCreationComponent implements OnInit {
     }
   }
 
+  private getPatron(id: any) {
+    this.patronService.getByIdAndLocale(id, 1).pipe(take(1)).subscribe(data => {
+      if (data) {
+        this.patron = data;
+        this.setValuesForm();
+      } else {
+        this.toastService.showError('Error', 'No se ha podido cargar el patrón');
+      }
+    }, error => {
+      this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+    })
+  }
+
+  private setValuesForm() {
+    this.form.controls[this.titleFormName].setValue(this.patron.nombre);
+    this.form.controls[this.descripcionFormName].setValue(this.patron.descripciones ? this.patron.descripciones[0].descripcion : undefined);
+    this.form.controls[this.contenidoFormName].setValue(this.patron.lecciones ? this.patron.lecciones[0].contenido : undefined);
+
+    if (this.patron.proyectos) {
+      this.patron.proyectos.map(proyecto => { this.rows.push(proyecto); });
+      this.rows = [...this.rows];
+    }
+  }
+
   private transformFile(file: File) {
     let proy = new ProyectoDTO();
     proy.pos = this.posFile;
@@ -98,18 +130,20 @@ export class PatronManageCreationComponent implements OnInit {
 
   private setValuesDTO() {
     // Cambiar por autor cuando este el modulo
-    this.patron.autor = new AutorDTO(3, 'pepe');
-    this.patron.fechaCreacion = moment();
-    this.patron.id = 6;
+    if (!this.patron.id) {
+      this.patron.autor = new AutorDTO(3, 'pepe');
+      this.patron.fechaCreacion = moment();
+      this.patron.lecciones = [{ locale: LocaleDTO.spanish, contenido: this.form.value[this.contenidoFormName] }];
+      this.patron.descripciones = [{ locale: LocaleDTO.spanish, descripcion: this.form.value[this.descripcionFormName] }];
+    } else {
+      this.patron.lecciones![0].contenido = this.form.value[this.contenidoFormName];
+      this.patron.descripciones![0].descripcion = this.form.value[this.descripcionFormName];
+    }
     this.patron.nombre = this.form.value[this.titleFormName];
-    this.patron.lecciones = [{ locale: LocaleDTO.spanish, contenido: this.form.value[this.contenidoFormName] }];
-    this.patron.descripciones = [{ locale: LocaleDTO.spanish, descripcion: this.form.value[this.descripcionFormName] }];
-    this.patron.proyectos = [];
   }
 
   private savePatron() {
     let formData: FormData = new FormData();
-    let index: number = 0;
     formData.append('patron', new Blob([JSON.stringify(this.patron)], { type: 'application/json' }));
     for (let file of this.files) {
       formData.append(`files`, file);
