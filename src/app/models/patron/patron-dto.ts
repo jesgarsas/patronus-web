@@ -6,21 +6,14 @@ import { ProyectoDTO } from "./proyecto-dto";
 
 export class PatronDTO {
 
-    public proyectos?: ProyectoDTO[] = [];
-    public descripciones?: DescripcionDTO[] = []
-    public lecciones?: LeccionDTO[] = []
-
     constructor(
         public id?: number,
         public nombre?: string,
         public fechaCreacion?: Moment | string,
         public autor?: AutorDTO,
-        descripciones?: DescripcionDTO[],
-        lecciones?: LeccionDTO[],
-        proyectos?: ProyectoDTO[]
+        public descripciones?: DescripcionDTO[],
+        public lecciones?: LeccionDTO[],
+        public proyectos?: ProyectoDTO[]
     ) {
-        if (!proyectos) {
-            proyectos = [];
-        }
     }
 }

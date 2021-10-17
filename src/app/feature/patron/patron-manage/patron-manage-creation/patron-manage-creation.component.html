@@ -1,6 +1,6 @@
 <nb-card status="default" class="stretch">
     <nb-card-header>{{ headerTitle }}</nb-card-header>
-    <nb-card-body>
+    <nb-card-body [ngClass]="{'hide-body': loading}">
         <form [formGroup]="form">
             <div style="min-width: 300px;" class="width30">
                 <p class=label-form>Nombre</p>
@@ -19,13 +19,15 @@
                 <div style="display: flex; gap: 20px;">
                     <p class=label-form>Proyectos</p>
                     <div style="margin-top: 10px;">
-                        <button nbButton class="button-lowercase" (click)="fileUpload.click()" status="info" size="small">Subir
-                            <input type="file" id="file" [accept]="fileConfig" #fileUpload style="display: none;" (change)="handleFileInput($event.target)">
+                        <button nbButton class="button-lowercase" (click)="fileUpload.click()" status="info"
+                            size="small">Subir
+                            <input type="file" id="file" [accept]="fileConfig" #fileUpload style="display: none;"
+                                (change)="handleFileInput($event.target)">
                         </button>
+                    </div>
                 </div>
-            </div>
-            <app-generic-table (onDelete)="onDelete($event)" [columns]="columns" [paginator]="false"
-                [actionsColumn]="true" [configActions]="configActions" [rows]="rows"></app-generic-table>
+                <app-generic-table (onDelete)="onDelete($event)" [columns]="columns" [paginator]="false"
+                    [actionsColumn]="true" [configActions]="configActions" [rows]="rows"></app-generic-table>
             </div>
             <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
                 <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
@@ -34,3 +36,5 @@
         </form>
     </nb-card-body>
 </nb-card>
+
+<app-generic-spinner [loading]="loading"></app-generic-spinner>

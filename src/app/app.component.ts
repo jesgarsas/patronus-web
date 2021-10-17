@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NbSidebarComponent, NbSidebarService } from '@nebular/theme';
+import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
 import { AppContants } from './utils/app-constants';
 
 @Component({
@@ -11,6 +12,8 @@ export class AppComponent {
 
   @ViewChild('sidebar')
   public sidebar!: NbSidebarComponent;
+  @ViewChild('spinner')
+  public spinner!: GenericSpinnerComponent;
 
   public mobile: boolean = false;
 

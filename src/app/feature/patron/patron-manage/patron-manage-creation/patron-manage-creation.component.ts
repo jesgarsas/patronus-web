@@ -32,6 +32,7 @@ export class PatronManageCreationComponent implements OnInit {
   files: File[] = [];
   posFile: number = 0;
   configActions!: ConfigAction;
+  loading: boolean = false;
 
   titleFormName: string = 'title';
   contenidoFormName: string = 'contenido';
@@ -96,15 +97,21 @@ export class PatronManageCreationComponent implements OnInit {
   }
 
   private getPatron(id: any) {
+    this.loading = true;
     this.patronService.getByIdAndLocale(id, 1).pipe(take(1)).subscribe(data => {
       if (data) {
         this.patron = data;
         this.setValuesForm();
+        this.loading = false;
       } else {
         this.toastService.showError('Error', 'No se ha podido cargar el patrón');
+        this.loading = false;
+        this.router.navigate(['/patron/administracion']);
       }
     }, error => {
       this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+      this.loading = false;
+      this.router.navigate(['/patron/administracion']);
     })
   }
 
@@ -148,17 +155,20 @@ export class PatronManageCreationComponent implements OnInit {
     for (let file of this.files) {
       formData.append(`files`, file);
     }
-
+    this.loading = true;
     this.patronService.save(this.patron, formData).pipe(take(1)).subscribe((data) => {
       if (data) {
-        this.router.navigate(['/patron/administracion']);
         this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
+        this.loading = false;
+        this.router.navigate(['/patron/administracion']);
       } else {
         this.toastService.showError('Error', 'No se ha podido guardar el patrón');
+        this.loading = false;
       }
     }, (error) => {
       if (error) {
         this.toastService.showError('Error', 'No se ha podido guardar el patrón');
+        this.loading = false;
       }
     });
   }

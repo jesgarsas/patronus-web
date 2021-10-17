@@ -26,11 +26,6 @@ export class SidebarComponent implements OnInit {
       icon: 'folder-outline',
       link: this.administrarPatronesRoute,
       pathMatch: "full"
-    },
-    {
-      title: 'Opción 3',
-      icon: 'arrowhead-right-outline',
-      pathMatch: "full"
     }
   ];
 

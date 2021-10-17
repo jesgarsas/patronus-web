@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -21,6 +21,7 @@ import { ToastService } from './service/toast.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { GenericDialogCancelComponent } from './component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
+import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { GenericDialogCancelComponent } from './component/generic-dialog/generic
     PatronManageCreationComponent,
     GenericDialogDeleteComponent,
     GenericDialogCancelComponent,
+    GenericSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { GenericDialogCancelComponent } from './component/generic-dialog/generic
     NbDialogModule.forRoot(),
     NbToastrModule.forRoot(),
     ReactiveFormsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NbSpinnerModule
   ],
   providers: [
     PatronService,
