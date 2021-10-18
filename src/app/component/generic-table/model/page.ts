@@ -6,6 +6,7 @@ export class Page {
     public totalPages: number;
     public sort?: string;
     public column?: string;
+    public name?: string;
 
     constructor(
         totalElements: number,
