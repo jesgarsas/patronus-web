@@ -89,7 +89,9 @@ export class PatronSearchComponent implements OnInit {
       this.numPages = [];
       for (let i = 0; i < this.page.totalPages; i++) {
          this.numPages[i] = i + 1;
+         this.statusPage[i] = 'basic';
       }
+      if (this.page.totalPages > 0) { this.statusPage[0] = 'primary'; }
    }
 
 }
