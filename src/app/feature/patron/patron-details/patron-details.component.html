@@ -15,7 +15,7 @@
                         </div>
                         <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
                         <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
-                            <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                            <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
                                 <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
                                     }}
                                     Kb)</span>
@@ -33,7 +33,7 @@
                     <nb-accordion-item-body>
                         <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
                         <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
-                            <p>• <a class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                            <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
                                 <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
                                     }}
                                     Kb)</span>

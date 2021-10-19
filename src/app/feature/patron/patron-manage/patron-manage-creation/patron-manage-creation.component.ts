@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -16,6 +16,7 @@ import { ProyectoDTO } from 'src/app/models/patron/proyecto-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { AppContants } from 'src/app/utils/app-constants';
+import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
   selector: 'app-patron-manage-creation',
@@ -34,9 +35,9 @@ export class PatronManageCreationComponent implements OnInit {
   configActions!: ConfigAction;
   loading: boolean = false;
 
-  titleFormName: string = 'title';
+  titleFormName: string = 'título';
   contenidoFormName: string = 'contenido';
-  descripcionFormName: string = 'descripcion';
+  descripcionFormName: string = 'descripción';
   proyectosFormName: string = 'proyectos';
 
   editorConfig: AngularEditorConfig = AppContants.editorConfig;
@@ -71,8 +72,14 @@ export class PatronManageCreationComponent implements OnInit {
   }
 
   onSave() {
-    this.setValuesDTO();
-    this.savePatron();
+    this.form.markAllAsTouched();
+    if (this.form && this.form.valid) {
+      this.setValuesDTO();
+      this.savePatron();
+    } else {
+      this.getMessageError();
+    }
+
   }
 
   onBack() {
@@ -94,6 +101,11 @@ export class PatronManageCreationComponent implements OnInit {
       }
       this.rows = [...this.rows];
     }
+  }
+
+  private getMessageError() {
+    let messages: string[] = AppUtilities.getErrorsFromForm(this.form);
+    messages.forEach(msg => { this.toastService.showError('Error', msg); })
   }
 
   private getPatron(id: any) {
@@ -181,10 +193,10 @@ export class PatronManageCreationComponent implements OnInit {
 
   private buildForm() {
     this.form = new FormGroup({});
-    this.form.addControl(this.titleFormName, new FormControl());
-    this.form.addControl(this.descripcionFormName, new FormControl());
-    this.form.addControl(this.contenidoFormName, new FormControl());
-    this.form.addControl(this.proyectosFormName, new FormControl());
+    this.form.addControl(this.titleFormName, new FormControl(undefined, [Validators.required]));
+    this.form.addControl(this.descripcionFormName, new FormControl(undefined, [Validators.required]));
+    this.form.addControl(this.contenidoFormName, new FormControl(undefined, [Validators.required]));
+    this.form.addControl(this.proyectosFormName, new FormControl(undefined));
   }
 
   private buildColumns() {
