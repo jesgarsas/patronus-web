@@ -19,7 +19,7 @@ import { ToastService } from 'src/app/service/toast.service';
 export class PatronManageTableComponent implements OnInit {
 
   public columns: TableColumn[] = [];
-  public rows: any[] = [];
+  public rows: PatronDTO[] = [];
   public page: Page = new Page(0,10,0,1);
   public loading: boolean = false;
   public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
@@ -102,8 +102,6 @@ export class PatronManageTableComponent implements OnInit {
 
   private transformData() {
     this.rows.map(row => {
-      row.leccion = row.leccion ? 1 : 0;
-      row.proyectos = row.proyectos ? row.proyectos : { length: 0 };
       row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
     });
   }
@@ -113,8 +111,8 @@ export class PatronManageTableComponent implements OnInit {
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
       { prop: 'fechaCreacion', name: 'Fecha de creación', resizeable: false, sortable: true, draggable: false, flexGrow: 1 },
       { prop: 'autor.nick', name: 'Autor', resizeable: false, draggable: false, sortable: false, flexGrow: 1 },
-      { prop: 'lecciones.length', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: false, flexGrow: 1 },
-      { prop: 'proyectos.length', name: 'Nº Proyectos', resizeable: false, draggable: false, sortable: false, flexGrow: 1 }
+      { prop: 'leccionesCount', name: 'Nº Lecciones', resizeable: false, draggable: false, sortable: false, flexGrow: 1 },
+      { prop: 'proyectosCount', name: 'Nº Proyectos', resizeable: false, draggable: false, sortable: false, flexGrow: 1 }
     ];
   }
 

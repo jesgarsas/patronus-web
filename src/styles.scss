@@ -92,14 +92,12 @@
 }
 
 // List SCSS
-
 .selectedItem {
   background-color: nb-theme(color-basic-focus);
 }
 
 .list-flex {
   width: 75% !important;
-  
   //display: flex;
 }
 
@@ -153,6 +151,19 @@
 // Text classes
 .no-decor {
   text-decoration: none !important;
+}
+
+.header-section {
+  color: var(--card-header-text-color) !important;
+  font-family: var(--card-header-text-font-family) !important;
+  font-size: var(--card-header-text-font-size) !important;
+  font-weight: var(--card-header-text-font-weight) !important;
+  line-height: var(--card-header-text-line-height) !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0px;
+  border-bottom: nb-theme(color-basic-600) 2px;
+  border-style: groove;
 }
 
 .h-card {

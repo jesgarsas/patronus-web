@@ -66,8 +66,18 @@ export class PatronManageCreationComponent implements OnInit {
 
   onDelete(event: ProyectoDTO) {
     let index: number = -1;
-    this.rows.map((value, i) => { if (ProyectoDTO.equals(value, event)) { index = i; } });
-    if (index >= 0) { this.rows.splice(index, 1); this.files.splice(index, 1); };
+    let id: number | undefined;
+    this.rows.map((value, i) => { if (ProyectoDTO.equals(value, event)) { index = i; id = value.id; } });
+    if (index >= 0) {
+      this.rows.splice(index, 1);
+      if (id) {
+        index = -1;
+        this.patron.proyectos?.forEach((value, i) => {
+          if (ProyectoDTO.equals(value, event)) { index = i; }
+        });
+        if (index !== -1) { this.patron.proyectos?.splice(index, 1); }
+      } else { this.files.splice(index, 1); }
+    };
     this.rows = [... this.rows];
   }
 

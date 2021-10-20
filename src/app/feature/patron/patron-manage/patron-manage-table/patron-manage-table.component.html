@@ -1,2 +1,15 @@
+<nb-accordion class="margin-b25">
+    <nb-accordion-item>
+     <nb-accordion-item-header class="header-blue"><nb-icon icon="funnel-outline"></nb-icon>Filtrar</nb-accordion-item-header>
+     <nb-accordion-item-body>
+       <!-- Filtrar -->
+        <div>
+            <div class="header-section">Nombre</div>
+            <input nbInput type="text">
+        </div>
+     </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>
+
 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns" [rows]="rows" [paginator]="true" (onEdit)="onEdit($event)"
     (onDelete)="onDelete($event)"></app-generic-table>

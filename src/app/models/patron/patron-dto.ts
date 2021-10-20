@@ -13,7 +13,9 @@ export class PatronDTO {
         public autor?: AutorDTO,
         public descripciones?: DescripcionDTO[],
         public lecciones?: LeccionDTO[],
-        public proyectos?: ProyectoDTO[]
+        public proyectos?: ProyectoDTO[],
+        public proyectosCount?: number,
+        public leccionesCount?: number
     ) {
     }
 }
