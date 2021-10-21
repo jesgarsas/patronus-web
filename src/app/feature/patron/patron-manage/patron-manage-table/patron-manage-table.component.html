@@ -7,16 +7,16 @@
             <!-- Filtrar -->
             <div class="row">
                 <div class="col-lg-5 col-md-6 col-sm-12">
-                    <app-generic-input label="Nombre"></app-generic-input>
+                    <app-generic-input label="Nombre" [form]="form" formName="nombre"></app-generic-input>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
-                    <app-generic-input label="Autor"></app-generic-input>
+                    <app-generic-input label="Autor" [form]="form" formName="autor"></app-generic-input>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <app-generic-datepicker-range label="Fecha"></app-generic-datepicker-range>
+                    <app-generic-datepicker-range [form]="form" label="Fecha"></app-generic-datepicker-range>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end" style="padding-top: 24px; display: flex; flex-direction: row;">
-                    <button nbButton status="primary">Filtrar</button>
+                    <button nbButton status="primary" (click)="onFilter()">Filtrar</button>
                 </div>
             </div>
         </nb-accordion-item-body>

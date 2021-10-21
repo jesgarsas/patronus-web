@@ -22,4 +22,12 @@ export class AppUtilities {
         });
         return messages;
     }
+
+    public static firstLetterUpper(text: string) {
+        let textFormatted: string = text.substr(0, 1).toUpperCase();
+        if (text.length > 1) {
+            textFormatted = `${textFormatted}${text.substr(1, text.length).toLowerCase()}`;
+        }
+        return textFormatted;
+    }
 }

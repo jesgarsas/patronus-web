@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-generic-input',
@@ -16,6 +16,7 @@ export class GenericInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.form.addControl(this.formName, new FormControl());
   }
 
 }

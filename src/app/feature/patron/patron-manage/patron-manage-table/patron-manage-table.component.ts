@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbDialogRef, NbDialogService, NbToastrService } from '@nebular/theme';
 import { TableColumn } from '@swimlane/ngx-datatable';
@@ -11,6 +12,7 @@ import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
+import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
   selector: 'app-patron-manage-table',
@@ -24,6 +26,7 @@ export class PatronManageTableComponent implements OnInit {
   private filter: PatronFilterDto = new PatronFilterDto();
   public loading: boolean = false;
   public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
+  public form: FormGroup = new FormGroup({});
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
 
@@ -74,8 +77,17 @@ export class PatronManageTableComponent implements OnInit {
       this.getPatrones();
     }
   }
-  
-  public onFilter() {}
+
+  public onFilter() {
+    if (this.form) {
+      this.filter.name = this.form.value['nombre'];
+      this.filter.autor = this.form.value['autor'];
+      this.filter.dateIni = this.form.value['dateIni'];
+      this.filter.dateFin = this.form.value['dateFin'];
+      this.filter.dateFin!.add(23, 'h').add(59, 'm').add(59, 's');
+    }
+    this.getPatrones();
+  }
 
   public onPage(value: any) {
     this.filter.pageNumber = value.offset;
@@ -91,18 +103,21 @@ export class PatronManageTableComponent implements OnInit {
     this.patroneService.getAllByPageFilter(this.filter).pipe(take(1)).subscribe((data: Page) => {
       if (data) {
         this.page = data;
+        this.transformData();
       }
       this.loading = false;
     },
-    (error) => {
-      this.loading = false;
-      this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
-    });
+      (error) => {
+        this.loading = false;
+        this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+      });
   }
 
   private transformData() {
-    this.page.content.map(row => {
+    this.page.content.map((row: PatronDTO) => {
       row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
+      row.autor!.nick = AppUtilities.firstLetterUpper(row.autor!.nick!);
+      row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
     });
   }
 

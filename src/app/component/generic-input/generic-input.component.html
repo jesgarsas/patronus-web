@@ -1,2 +1,4 @@
-<div class="header-section">{{ label }}</div>
-<input fullWidth nbInput type="text">
+<form [formGroup]="form">
+    <div class="header-section">{{ label }}</div>
+    <input fullWidth nbInput type="text" [formControlName]="formName">
+</form>
