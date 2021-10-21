@@ -1,0 +1,12 @@
+<div class="header-section">{{ label }}</div>
+<div style="display: flex; gap: 10px; flex-direction: row;">
+    <div>
+        <input nbInput fullWidth placeholder="Desde" [nbDatepicker]="desdeDatePicker">
+        <nb-datepicker format="DD/MM/yyyy" #desdeDatePicker></nb-datepicker>
+    </div>
+    <div style="padding-top: 10px; font-weight: bold;"> - </div>
+    <div>
+        <input nbInput fullWidth placeholder="Hasta" [nbDatepicker]="hastaDatePicker">
+        <nb-datepicker format="DD/MM/yyyy" #hastaDatePicker></nb-datepicker>
+    </div>
+</div>

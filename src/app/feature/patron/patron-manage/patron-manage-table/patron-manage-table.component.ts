@@ -6,7 +6,8 @@ import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
-import { Page } from 'src/app/component/generic-table/model/page';
+import { Page } from 'src/app/models/page/page';
+import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
@@ -19,8 +20,8 @@ import { ToastService } from 'src/app/service/toast.service';
 export class PatronManageTableComponent implements OnInit {
 
   public columns: TableColumn[] = [];
-  public rows: PatronDTO[] = [];
-  public page: Page = new Page(0,10,0,1);
+  public page: Page = new Page();
+  private filter: PatronFilterDto = new PatronFilterDto();
   public loading: boolean = false;
   public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
 
@@ -67,15 +68,17 @@ export class PatronManageTableComponent implements OnInit {
 
   public onSort(value: any) {
     if (value.sorts && value.sorts[0]) {
-      this.page.sort = value.sorts[0].dir;
-      this.page.column = value.sorts[0].prop;
-      this.page.pageNumber = 0;
+      this.filter.sort = value.sorts[0].dir;
+      this.filter.column = value.sorts[0].prop;
+      this.filter.pageNumber = 0;
       this.getPatrones();
     }
   }
+  
+  public onFilter() {}
 
   public onPage(value: any) {
-    this.page.pageNumber = value.offset;
+    this.filter.pageNumber = value.offset;
     this.getPatrones();
   }
 
@@ -85,12 +88,9 @@ export class PatronManageTableComponent implements OnInit {
 
   private getPatrones() {
     this.loading = true;
-    this.patroneService.getAllByPageFilter(this.page).pipe(take(1)).subscribe((data: any) => {
+    this.patroneService.getAllByPageFilter(this.filter).pipe(take(1)).subscribe((data: Page) => {
       if (data) {
-        this.rows = data.patrones;
-        this.page.totalElements = data.totalElements;
-        this.page.totalPages = data.totalPages;
-        this.transformData();
+        this.page = data;
       }
       this.loading = false;
     },
@@ -101,7 +101,7 @@ export class PatronManageTableComponent implements OnInit {
   }
 
   private transformData() {
-    this.rows.map(row => {
+    this.page.content.map(row => {
       row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
     });
   }

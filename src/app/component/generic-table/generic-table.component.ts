@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { SelectionType, TableColumn } from '@swimlane/ngx-datatable';
 import { ConfigAction } from './model/config-action';
-import { Page } from './model/page';
+import { Page } from '../../models/page/page';
+import { FilterDto } from 'src/app/models/filter/filter-dto';
 
 @Component({
   selector: 'app-generic-table',
@@ -19,7 +20,8 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Input() public loading: boolean = false;
   @Input() public paging: boolean = false;
   @Input() public sorting: boolean = false;
-  @Input() public page: Page = new Page(0, 10, 1, 1);
+  @Input() public page: Page = new Page();
+  @Input() public filter: FilterDto = new FilterDto();
 
   @Output() public onEdit: EventEmitter<any> = new EventEmitter();
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();

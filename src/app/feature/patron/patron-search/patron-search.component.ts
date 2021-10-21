@@ -4,8 +4,10 @@ import { PatronService } from 'src/app/service/patron.service';
 import { AppContants } from 'src/app/utils/app-constants';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Page } from 'src/app/component/generic-table/model/page';
+import { Page } from 'src/app/models/page/page';
 import { ToastService } from 'src/app/service/toast.service';
+import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto';
+import { FilterDto } from 'src/app/models/filter/filter-dto';
 
 @Component({
    selector: 'app-patron-search',
@@ -15,10 +17,10 @@ import { ToastService } from 'src/app/service/toast.service';
 export class PatronSearchComponent implements OnInit {
 
    public mobile: boolean = false;
-   public patronesFiltered: PatronDTO[] = [];
    public numPages: number[] = [];
    public statusPage: string[] = ['primary', 'basic', 'basic'];
-   public page: Page = new Page(0, 10, 0, 1);
+   public page: Page = new Page();
+   public filter: PatronFilterDto = new PatronFilterDto();
 
    public patrones: PatronDTO[] = []
    public nameFilter: any;
@@ -49,8 +51,7 @@ export class PatronSearchComponent implements OnInit {
    }
 
    public filterList() {
-      this.page.name = this.nameFilter ? this.nameFilter.trim() : '';
-
+      this.filter = new PatronFilterDto(this.nameFilter ? this.nameFilter.trim() : '');
       this.getAllPatrones();
    }
 
@@ -59,9 +60,9 @@ export class PatronSearchComponent implements OnInit {
    }
 
    public onPage(value: any) {
-      this.statusPage[this.page.pageNumber] = 'basic';
+      this.statusPage[this.filter.pageNumber!] = 'basic';
       this.statusPage[value - 1] = 'primary';
-      this.page.pageNumber = value - 1;
+      this.filter.pageNumber! = value - 1;
       this.getAllPatrones();
    }
 
@@ -71,12 +72,9 @@ export class PatronSearchComponent implements OnInit {
 
    private getAllPatrones() {
       this.loading = true;
-      this.patronService.getAllByPageFilter(this.page).pipe(take(1)).subscribe((data: any) => {
+      this.patronService.getAllByPageFilter(this.filter).pipe(take(1)).subscribe((data: Page) => {
          if (data) {
-            this.patrones = data.patrones;
-            this.page.totalElements = data.totalElements;
-            this.page.totalPages = data.totalPages;
-            this.patronesFiltered = this.patrones;
+            this.page = data;
             if (this.numPages.length !== data.totalPages) { this.generatePaginator() };
             this.loading = false;
          }
@@ -87,11 +85,11 @@ export class PatronSearchComponent implements OnInit {
    }
    private generatePaginator() {
       this.numPages = [];
-      for (let i = 0; i < this.page.totalPages; i++) {
+      for (let i = 0; i < this.page.totalPages!; i++) {
          this.numPages[i] = i + 1;
          this.statusPage[i] = 'basic';
       }
-      if (this.page.totalPages > 0) { this.statusPage[0] = 'primary'; }
+      if (this.page.totalPages! > 0) { this.statusPage[0] = 'primary'; }
    }
 
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -22,6 +22,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { GenericDialogCancelComponent } from './component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
 import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
+import { GenericInputComponent } from './component/generic-input/generic-input.component';
+import { GenericDatepickerRangeComponent } from './component/generic-datepicker-range/generic-datepicker-range.component';
+import * as moment from 'moment';
+import { NbMomentDateModule } from '@nebular/moment';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,8 @@ import { GenericSpinnerComponent } from './component/generic-spinner/generic-spi
     GenericDialogDeleteComponent,
     GenericDialogCancelComponent,
     GenericSpinnerComponent,
+    GenericInputComponent,
+    GenericDatepickerRangeComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +67,9 @@ import { GenericSpinnerComponent } from './component/generic-spinner/generic-spi
     ReactiveFormsModule,
     AngularEditorModule,
     NbSpinnerModule,
-    NbButtonGroupModule
+    NbButtonGroupModule,
+    NbDatepickerModule.forRoot(),
+    NbMomentDateModule
   ],
   providers: [
     PatronService,

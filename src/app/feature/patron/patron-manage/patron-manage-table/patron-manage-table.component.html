@@ -1,15 +1,28 @@
 <nb-accordion class="margin-b25">
     <nb-accordion-item>
-     <nb-accordion-item-header class="header-blue"><nb-icon icon="funnel-outline"></nb-icon>Filtrar</nb-accordion-item-header>
-     <nb-accordion-item-body>
-       <!-- Filtrar -->
-        <div>
-            <div class="header-section">Nombre</div>
-            <input nbInput type="text">
-        </div>
-     </nb-accordion-item-body>
+        <nb-accordion-item-header class="header-blue">
+            <nb-icon icon="funnel-outline"></nb-icon>Filtrar
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <!-- Filtrar -->
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-12">
+                    <app-generic-input label="Nombre"></app-generic-input>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <app-generic-input label="Autor"></app-generic-input>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <app-generic-datepicker-range label="Fecha"></app-generic-datepicker-range>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end" style="padding-top: 24px; display: flex; flex-direction: row;">
+                    <button nbButton status="primary">Filtrar</button>
+                </div>
+            </div>
+        </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>
 
-<app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns" [rows]="rows" [paginator]="true" (onEdit)="onEdit($event)"
-    (onDelete)="onDelete($event)"></app-generic-table>
+<app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading"
+    [actionsColumn]="true" [configActions]="configActions" [columns]="columns" [rows]="page.content" [paginator]="true"
+    (onEdit)="onEdit($event)" (onDelete)="onDelete($event)"></app-generic-table>

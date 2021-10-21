@@ -10,7 +10,7 @@
             </div>
             <!-- Lista patrones -->
             <nb-list class="list-flex center" style="display: inline;">
-                <nb-list-item *ngFor="let item of patronesFiltered" class="hoverItem">
+                <nb-list-item *ngFor="let item of page.content!" class="hoverItem">
                     <app-patron-listitem [item]=item (click)="goToDetails(item.id!)"></app-patron-listitem>
                 </nb-list-item>
             </nb-list>
