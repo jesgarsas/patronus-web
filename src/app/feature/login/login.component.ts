@@ -5,6 +5,7 @@ import { Md5 } from 'md5-typescript';
 import { take } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario/usuario';
 import { LoginService } from 'src/app/service/login.service';
+import { NotifierService } from 'src/app/service/notifier.service';
 import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
@@ -19,9 +20,14 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService,
     private toastService: ToastService,
-    private router: Router) { }
+    private router: Router,
+    private notifierService: NotifierService) { }
 
   ngOnInit(): void {
+    if (!this.loginService.getUser()) {
+      this.notifierService.emitUserLogged(false);
+    }
+
   }
 
   onSubmit() {
@@ -33,6 +39,7 @@ export class LoginComponent implements OnInit {
       this.loginService.login(formData).pipe(take(1)).subscribe((user: Usuario) => {
         this.loginService.setUser(user);
         this.toastService.showConfirmation('Éxito', 'Se ha iniciado sesión de forma exitosa');
+        this.notifierService.emitUserLogged(true);
         this.router.navigate(['/patron/buscador']);
         this.loading = false;
       }, (error) => {

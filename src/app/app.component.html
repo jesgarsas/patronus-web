@@ -3,20 +3,22 @@
   <nb-layout-header fixed>
     <!-- Logo&Text -->
     <nb-layout-column class="margin10" *ngIf="mobile">
-      <button nbButton (click)="toggleSideBar()">
-        <nb-icon icon="menu-outline"></nb-icon>
-      </button>
+      <ng-container *ngIf="userLogged">
+        <button nbButton (click)="toggleSideBar()">
+          <nb-icon icon="menu-outline"></nb-icon>
+        </button>
+      </ng-container>
     </nb-layout-column>
     <nb-layout-column class="margin10">
       <img onclick="javascript:window.location='/';" class="pointCursor" src="../assets/images/Logo100x100.png">
     </nb-layout-column>
     <nb-layout-column>
-      <h3><a href="/" class="no-decor">Patronus</a></h3>
+      <h3><a href="/login" class="no-decor">Patronus</a></h3>
     </nb-layout-column>
   </nb-layout-header>
 
   <!-- Sidear -->
-  <nb-sidebar #sidebar tag="left">
+  <nb-sidebar *ngIf="userLogged" #sidebar tag="left">
     <app-sidebar></app-sidebar>
   </nb-sidebar>
 

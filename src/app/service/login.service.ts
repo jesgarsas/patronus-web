@@ -23,6 +23,7 @@ export class LoginService {
   }
 
   public setUser(usuario: Usuario) {
+    this.cookies.delete("usuario");
     let user: string = JSON.stringify(usuario);
     this.cookies.set("usuario", user, { expires: 1, sameSite: 'Lax' });
   }

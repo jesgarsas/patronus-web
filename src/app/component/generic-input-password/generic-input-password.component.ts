@@ -9,7 +9,7 @@ import { GenericInputComponent } from '../generic-input/generic-input.component'
 })
 export class GenericInputPasswordComponent extends GenericInputComponent implements OnInit {
 
-  showPassword: boolean = false;
+  hidePassword: boolean = true;
 
   constructor() { super(); }
 
@@ -22,14 +22,14 @@ export class GenericInputPasswordComponent extends GenericInputComponent impleme
 
 
   getInputType() {
-    if (this.showPassword) {
-      return 'text';
+    if (this.hidePassword) {
+      return 'password';
     }
-    return 'password';
+    return 'text';
   }
 
   toggleShowPassword() {
-    this.showPassword = !this.showPassword;
+    this.hidePassword = !this.hidePassword;
   }
 
   onKeypress(e: any) {
