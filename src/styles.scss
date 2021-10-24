@@ -29,6 +29,10 @@
   margin-left: 10px !important;
 }
 
+.margin-b20 {
+  margin-bottom: 20px !important;
+}
+
 .margin-b25 {
   margin-bottom: 25px !important;
 }
@@ -233,4 +237,24 @@
 
 .back-loading span {
   color: white
+}
+
+.login-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center !important;
+}
+
+.login-container div {
+  max-width: 50% !important;
+  min-width: 340px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 }

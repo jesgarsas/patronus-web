@@ -3,13 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
 import { PatronListitemComponent } from './feature/patron/patron-search/patron-listitem/patron-listitem.component';
 import { PatronService } from './service/patron.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PatronDetailsComponent } from './feature/patron/patron-details/patron-details.component';
 import { PatronManageComponent } from './feature/patron/patron-manage/patron-manage.component';
 import { GenericTableComponent } from './component/generic-table/generic-table.component';
@@ -26,6 +26,9 @@ import { GenericInputComponent } from './component/generic-input/generic-input.c
 import { GenericDatepickerRangeComponent } from './component/generic-datepicker-range/generic-datepicker-range.component';
 import * as moment from 'moment';
 import { NbMomentDateModule } from '@nebular/moment';
+import { LoginComponent } from './feature/login/login.component';
+import { GenericInputPasswordComponent } from './component/generic-input-password/generic-input-password.component';
+import { ApiPetitionsInterceptor } from './interceptor/api-petitions.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { NbMomentDateModule } from '@nebular/moment';
     GenericSpinnerComponent,
     GenericInputComponent,
     GenericDatepickerRangeComponent,
+    LoginComponent,
+    GenericInputPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,12 +74,14 @@ import { NbMomentDateModule } from '@nebular/moment';
     NbSpinnerModule,
     NbButtonGroupModule,
     NbDatepickerModule.forRoot(),
-    NbMomentDateModule
+    NbMomentDateModule,
+    NbFormFieldModule
   ],
   providers: [
     PatronService,
     NbToastrService,
-    ToastService
+    ToastService,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiPetitionsInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

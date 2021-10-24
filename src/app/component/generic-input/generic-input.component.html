@@ -1,4 +1,4 @@
 <form [formGroup]="form">
-    <div class="header-section">{{ label }}</div>
-    <input fullWidth nbInput type="text" [formControlName]="formName">
+    <span class="header-section">{{ label }}</span>
+    <input (keydown.enter)="onKeypress($event)" fullWidth nbInput type="text" [formControlName]="formName">
 </form>

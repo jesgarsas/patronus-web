@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbSidebarComponent, NbSidebarService } from '@nebular/theme';
 import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
+import { LoginService } from './service/login.service';
 import { AppContants } from './utils/app-constants';
 
 @Component({
@@ -17,9 +19,13 @@ export class AppComponent {
 
   public mobile: boolean = false;
 
-  constructor(private sidebarService: NbSidebarService) {
+  constructor(private sidebarService: NbSidebarService,
+    private router: Router, private loginService: LoginService) {
     // Set interface
     this.resizeInteface();
+    if (!this.loginService.getUser()) {
+      this.router.navigate(['/login']);
+    }
   }
 
   public toggleSideBar() {
@@ -30,7 +36,7 @@ export class AppComponent {
   onResize() {
     this.resizeInteface();
   }
-  
+
   private resizeInteface() {
     if (window.innerWidth <= AppContants.minWidthPhone) {
       this.mobile = true;

@@ -1,0 +1,14 @@
+<div class="login-container">
+    <div>
+        <nb-card [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+            <nb-card-header>Inicio de sesión</nb-card-header>
+            <nb-card-body>
+                <form [formGroup]="form" class="login-form" (ngSubmit)="onSubmit()">
+                    <app-generic-input [required]="true" (onSubmit)="onSubmit()" label="Nombre de usuario" [form]="form" formName="nick"></app-generic-input>
+                    <app-generic-input-password [required]="true" (onSubmit)="onSubmit()" label="Contraseña" [form]="form" formName="password" ></app-generic-input-password>
+                    <button type="submit" class="button-lowercase" nbButton status="primary">Iniciar sesión</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>
