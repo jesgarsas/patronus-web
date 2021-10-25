@@ -15,22 +15,22 @@ export class PatronService {
   constructor(private http: HttpClient) { }
 
   public getAllByLocale(idLocale: number): Observable<PatronDTO[]> {
-    return this.http.get<PatronDTO[]>(`${AppContants.URL_API_PATRON}/all/${idLocale}`);
+    return this.http.get<PatronDTO[]>(`${AppContants.URL_API_PATRON_ALL}/all/${idLocale}`);
   }
   
   public getAllByPageFilter(filter: FilterDto): Observable<Page> {
-    return this.http.post<Page>(`${AppContants.URL_API_PATRON}/all/filtered`, filter);
+    return this.http.post<Page>(`${AppContants.URL_API_PATRON_ALL}/all/filtered`, filter);
   }
 
   public getByIdAndLocale(id: number, idLocale: number): Observable<PatronDTO> {
-    return this.http.get<PatronDTO>(`${AppContants.URL_API_PATRON}/${id}/${idLocale}`);
+    return this.http.get<PatronDTO>(`${AppContants.URL_API_PATRON_ALL}/${id}/${idLocale}`);
   }
 
   public deleteById(id: number): Observable<any> {
-    return this.http.delete(`${AppContants.URL_API_PATRON}/${id}`);
+    return this.http.delete(`${AppContants.URL_API_PATRON_PROFE}/${id}`);
   }
 
   public save(patron: PatronDTO, form: FormData) {
-    return this.http.post(`${AppContants.URL_API_PATRON}/save`, form);
+    return this.http.post(`${AppContants.URL_API_PATRON_PROFE}/save`, form);
   }
 }

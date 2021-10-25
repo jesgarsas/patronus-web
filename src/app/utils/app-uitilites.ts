@@ -1,4 +1,5 @@
 import { FormControl, FormGroup, ValidationErrors } from "@angular/forms";
+import { AppContants } from "./app-constants";
 
 export class AppUtilities {
 
@@ -29,5 +30,13 @@ export class AppUtilities {
             textFormatted = `${textFormatted}${text.substr(1, text.length).toLowerCase()}`;
         }
         return textFormatted;
+    }
+
+    public static checkAuthority(name: string): number {
+        let id: string = '0';
+        Object.keys(AppContants.ROLES).forEach(key => {
+            if(AppContants.ROLES[key] === name) { id = key; }
+        });
+        return Number(id);
     }
 }
