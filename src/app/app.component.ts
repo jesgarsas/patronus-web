@@ -32,7 +32,9 @@ export class AppComponent {
       this.userLogged = false;
     } else {
       this.userLogged = true;
-      this.router.navigate(['/patron/buscador']);
+      if (window.location.pathname === '/login') {
+        this.router.navigate(['/patron/buscador']);
+      }
     }
 
     // Subscripcion para activar el sidebar

@@ -19,7 +19,11 @@ export class AuthGuardService implements CanActivate {
     // decode the token to get its payload
     if (user && user.token) {
       const tokenPayload = jwtDecode(user.token);
-      return AppUtilities.checkAuthority((tokenPayload as any).authorities) >= expectedRole;
+      if (AppUtilities.checkAuthority((tokenPayload as any).authorities) >= expectedRole) {
+        return true;
+      }
+      this.router.navigate(['/no-permision']);
+      return false;
     }
     this.router.navigate(['/login']);
     return false;

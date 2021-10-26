@@ -29,6 +29,7 @@ import { NbMomentDateModule } from '@nebular/moment';
 import { LoginComponent } from './feature/login/login.component';
 import { GenericInputPasswordComponent } from './component/generic-input-password/generic-input-password.component';
 import { ApiPetitionsInterceptor } from './interceptor/api-petitions.interceptor';
+import { NoPermisionComponent } from './feature/no-permision/no-permision.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ApiPetitionsInterceptor } from './interceptor/api-petitions.interceptor
     GenericDatepickerRangeComponent,
     LoginComponent,
     GenericInputPasswordComponent,
+    NoPermisionComponent,
   ],
   imports: [
     BrowserModule,
