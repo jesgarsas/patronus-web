@@ -28,5 +28,7 @@ export class LoginService {
     this.cookies.set("usuario", user, { expires: 1, sameSite: 'Lax' });
   }
 
-
+  public logout() {
+    this.cookies.delete("usuario");
+  }
 }

@@ -15,6 +15,14 @@
     <nb-layout-column>
       <h3><a href="/login" class="no-decor">Patronus</a></h3>
     </nb-layout-column>
+    <nb-layout-column class="width100" style="display: flex; justify-content: flex-end;">
+      <ng-container *ngIf="user">
+        <nb-user [name]="user.email!" [picture]="imageProfile" [title]="userRol" [nbContextMenu]="profileOptions"
+          nbContextMenuTag="Opciones">
+        </nb-user>
+      </ng-container>
+    </nb-layout-column>
+
   </nb-layout-header>
 
   <!-- Sidear -->

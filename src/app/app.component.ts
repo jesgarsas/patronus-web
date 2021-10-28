@@ -1,10 +1,12 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NbSidebarComponent, NbSidebarService } from '@nebular/theme';
+import { NbMenuItem, NbSidebarComponent, NbSidebarService } from '@nebular/theme';
 import { takeUntil } from 'rxjs/operators';
 import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
+import { Usuario } from './models/usuario/usuario';
 import { LoginService } from './service/login.service';
 import { NotifierService } from './service/notifier.service';
+import { RolService } from './service/rol.service';
 import { AppContants } from './utils/app-constants';
 
 @Component({
@@ -21,25 +23,42 @@ export class AppComponent {
 
   public mobile: boolean = false;
   public userLogged: boolean = true;
+  public user: Usuario | undefined;
+  public userRol: string = '';
+  public profileOptions: NbMenuItem[] = [
+    { title: 'Perfil' },
+    { title: 'Cerrar Sesión', icon: 'log-out-outline', link: AppContants.LOGOUT_PATH }
+  ]
+  public imageProfile: string = AppContants.URI_PROFILE_IMAGE;
 
   constructor(private sidebarService: NbSidebarService,
     private router: Router, private loginService: LoginService,
-    private notifierService: NotifierService) {
+    private notifierService: NotifierService,
+    private rolService: RolService) {
     // Set interface
     this.resizeInteface();
     if (!this.loginService.getUser()) {
-      this.router.navigate(['/login']);
+      this.router.navigate([AppContants.LOGIN_PATH]);
       this.userLogged = false;
     } else {
       this.userLogged = true;
-      if (window.location.pathname === '/login') {
-        this.router.navigate(['/patron/buscador']);
+      this.user = this.loginService.getUser();
+      this.userRol = this.rolService.translateRol(this.user?.rolId!);
+      if (window.location.pathname === AppContants.LOGIN_PATH) {
+        this.router.navigate([AppContants.BUSCADOR_PATH]);
       }
     }
 
     // Subscripcion para activar el sidebar
     this.notifierService.userLogged.pipe().subscribe((data: Boolean) => {
       this.userLogged = data ? true : false;
+      if (data) {
+        this.user = this.loginService.getUser();
+        this.userRol = this.rolService.translateRol(this.user?.rolId!);
+      } else {
+        this.user = undefined;
+        this.userRol = '';
+      }
     });
   }
 

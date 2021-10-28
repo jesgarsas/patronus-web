@@ -4,6 +4,11 @@ export class AppContants {
 
     public static minWidthPhone: number = 1140;
 
+    // Routes
+    public static LOGIN_PATH = '/login';
+    public static LOGOUT_PATH = '/logout';
+    public static BUSCADOR_PATH = '/patron/buscador';
+
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';
 
@@ -47,6 +52,9 @@ export class AppContants {
     };
 
     public static validFormatFile: string = '.zip, .7z, .rar, .tar, .gz, .gzip, .pdf, .txt, .doc, .docx';
+
+    // URI to images
+    public static URI_PROFILE_IMAGE = '/assets/images/person-outline.png'
 
     // Rol variables
     public static ROLES: any = { 1: 'Alumno', 2: 'Profesor', 3: 'Administrador'}

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -30,6 +30,7 @@ import { LoginComponent } from './feature/login/login.component';
 import { GenericInputPasswordComponent } from './component/generic-input-password/generic-input-password.component';
 import { ApiPetitionsInterceptor } from './interceptor/api-petitions.interceptor';
 import { NoPermisionComponent } from './feature/no-permision/no-permision.component';
+import { LogoutComponent } from './feature/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NoPermisionComponent } from './feature/no-permision/no-permision.compon
     LoginComponent,
     GenericInputPasswordComponent,
     NoPermisionComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,9 @@ import { NoPermisionComponent } from './feature/no-permision/no-permision.compon
     NbButtonGroupModule,
     NbDatepickerModule.forRoot(),
     NbMomentDateModule,
-    NbFormFieldModule
+    NbFormFieldModule,
+    NbContextMenuModule,
+    NbUserModule
   ],
   providers: [
     PatronService,
