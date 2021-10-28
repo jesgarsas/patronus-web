@@ -1,4 +1,11 @@
 <div>
-    <nb-menu [items]="options">
-    </nb-menu>
+    <ng-container *ngIf="!notAlumno">
+        <nb-menu [items]="optionsAlumnos">
+        </nb-menu>
+    </ng-container>
+    <ng-container *ngIf="notAlumno">
+        <nb-menu [items]="optionsProfesores">
+        </nb-menu>
+    </ng-container>
+    
 </div>

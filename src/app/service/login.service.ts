@@ -23,12 +23,12 @@ export class LoginService {
   }
 
   public setUser(usuario: Usuario) {
-    this.cookies.delete("usuario");
+    this.cookies.deleteAll("usuario");
     let user: string = JSON.stringify(usuario);
     this.cookies.set("usuario", user, { expires: 1, sameSite: 'Lax' });
   }
 
   public logout() {
-    this.cookies.delete("usuario");
+    this.cookies.deleteAll("usuario");
   }
 }

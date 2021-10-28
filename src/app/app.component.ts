@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbMenuItem, NbSidebarComponent, NbSidebarService } from '@nebular/theme';
-import { takeUntil } from 'rxjs/operators';
 import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
 import { Usuario } from './models/usuario/usuario';
 import { LoginService } from './service/login.service';

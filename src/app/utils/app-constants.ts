@@ -7,7 +7,9 @@ export class AppContants {
     // Routes
     public static LOGIN_PATH = '/login';
     public static LOGOUT_PATH = '/logout';
-    public static BUSCADOR_PATH = '/patron/buscador';
+    public static PATRON_PATH = '/patron';
+    public static BUSCADOR_PATH = `${AppContants.PATRON_PATH}/buscador`;
+    public static PATRON_ADMINISTRAR_PATH = `${AppContants.PATRON_PATH}/administracion`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';
