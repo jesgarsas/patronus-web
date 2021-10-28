@@ -8,4 +8,11 @@ export class PatronFilterDto extends FilterDto {
         public dateFin?: Moment,
         public autor?: string
     ) { super(); }
+
+    public reset() {
+        this.name = undefined;
+        this.dateIni = undefined;
+        this.dateFin = undefined;
+        this.autor = undefined;
+    }
 }

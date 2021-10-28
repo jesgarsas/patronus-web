@@ -84,8 +84,13 @@ export class PatronManageTableComponent implements OnInit {
       this.filter.autor = this.form.value['autor'];
       this.filter.dateIni = this.form.value['dateIni'];
       this.filter.dateFin = this.form.value['dateFin'];
-      this.filter.dateFin!.add(23, 'h').add(59, 'm').add(59, 's');
     }
+    this.getPatrones();
+  }
+
+  public eraseForm() {
+    this.form.reset();
+    this.filter.reset();
     this.getPatrones();
   }
 
