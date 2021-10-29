@@ -13,6 +13,8 @@ export class GenericInputComponent implements OnInit {
   @Input() formName!: string;
   @Input() disable?: boolean;
   @Input() required: boolean = false;
+  @Input() readOnly: boolean = false;
+  @Input() defaultValue: string | undefined;
 
   @Output() onSubmit: EventEmitter<Boolean> = new EventEmitter();
 
@@ -22,6 +24,9 @@ export class GenericInputComponent implements OnInit {
     this.form.addControl(this.formName, new FormControl());
     if (this.required) {
       this.form.controls[this.formName].setValidators(Validators.required);
+    }
+    if (this.defaultValue) {
+      this.form.controls[this.formName].setValue(this.defaultValue);
     }
   }
 

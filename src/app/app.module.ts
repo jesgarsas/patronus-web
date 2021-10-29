@@ -31,6 +31,7 @@ import { GenericInputPasswordComponent } from './component/generic-input-passwor
 import { ApiPetitionsInterceptor } from './interceptor/api-petitions.interceptor';
 import { NoPermisionComponent } from './feature/no-permision/no-permision.component';
 import { LogoutComponent } from './feature/logout/logout.component';
+import { UsuarioDetailsComponent } from './feature/usuario/usuario-details/usuario-details.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { LogoutComponent } from './feature/logout/logout.component';
     GenericInputPasswordComponent,
     NoPermisionComponent,
     LogoutComponent,
+    UsuarioDetailsComponent,
   ],
   imports: [
     BrowserModule,

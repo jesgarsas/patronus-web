@@ -7,17 +7,19 @@ import { PatronDetailsComponent } from './feature/patron/patron-details/patron-d
 import { PatronManageCreationComponent } from './feature/patron/patron-manage/patron-manage-creation/patron-manage-creation.component';
 import { PatronManageComponent } from './feature/patron/patron-manage/patron-manage.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
+import { UsuarioDetailsComponent } from './feature/usuario/usuario-details/usuario-details.component';
 import { AuthGuardService as AuthGuard} from './guard/auth-guard.service';
 import { AppContants } from './utils/app-constants';
 
 const routes: Routes = [
-  { path: 'patron/buscador', component: PatronSearchComponent },
-  { path: 'patron/detalles', component: PatronDetailsComponent },
-  { path: 'patron/administracion', component: PatronManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
-  { path: 'patron/administracion/crear', component: PatronManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
-  { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'no-permision', component: NoPermisionComponent }
+  { path: AppContants.BUSCADOR_PATH.substr(1), component: PatronSearchComponent },
+  { path: AppContants.PATRON_DETALLES_PATH.substr(1), component: PatronDetailsComponent },
+  { path: AppContants.PATRON_ADMINISTRAR_PATH.substr(1), component: PatronManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.PATRON_CREAR_PATH.substr(1), component: PatronManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.LOGIN_PATH.substr(1), component: LoginComponent },
+  { path: AppContants.LOGOUT_PATH.substr(1), component: LogoutComponent },
+  { path: AppContants.NO_PERMISION_PATH.substr(1), component: NoPermisionComponent },
+  { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent}
 ];
 
 @NgModule({

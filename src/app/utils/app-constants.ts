@@ -7,9 +7,14 @@ export class AppContants {
     // Routes
     public static LOGIN_PATH = '/login';
     public static LOGOUT_PATH = '/logout';
+    public static NO_PERMISION_PATH = '/no-permision'
     public static PATRON_PATH = '/patron';
     public static BUSCADOR_PATH = `${AppContants.PATRON_PATH}/buscador`;
+    public static PATRON_DETALLES_PATH = `${AppContants.PATRON_PATH}/detalles`;
     public static PATRON_ADMINISTRAR_PATH = `${AppContants.PATRON_PATH}/administracion`;
+    public static PATRON_CREAR_PATH = `${AppContants.PATRON_ADMINISTRAR_PATH}/crear`;
+    public static USUARIO_PATH = '/usuario';
+    public static USUARIO_DETALLES_PATH = `${AppContants.USUARIO_PATH}/detalles`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';

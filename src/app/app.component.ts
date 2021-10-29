@@ -25,7 +25,7 @@ export class AppComponent {
   public user: Usuario | undefined;
   public userRol: string = '';
   public profileOptions: NbMenuItem[] = [
-    { title: 'Perfil' },
+    { title: 'Perfil', link: AppContants.USUARIO_DETALLES_PATH },
     { title: 'Cerrar Sesión', icon: 'log-out-outline', link: AppContants.LOGOUT_PATH }
   ]
   public imageProfile: string = AppContants.URI_PROFILE_IMAGE;
@@ -42,6 +42,7 @@ export class AppComponent {
     } else {
       this.userLogged = true;
       this.user = this.loginService.getUser();
+      this.profileOptions[0].queryParams = { id: this.user!.id };
       this.userRol = this.rolService.translateRol(this.user?.rolId!);
       if (window.location.pathname === AppContants.LOGIN_PATH) {
         this.router.navigate([AppContants.BUSCADOR_PATH]);
@@ -54,6 +55,7 @@ export class AppComponent {
       if (data) {
         this.user = this.loginService.getUser();
         this.userRol = this.rolService.translateRol(this.user?.rolId!);
+        this.profileOptions[0].queryParams = { id: this.user!.id };
       } else {
         this.user = undefined;
         this.userRol = '';

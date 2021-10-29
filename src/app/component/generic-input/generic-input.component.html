@@ -1,4 +1,27 @@
 <form [formGroup]="form">
-    <span class="header-section">{{ label }}</span>
-    <input (keydown.enter)="onKeypress($event)" fullWidth nbInput type="text" [formControlName]="formName">
+    <div class="row">
+        <div class="col">
+            <div>
+                <span class="header-section">{{ label }}</span>
+            </div>
+            <div> 
+                <ng-container *ngIf="!readOnly; else readTemplate">
+                    <input (keydown.enter)="onKeypress($event)" fullWidth nbInput type="text" [formControlName]="formName">
+                </ng-container>
+            </div>
+            
+            <ng-template #readTemplate>
+                <div>
+                    <ng-container *ngIf="form.controls[formName] && form.controls[formName].value; else noValue">
+                        <ng-container *ngIf="form.value[formName].length > 0; else noValue">
+                            <span>{{ form.value[formName] }}</span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <ng-template #noValue>
+        <span>-</span>
+    </ng-template>
 </form>
