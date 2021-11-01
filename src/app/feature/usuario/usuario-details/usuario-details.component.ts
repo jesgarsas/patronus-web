@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { ToastService } from 'src/app/service/toast.service';
 import { RolService } from 'src/app/service/rol.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { DialogPasswordChangeComponent } from 'src/app/component/generic-dialog/dialog-password-change/dialog-password-change.component';
 
 @Component({
   selector: 'app-usuario-details',
@@ -16,6 +18,7 @@ import { AppContants } from 'src/app/utils/app-constants';
 })
 export class UsuarioDetailsComponent implements OnInit {
 
+  private dialog?: NbDialogRef<DialogPasswordChangeComponent>;
   imageURI: string = AppContants.URI_PROFILE_IMAGE;
   user: UsuarioDTO = new UsuarioDTO;
   isAlumno: boolean = true;
@@ -27,7 +30,8 @@ export class UsuarioDetailsComponent implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     private toastService: ToastService,
-    private rolService: RolService) { }
+    private rolService: RolService,
+    private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
 
@@ -74,6 +78,17 @@ export class UsuarioDetailsComponent implements OnInit {
       this.id = +id;
       this.getProfileValues(id);
     }
+  }
+
+  onChangePassword(): void {
+    this.dialog = this.dialogService.open(DialogPasswordChangeComponent, {
+      context: {
+        accept: () => {
+          console.log("HI");
+          this.dialog?.close();
+        }
+      }
+    });
   }
 
 }
