@@ -36,7 +36,8 @@ export class SidebarComponent implements OnInit {
   public notAlumno: number | boolean | undefined;
 
   constructor(private notifierService: NotifierService,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private menuService: NbMenuService) { }
 
   ngOnInit(): void {
     this.setMenuItems();

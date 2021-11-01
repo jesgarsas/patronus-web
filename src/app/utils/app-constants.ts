@@ -23,9 +23,9 @@ export class AppContants {
     public static URL_API_PATRON_ALL = `${AppContants.URL_API_PATRON}/alumno`
     public static URL_API_PATRON_PROFE = `${AppContants.URL_API_PATRON}/profesor`
     public static URL_API_USUARIO = `${AppContants.URL_API}/usuario`;
-    public static URL_API_USUARIO_ALL = `${AppContants.URL_API}/alumno`;
-    public static URL_API_USUARIO_PROFE = `${AppContants.URL_API}/profesor`;
-    public static URL_API_USUARIO_ADMIN = `${AppContants.URL_API}/administrador`;
+    public static URL_API_USUARIO_ALL = `${AppContants.URL_API_USUARIO}/alumno`;
+    public static URL_API_USUARIO_PROFE = `${AppContants.URL_API_USUARIO}/profesor`;
+    public static URL_API_USUARIO_ADMIN = `${AppContants.URL_API_USUARIO}/administrador`;
 
     // Configurations
     public static editorConfig: AngularEditorConfig = {

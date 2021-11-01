@@ -53,7 +53,7 @@ import { UsuarioDetailsComponent } from './feature/usuario/usuario-details/usuar
     GenericInputPasswordComponent,
     NoPermisionComponent,
     LogoutComponent,
-    UsuarioDetailsComponent,
+    UsuarioDetailsComponent
   ],
   imports: [
     BrowserModule,

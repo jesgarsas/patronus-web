@@ -1,21 +1,60 @@
 <nb-card>
-    <nb-card-header>Perfil de</nb-card-header>
+    <nb-card-header>Perfil de usuario</nb-card-header>
     <nb-card-body>
         <div class="row">
             <!-- <div class="col-lg-6 col-md-6 col-sm-12">
                 <img [src]="imageURI"/>
             </div> -->
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <app-generic-input label="Nick" [readOnly]="true" defaultValue=""></app-generic-input>
+            <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                <app-generic-input label="Nick" [readOnly]="true" [defaultValue]="user.nick!" formName="nick"
+                    [form]="form"></app-generic-input>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <app-generic-input label="Email" [readOnly]="true" defaultValue=""></app-generic-input>
+            <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                <div>
+                    <span class="header-section">Contraseña</span>
+                </div>
+                <ng-container *ngIf="user && user.id !== id">
+                    <button nbButton class="button-lowercase" size="medium" status="primary">Cambiar contraseña</button>
+                </ng-container>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-12">
-                <app-generic-input label="Rol" [readOnly]="true" defaultValue=""></app-generic-input>
+            <div class="col-lg-3 col-md-6 col-sm-12 margin-b10">
+                <app-generic-input label="Email" [readOnly]="true" [defaultValue]="user.email!" formName="email"
+                    [form]="form"></app-generic-input>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                <app-generic-input label="Rol" [readOnly]="true" formName="rol" [form]="form"></app-generic-input>
             </div>
         </div>
-        <div class="row">
+        <div class="row margin-t20">
+            <ng-container *ngIf="isAlumno">
+                <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                    <app-generic-input label="Grupo" [readOnly]="true" [defaultValue]="user.grupo!" formName="grupo"
+                        [form]="form"></app-generic-input>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                    <app-generic-input label="Profesor" [readOnly]="true" [defaultValue]="user.profesor!"
+                        formName="profesor" [form]="form"></app-generic-input>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 margin-b10">
+                    <app-generic-input label="Email del profesor" [readOnly]="true" [defaultValue]="user.profesorEmail!"
+                        formName="profesorEmail" [form]="form"></app-generic-input>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isProfesor">
+                <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                    <div>
+                        <span class="header-section">Grupos</span>
+                    </div>
+                    <nb-card size="medium">
+                        <nb-list>
+                            <nb-list-item *ngFor="let grupo of user.grupos!">
+                                {{ grupo }}
+                            </nb-list-item>
+                        </nb-list>
+                    </nb-card>
+
+                </div>
+            </ng-container>
         </div>
     </nb-card-body>
 </nb-card>
