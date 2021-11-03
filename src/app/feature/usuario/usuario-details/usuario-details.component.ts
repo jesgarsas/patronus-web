@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
@@ -10,6 +10,8 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { DialogPasswordChangeComponent } from 'src/app/component/generic-dialog/dialog-password-change/dialog-password-change.component';
+import { Md5 } from 'md5-typescript';
+import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
   selector: 'app-usuario-details',
@@ -25,6 +27,7 @@ export class UsuarioDetailsComponent implements OnInit {
   isProfesor: boolean = true;
   id: number = 0;
   form: FormGroup = new FormGroup({});
+  loading: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private loginService: LoginService,
@@ -81,14 +84,55 @@ export class UsuarioDetailsComponent implements OnInit {
   }
 
   onChangePassword(): void {
+    let form: FormGroup = new FormGroup({});
+    form.setValidators(this.samePassword());
     this.dialog = this.dialogService.open(DialogPasswordChangeComponent, {
       context: {
+        form: form,
         accept: () => {
-          console.log("HI");
-          this.dialog?.close();
+          form.markAsTouched();
+          if (form.valid) {
+            this.dialog?.close();
+            let formData: FormData = new FormData();
+            formData.append("newPassword", Md5.init(form.value['newPassword']));
+            formData.append("nick", this.user.nick!);
+            formData.append("password", Md5.init(form.value['password']))
+            this.loading = true;
+            this.usuarioService.changePassword(formData).pipe(take(1)).subscribe(data => {
+              if (data) {
+                this.toastService.showConfirmation('Éxito', 'La contraseña ha sido modificada');
+              } else {
+                this.toastService.showError('Error', 'Contraseña actual no coincide');
+              }
+              this.loading = false;
+            }, error => {
+              this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+              this.loading = false;
+            });
+          } else {
+            let errors: string[] = AppUtilities.getErrorsFromForm(form);
+            errors.forEach(msg => {
+              this.toastService.showError('Error', msg.replace('newPassword2', 'nueva contraseña otra vez')
+                .replace('newPassword', 'nueva contraseña').replace('password', 'contraseña actual'));
+            });
+            if (form.errors && form.errors['newPassword']) {
+              this.toastService.showError('Error', 'La contraseña nueva no coincide en ambos campos');
+            }
+          }
+
         }
       }
     });
   }
 
+  private samePassword(): ValidatorFn {
+    return (control: any): ValidationErrors | null => {
+      const isValid = (control.controls['newPassword'] && control.controls['newPassword2'] &&
+        !control.controls['newPassword'].value && !control.controls['newPassword2'].value) || (control.controls['newPassword'] && control.controls['newPassword2'] &&
+        control.controls['newPassword'].value && control.controls['newPassword2'].value &&
+        control.controls['newPassword'].value.trim().length > 0 && control.controls['newPassword2'].value.trim().length > 0
+        && control.controls['newPassword'].value.trim() === control.controls['newPassword2'].value.trim());
+      return isValid ? null : { 'newPassword': true };
+    }
+  }
 }
