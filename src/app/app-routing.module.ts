@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.component';
 import { LoginComponent } from './feature/login/login.component';
 import { LogoutComponent } from './feature/logout/logout.component';
 import { NoPermisionComponent } from './feature/no-permision/no-permision.component';
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: AppContants.LOGIN_PATH.substr(1), component: LoginComponent },
   { path: AppContants.LOGOUT_PATH.substr(1), component: LogoutComponent },
   { path: AppContants.NO_PERMISION_PATH.substr(1), component: NoPermisionComponent },
-  { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent}
+  { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent},
+  { path: AppContants.GRUPO_ADMINISTRAR_PATH.substr(1), component: GrupoManageComponent},
 ];
 
 @NgModule({

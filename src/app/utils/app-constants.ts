@@ -15,6 +15,8 @@ export class AppContants {
     public static PATRON_CREAR_PATH = `${AppContants.PATRON_ADMINISTRAR_PATH}/crear`;
     public static USUARIO_PATH = '/usuario';
     public static USUARIO_DETALLES_PATH = `${AppContants.USUARIO_PATH}/detalles`;
+    public static GRUPO_PATH = '/grupo'
+    public static GRUPO_ADMINISTRAR_PATH = `${AppContants.GRUPO_PATH}/administracion`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';
@@ -26,6 +28,9 @@ export class AppContants {
     public static URL_API_USUARIO_ALL = `${AppContants.URL_API_USUARIO}/alumno`;
     public static URL_API_USUARIO_PROFE = `${AppContants.URL_API_USUARIO}/profesor`;
     public static URL_API_USUARIO_ADMIN = `${AppContants.URL_API_USUARIO}/administrador`;
+    public static URL_API_GRUPO = `${AppContants.URL_API}/grupo`
+    public static URL_API_GRUPO_ALL = `${AppContants.URL_API_GRUPO}/alumno`;
+    public static URL_API_GRUPO_PROFE = `${AppContants.URL_API_GRUPO}/profesor`;
 
     // Configurations
     public static editorConfig: AngularEditorConfig = {

@@ -1,0 +1,11 @@
+<nb-card status="default" class="stretch">
+    <nb-card-header>Administración de grupos</nb-card-header>
+    <nb-card-body>
+        <div class="button-create width100">
+            <div>
+                <button (click)="crearGrupo()" nbButton status="primary" size="large">Crear grupo nuevo</button>
+            </div>
+        </div>
+        <app-grupo-manage-table></app-grupo-manage-table>
+    </nb-card-body>
+</nb-card>

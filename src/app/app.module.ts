@@ -33,6 +33,9 @@ import { NoPermisionComponent } from './feature/no-permision/no-permision.compon
 import { LogoutComponent } from './feature/logout/logout.component';
 import { UsuarioDetailsComponent } from './feature/usuario/usuario-details/usuario-details.component';
 import { DialogPasswordChangeComponent } from './component/generic-dialog/dialog-password-change/dialog-password-change.component';
+import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.component';
+import { GrupoManageTableComponent } from './feature/grupo/grupo-manage/grupo-manage-table/grupo-manage-table.component';
+import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import { DialogPasswordChangeComponent } from './component/generic-dialog/dialog
     NoPermisionComponent,
     LogoutComponent,
     UsuarioDetailsComponent,
-    DialogPasswordChangeComponent
+    DialogPasswordChangeComponent,
+    GrupoManageComponent,
+    GrupoManageTableComponent,
+    GrupoManageCreationComponent
   ],
   imports: [
     BrowserModule,
