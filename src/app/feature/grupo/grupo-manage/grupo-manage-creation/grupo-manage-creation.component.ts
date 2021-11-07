@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { take } from 'rxjs/operators';
 import { GenericDialogCancelComponent } from 'src/app/component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
@@ -25,6 +26,8 @@ export class GrupoManageCreationComponent implements OnInit {
   nombreFormName: string = 'nombre';
   profesorFormName: string = 'profesor';
 
+  profesorLabel: string | undefined;
+
   private dialog?: NbDialogRef<GenericDialogCancelComponent>;
 
   constructor(private router: Router,
@@ -35,6 +38,12 @@ export class GrupoManageCreationComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit(): void {
+    // Recoger los datos del grupo que nos pasan
+    this.route.queryParams.pipe(take(1)).subscribe(params => {
+      if (params.id) {
+        this.getGrupo(params.id);
+      }
+    });
   }
 
   onSave() {
@@ -70,59 +79,51 @@ export class GrupoManageCreationComponent implements OnInit {
   }
 
   private getGrupo(id: any) {
-    // this.loading = true;
-    // this.patronService.getByIdAndLocale(id, 1).pipe(take(1)).subscribe(data => {
-    //   if (data) {
-    //     this.patron = data;
-    //     this.setValuesForm();
-    //     this.loading = false;
-    //   } else {
-    //     this.toastService.showError('Error', 'No se ha podido cargar el patrón');
-    //     this.loading = false;
-    //     this.router.navigate(['/patron/administracion']);
-    //   }
-    // }, error => {
-    //   this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
-    //   this.loading = false;
-    //   this.router.navigate(['/patron/administracion']);
-    // })
+    this.loading = true;
+    this.grupoService.getOne(id).pipe(take(1)).subscribe(data => {
+      if (data) {
+        this.grupo = data;
+        this.setValuesForm();
+        this.loading = false;
+      } else {
+        this.toastService.showError('Error', 'No se ha podido cargar el patrón');
+        this.loading = false;
+        this.router.navigate(['/grupo/administracion']);
+      }
+    }, error => {
+      this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+      this.loading = false;
+      this.router.navigate(['/grupo/administracion']);
+    })
   }
 
   private setValuesForm() {
-    // this.form.controls[this.titleFormName].setValue(this.patron.nombre);
-    // this.form.controls[this.descripcionFormName].setValue(this.patron.descripciones ? this.patron.descripciones[0].descripcion : undefined);
-    // this.form.controls[this.contenidoFormName].setValue(this.patron.lecciones ? this.patron.lecciones[0].contenido : undefined);
-
-    // if (this.patron.proyectos) {
-    //   this.patron.proyectos.map(proyecto => { this.rows.push(proyecto); });
-    //   this.rows = [...this.rows];
-    // }
+    this.form.controls[this.nombreFormName].setValue(this.grupo.nombre);
+    this.form.controls[this.profesorFormName].setValue(this.grupo.profesor);
+    this.profesorLabel = `${this.grupo.profesor!.id} - ${AppUtilities.firstLetterUpper(this.grupo.profesor!.nick!)}`;
   }
 
   private setValuesDTO() {
+    this.grupo.nombre = this.form.value[this.nombreFormName];
+    this.grupo.profesor = this.form.value[this.profesorFormName];
   }
 
   private saveGrupo() {
-    // let formData: FormData = new FormData();
-    // formData.append('patron', new Blob([JSON.stringify(this.patron)], { type: 'application/json' }));
-    // for (let file of this.files) {
-    //   formData.append(`files`, file);
-    // }
-    // this.loading = true;
-    // this.patronService.save(this.patron, formData).pipe(take(1)).subscribe((data) => {
-    //   if (data) {
-    //     this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
-    //     this.loading = false;
-    //     this.router.navigate(['/patron/administracion']);
-    //   } else {
-    //     this.toastService.showError('Error', 'No se ha podido guardar el patrón');
-    //     this.loading = false;
-    //   }
-    // }, (error) => {
-    //   if (error) {
-    //     this.toastService.showError('Error', 'No se ha podido guardar el patrón');
-    //     this.loading = false;
-    //   }
-    // });
+    this.loading = true;
+    this.grupoService.save(this.grupo).pipe(take(1)).subscribe((data) => {
+      if (data) {
+        this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
+        this.loading = false;
+        this.router.navigate(['/grupo/administracion']);
+      } else {
+        this.toastService.showError('Error', 'No se ha podido guardar el grupo');
+        this.loading = false;
+      }
+    }, (error) => {
+      if (error) {
+        this.toastService.showError('Error', 'No se ha podido guardar el grupo');
+        this.loading = false;
+      }
+    });
   }
 }

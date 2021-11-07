@@ -8,7 +8,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm 6">
                 <app-generic-autocomplete label="Profesor" [form]="form" [formName]="profesorFormName" [required]="true" 
-                param="2" [service]="usuarioService" [transformFunction]="transformProfesores">
+                param="2" [service]="usuarioService" [transformFunction]="transformProfesores" [defaultValue]="profesorLabel">
                 </app-generic-autocomplete>
             </div>
         </div>

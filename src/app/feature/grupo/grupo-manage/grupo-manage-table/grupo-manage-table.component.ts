@@ -90,7 +90,7 @@ export class GrupoManageTableComponent implements OnInit {
   }
 
   public onEdit(value: PatronDTO) {
-    // this.router.navigate(['/patron/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
+    this.router.navigate(['/grupo/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private buildColumns(): void {

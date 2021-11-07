@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
   templateUrl: './generic-autocomplete.component.html',
   styleUrls: ['./generic-autocomplete.component.scss']
 })
-export class GenericAutocompleteComponent implements OnInit, AfterViewInit {
+export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() label!: string;
   @Input() form: FormGroup = new FormGroup({});
@@ -38,10 +38,17 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit {
       this.form.controls[this.formName].setValidators(Validators.required);
     }
     if (this.defaultValue) {
-      this.form.controls[this.formName].setValue(this.defaultValue);
+      this.formInput.controls['auto'].setValue(this.defaultValue);
     }
 
     this.formInput.addControl('auto', new FormControl(undefined));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.defaultValue && changes.defaultValue.currentValue) {
+      this.formInput.controls['auto'].setValue(changes.defaultValue.currentValue);
+      this.filteredOptions$ = this.getFilteredOptions(changes.defaultValue.currentValue);
+    }
   }
 
   ngAfterViewInit(): void {
