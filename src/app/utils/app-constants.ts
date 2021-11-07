@@ -17,6 +17,7 @@ export class AppContants {
     public static USUARIO_DETALLES_PATH = `${AppContants.USUARIO_PATH}/detalles`;
     public static GRUPO_PATH = '/grupo'
     public static GRUPO_ADMINISTRAR_PATH = `${AppContants.GRUPO_PATH}/administracion`;
+    public static GRUPO_CREAR_PATH = `${AppContants.GRUPO_ADMINISTRAR_PATH}/crear`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';

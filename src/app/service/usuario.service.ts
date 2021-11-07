@@ -19,4 +19,8 @@ export class UsuarioService {
   public changePassword(newPassword: FormData): Observable<Boolean> {
     return this.http.post<Boolean>(`${AppContants.URL_API_USUARIO_ALL}/changePassword`, newPassword);
   }
+
+  public getByParam(type: number): Observable<UsuarioDTO[]> {
+    return this.http.get<UsuarioDTO[]>(`${AppContants.URL_API_USUARIO_PROFE}/type/${type}`);
+  }
 }

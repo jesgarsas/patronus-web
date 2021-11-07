@@ -40,11 +40,22 @@ export class GrupoManageTableComponent implements OnInit {
     this.getGrupos();
   }
 
-  public onDelete(value: PatronDTO) {
+  public onDelete(value: GrupoDTO) {
     this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
       context: {
         accept: () => {
-          this.getGrupos();
+          this.grupoService.delete(value.id!).pipe(take(1)).subscribe((isDeleted) => {
+            if (isDeleted) {
+              this.getGrupos();
+              this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
+            } else {
+              this.toastService.showError('Error', 'No se ha podido borrar el grupo');
+            }
+            this.dialog!.close();
+          }, error => {
+            this.toastService.showError('Error', 'No se ha podido borrar el grupo');
+            this.dialog!.close();
+          })
         }
       }
     });

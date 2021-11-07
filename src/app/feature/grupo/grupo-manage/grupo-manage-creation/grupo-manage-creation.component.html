@@ -1,1 +1,25 @@
-<p>grupo-manage-creation works!</p>
+<nb-card status="default" class="stretch">
+    <nb-card-header>{{ headerTitle }}</nb-card-header>
+    <nb-card-body [ngClass]="{'hide-body': loading}">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm 6">
+                <app-generic-input label="Nombre" [form]="form" [formName]="nombreFormName" [required]="true">
+                </app-generic-input>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm 6">
+                <app-generic-autocomplete label="Profesor" [form]="form" [formName]="profesorFormName" [required]="true" 
+                param="2" [service]="usuarioService" [transformFunction]="transformProfesores">
+                </app-generic-autocomplete>
+            </div>
+        </div>
+        <ng-container *ngIf="grupo.id">
+            <span class="header-section">Alumnos</span>
+        </ng-container>
+        <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+            <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
+            <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Cancelar</button>
+        </div>
+    </nb-card-body>
+</nb-card>
+
+<app-generic-spinner [loading]="loading"></app-generic-spinner>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-grupo-manage',
@@ -7,12 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GrupoManageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
   crearGrupo() {
+    this.router.navigate(['/grupo/administracion/crear']);
   }
 
 }

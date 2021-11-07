@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule, NbAutocompleteModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -36,6 +36,7 @@ import { DialogPasswordChangeComponent } from './component/generic-dialog/dialog
 import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.component';
 import { GrupoManageTableComponent } from './feature/grupo/grupo-manage/grupo-manage-table/grupo-manage-table.component';
 import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
+import { GenericAutocompleteComponent } from './component/generic-autocomplete/generic-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo
     DialogPasswordChangeComponent,
     GrupoManageComponent,
     GrupoManageTableComponent,
-    GrupoManageCreationComponent
+    GrupoManageCreationComponent,
+    GenericAutocompleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,7 +93,8 @@ import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo
     NbMomentDateModule,
     NbFormFieldModule,
     NbContextMenuModule,
-    NbUserModule
+    NbUserModule,
+    NbAutocompleteModule
   ],
   providers: [
     PatronService,

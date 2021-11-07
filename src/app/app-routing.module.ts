@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
 import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.component';
 import { LoginComponent } from './feature/login/login.component';
 import { LogoutComponent } from './feature/logout/logout.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: AppContants.NO_PERMISION_PATH.substr(1), component: NoPermisionComponent },
   { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent},
   { path: AppContants.GRUPO_ADMINISTRAR_PATH.substr(1), component: GrupoManageComponent},
+  { path: AppContants.GRUPO_CREAR_PATH.substr(1), component: GrupoManageCreationComponent},
 ];
 
 @NgModule({
