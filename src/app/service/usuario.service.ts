@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FilterDto } from '../models/filter/filter-dto';
+import { Page } from '../models/page/page';
 import { Usuario } from '../models/usuario/usuario';
 import { UsuarioDTO } from '../models/usuario/usuario-dto';
 import { AppContants } from '../utils/app-constants';
@@ -18,6 +20,10 @@ export class UsuarioService {
 
   public changePassword(newPassword: FormData): Observable<Boolean> {
     return this.http.post<Boolean>(`${AppContants.URL_API_USUARIO_ALL}/changePassword`, newPassword);
+  }
+
+  public getByGroup(filter: FilterDto): Observable<Page> {
+    return this.http.post<Page>(`${AppContants.URL_API_USUARIO_PROFE}/grupo/`, filter);
   }
 
   public getByParam(type: number): Observable<UsuarioDTO[]> {

@@ -7,7 +7,7 @@
             <div>
                 <ng-container *ngIf="!readOnly; else readTemplate">
                     <input #autoInput fullWidth nbInput type="text" formControlName="auto" [nbAutocomplete]="auto"  (input)="onInput()">
-                    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+                    <nb-autocomplete [activeFirst]="true" #auto (selectedChange)="onSelectionChange($event)">
 
                         <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
                             {{ option.label }}

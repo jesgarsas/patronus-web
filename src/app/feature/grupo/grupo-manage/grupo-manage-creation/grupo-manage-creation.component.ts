@@ -2,9 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { TableColumn } from '@swimlane/ngx-datatable';
+import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogCancelComponent } from 'src/app/component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
+import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
+import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
+import { Page } from 'src/app/models/page/page';
+import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto';
+import { PatronDTO } from 'src/app/models/patron/patron-dto';
+import { UsuarioFilterDto } from 'src/app/models/usuario/filter/usuario-filter-dto';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 import { GrupoService } from 'src/app/service/grupo.service';
 import { ToastService } from 'src/app/service/toast.service';
@@ -18,17 +26,23 @@ import { AppUtilities } from 'src/app/utils/app-uitilites';
 })
 export class GrupoManageCreationComponent implements OnInit {
 
+  public columns: TableColumn[] = [];
+  public page: Page = new Page();
+  private filter: UsuarioFilterDto = new UsuarioFilterDto();
+  public configActions: ConfigAction = new ConfigAction({ delete: true});
+
   form: FormGroup = new FormGroup({});
   grupo: GrupoDTO = new GrupoDTO();
   headerTitle: string = 'Crear grupo nuevo';
   loading: boolean = false;
+  close: boolean = true;
 
   nombreFormName: string = 'nombre';
   profesorFormName: string = 'profesor';
 
   profesorLabel: string | undefined;
 
-  private dialog?: NbDialogRef<GenericDialogCancelComponent>;
+  private dialog?: NbDialogRef<GenericDialogCancelComponent> ;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -44,6 +58,7 @@ export class GrupoManageCreationComponent implements OnInit {
         this.getGrupo(params.id);
       }
     });
+    this.buildColumns();
   }
 
   onSave() {
@@ -84,6 +99,7 @@ export class GrupoManageCreationComponent implements OnInit {
       if (data) {
         this.grupo = data;
         this.setValuesForm();
+        this.getAlumnos();
         this.loading = false;
       } else {
         this.toastService.showError('Error', 'No se ha podido cargar el patrón');
@@ -125,5 +141,82 @@ export class GrupoManageCreationComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  public onDelete(value: PatronDTO) {
+    // this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
+    //   context: {
+    //     accept: () => {
+    //       this.deletePatron(value);
+    //     }
+    //   }
+    // });
+  }
+
+  private deletePatron(value: PatronDTO) {
+    // if (value.id) {
+    //   this.patroneService.deleteById(value.id).pipe(take(1)).subscribe((data) => {
+    //     if (data) {
+    //       this.getAlumnos();
+    //       this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
+    //     } else {
+    //       this.toastService.showError('Error', 'No se ha podido borrar el patrón');
+    //     }
+    //     this.dialog!.close();
+    //   }, (error) => {
+    //     if (error) {
+    //       this.toastService.showError('Error', 'No se ha podido borrar el patrón');
+    //     }
+    //     this.dialog!.close();
+    //   });
+    // }
+  }
+
+  public onSort(value: any) {
+    if (value.sorts && value.sorts[0]) {
+      this.filter.sort = value.sorts[0].dir;
+      this.filter.column = value.sorts[0].prop;
+      this.filter.pageNumber = 0;
+      this.getAlumnos();
+    }
+  }
+
+  public onPage(value: any) {
+    this.filter.pageNumber = value.offset;
+    this.getAlumnos();
+  }
+
+  private getAlumnos() {
+    this.loading = true;
+    this.filter.idGrupo = this.grupo.id;
+    if (this.grupo.id) {
+      this.usuarioService.getByGroup(this.filter).pipe(take(1)).subscribe((data) => {
+        if (data) {
+          this.page = data;
+          this.transformData();
+        }
+        this.loading = false;
+      },
+        (error) => {
+          this.loading = false;
+          this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+        });
+    }
+  }
+
+  private transformData() {
+    // this.page.content.map((row: PatronDTO) => {
+    //   row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
+    //   row.autor!.nick = AppUtilities.firstLetterUpper(row.autor!.nick!);
+    //   row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
+    // });
+  }
+
+  private buildColumns() {
+    this.columns = [
+      { prop: 'id', name: 'Identificador', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
+      { prop: 'nick', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
+      { prop: 'email', name: 'Email', resizeable: false, sortable: true, draggable: false, flexGrow: 1 }
+    ];
   }
 }

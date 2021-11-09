@@ -39,13 +39,14 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
     }
     if (this.defaultValue) {
       this.formInput.controls['auto'].setValue(this.defaultValue);
+      this.filteredOptions$ = this.getFilteredOptions(this.defaultValue);
     }
 
     this.formInput.addControl('auto', new FormControl(undefined));
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.defaultValue && changes.defaultValue.currentValue) {
+    if (changes.defaultValue && changes.defaultValue.currentValue) {
       this.formInput.controls['auto'].setValue(changes.defaultValue.currentValue);
       this.filteredOptions$ = this.getFilteredOptions(changes.defaultValue.currentValue);
     }
@@ -60,14 +61,19 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
           }
           this.options = data;
           this.filteredOptions$ = of(data);
+          this.filteredOptions$ = this.getFilteredOptions(this.defaultValue);
         }
       })
     }
   }
 
   private filter(value: any): any[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter(optionValue => optionValue.label.toLowerCase().includes(filterValue));
+    const filterValue = value;
+    let lowed = filterValue;
+    try {
+      lowed = lowed.toLowerCase();
+    } catch { }
+    return this.options.filter(optionValue => optionValue.label.toLowerCase().includes(lowed));
   }
 
   getFilteredOptions(value: any): Observable<any[]> {
