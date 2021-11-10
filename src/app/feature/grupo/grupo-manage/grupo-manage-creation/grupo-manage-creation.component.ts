@@ -3,20 +3,21 @@ import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { TableColumn } from '@swimlane/ngx-datatable';
-import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 import { GenericDialogCancelComponent } from 'src/app/component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
+import { UserDialogCreateComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
+import { UsuarioDetailsComponent } from 'src/app/feature/usuario/usuario-details/usuario-details.component';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
 import { Page } from 'src/app/models/page/page';
-import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { UsuarioFilterDto } from 'src/app/models/usuario/filter/usuario-filter-dto';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 import { GrupoService } from 'src/app/service/grupo.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { AppContants } from 'src/app/utils/app-constants';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
@@ -43,7 +44,7 @@ export class GrupoManageCreationComponent implements OnInit {
 
   profesorLabel: string | undefined;
 
-  private dialog?: NbDialogRef<GenericDialogCancelComponent>;
+  private dialog?: NbDialogRef<GenericDialogCancelComponent> | NbDialogRef<UserDialogCreateComponent> | NbDialogRef<GenericDialogDeleteComponent>;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -61,8 +62,8 @@ export class GrupoManageCreationComponent implements OnInit {
       } else {
         this.isReadOnly = false;
       }
-      if (params.state) {
-        this.isReadOnly = params.state === 'edit';
+      if (params.state && params.state === 'edit') {
+        this.isReadOnly = false;
         this.headerTitle = 'Editar grupo'
       }
     });
@@ -80,7 +81,9 @@ export class GrupoManageCreationComponent implements OnInit {
   }
 
   onEdit() {
-    this.isReadOnly = false;
+    this.router.navigate([AppContants.GRUPO_ADMINISTRAR_PATH], { skipLocationChange: true }).then(() => {
+      this.router.navigate([AppContants.GRUPO_DETALLES_PATH], { queryParams: { id: this.grupo.id, state: 'edit' }, queryParamsHandling: 'merge' });
+    });
   }
 
   onBack() {
@@ -88,15 +91,59 @@ export class GrupoManageCreationComponent implements OnInit {
       context: {
         accept: () => {
           if (this.grupo.id) {
-            this.isReadOnly = true;
+            this.router.navigate([AppContants.GRUPO_ADMINISTRAR_PATH], { skipLocationChange: true }).then(() => {
+              this.router.navigate([AppContants.GRUPO_DETALLES_PATH], { queryParams: { id: this.grupo.id }, queryParamsHandling: 'merge' });
+            });
           } else {
-            this.router.navigate(['/grupo/administracion']);
+            this.router.navigate([AppContants.GRUPO_ADMINISTRAR_PATH]);
           }
           this.dialog!.close();
         }
       }
     });
   }
+
+  onAddAlumno() {
+    let form: FormGroup = new FormGroup({});
+    this.dialog = this.dialogService.open(UserDialogCreateComponent, {
+      context: {
+        form: form,
+        accept: () => {
+          form.markAsTouched();
+          if (form.valid) {
+            this.loading = true;
+            let user: UsuarioDTO = new UsuarioDTO();
+            user.rolId = 1;
+            user.grupoId = this.grupo.id;
+            user.nick = form.value['nick'].trim();
+            user.email = form.value['email'].trim();
+            this.usuarioService.create(user).pipe(take(1)).subscribe(
+              (data: any) => {
+                if (data) {
+                  this.toastService.showConfirmation('Éxito', 'Usuario creado con éxito');
+                  this.getAlumnos();
+                } else {
+                  this.toastService.showError('Error', 'Ha ocurrido un error en la creación');
+                }
+                this.loading = false;
+              }, (error: any) => {
+                this.toastService.showError('Error', 'No se ha podido conectar con el servidor')
+                this.loading = false;
+              }
+            );
+            this.dialog?.close();
+          } else {
+            let errors: string[] = AppUtilities.getErrorsFromForm(form);
+            errors.forEach(msg => {
+              this.toastService.showError('Error', msg);
+            });
+          }
+        }
+      }
+    });
+  }
+
+  onImportAlumno() { }
 
   transformProfesores(data: any): void {
     if (data) {
@@ -148,6 +195,7 @@ export class GrupoManageCreationComponent implements OnInit {
         this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
         this.loading = false;
         this.isReadOnly = true;
+        this.buildColumns();
         // this.router.navigate(['/grupo/administracion']);
       } else {
         this.toastService.showError('Error', 'No se ha podido guardar el grupo');
@@ -161,14 +209,28 @@ export class GrupoManageCreationComponent implements OnInit {
     });
   }
 
-  public onDelete(value: PatronDTO) {
-    // this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
-    //   context: {
-    //     accept: () => {
-    //       this.deletePatron(value);
-    //     }
-    //   }
-    // });
+  public onDelete(value: UsuarioDTO) {
+    this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
+      context: {
+        accept: () => {
+          this.usuarioService.delete(value.id!).pipe(take(1)).subscribe((data) => {
+            if (data) {
+              this.toastService.showConfirmation('Éxito', 'Se ha borrado el usuario');
+              this.getAlumnos();
+            } else {
+              this.toastService.showError('Error', 'No se ha podido borrar el usuario');
+            }
+            this.dialog?.close();
+            this.loading = false;
+          },
+            (error) => {
+              this.dialog?.close();
+              this.loading = false;
+              this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+            });
+        }
+      }
+    });
   }
 
   public onSort(value: any) {

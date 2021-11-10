@@ -19,8 +19,17 @@
             </div>
         </div>
         <div style="margin-top: 25px;">
-            <ng-container *ngIf="grupo.id || isReadOnly">
+            <ng-container *ngIf="grupo.id && isReadOnly">
                 <span class="header-section">Alumnos</span>
+                <div class="margin-t20 margin-b20 row">
+                    <div class="margin-r20 col-2">
+                        <button (click)="onAddAlumno()" nbButton class="button-lowercase" status="basic">Añadir alumno</button>
+                    </div>
+                    <div class="col-2">
+                        <button (click)="onImportAlumno()" nbButton class="button-lowercase" status="basic">Importar desde excel</button>
+                    </div>
+                    
+                </div>
                 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true"
                     [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns"
                     [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)">

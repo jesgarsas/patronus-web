@@ -23,10 +23,18 @@ export class UsuarioService {
   }
 
   public getByGroup(filter: FilterDto): Observable<Page> {
-    return this.http.post<Page>(`${AppContants.URL_API_USUARIO_PROFE}/grupo/`, filter);
+    return this.http.post<Page>(`${AppContants.URL_API_USUARIO_PROFE}/grupo`, filter);
   }
 
   public getByParam(type: number): Observable<UsuarioDTO[]> {
     return this.http.get<UsuarioDTO[]>(`${AppContants.URL_API_USUARIO_PROFE}/type/${type}`);
+  }
+
+  public create(usuario: UsuarioDTO): Observable<UsuarioDTO> {
+    return this.http.post<UsuarioDTO>(`${AppContants.URL_API_USUARIO_PROFE}/create`, usuario);
+  }
+
+  public delete(id: number): Observable<Boolean> {
+    return this.http.delete<Boolean>(`${AppContants.URL_API_USUARIO_PROFE}/delete/${id}`);
   }
 }

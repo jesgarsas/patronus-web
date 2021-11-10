@@ -37,6 +37,8 @@ import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.
 import { GrupoManageTableComponent } from './feature/grupo/grupo-manage/grupo-manage-table/grupo-manage-table.component';
 import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
 import { GenericAutocompleteComponent } from './component/generic-autocomplete/generic-autocomplete.component';
+import { GenericDialogComponent } from './component/generic-dialog/generic-dialog.component';
+import { UserDialogCreateComponent } from './feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { GenericAutocompleteComponent } from './component/generic-autocomplete/g
     GrupoManageTableComponent,
     GrupoManageCreationComponent,
     GenericAutocompleteComponent,
+    GenericDialogComponent,
+    UserDialogCreateComponent,
   ],
   imports: [
     BrowserModule,

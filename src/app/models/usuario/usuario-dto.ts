@@ -8,6 +8,7 @@ export class UsuarioDTO {
     public profesor?: string;
     public profesorEmail?: string;
     public grupo?: string;
+    public grupoId?: number;
     public grupos?: string[] = [];
     
     constructor() {}
