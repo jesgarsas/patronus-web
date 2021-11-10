@@ -12,6 +12,7 @@ import { Page } from 'src/app/models/page/page';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { GrupoService } from 'src/app/service/grupo.service';
 import { ToastService } from 'src/app/service/toast.service';
+import { AppContants } from 'src/app/utils/app-constants';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
@@ -90,7 +91,7 @@ export class GrupoManageTableComponent implements OnInit {
   }
 
   public onEdit(value: PatronDTO) {
-    this.router.navigate(['/grupo/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
+    this.router.navigate([AppContants.GRUPO_DETALLES_PATH], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private buildColumns(): void {

@@ -29,20 +29,21 @@ export class GrupoManageCreationComponent implements OnInit {
   public columns: TableColumn[] = [];
   public page: Page = new Page();
   private filter: UsuarioFilterDto = new UsuarioFilterDto();
-  public configActions: ConfigAction = new ConfigAction({ delete: true});
+  public configActions: ConfigAction = new ConfigAction({ delete: true });
 
   form: FormGroup = new FormGroup({});
   grupo: GrupoDTO = new GrupoDTO();
   headerTitle: string = 'Crear grupo nuevo';
   loading: boolean = false;
   close: boolean = true;
+  isReadOnly: boolean = true;
 
   nombreFormName: string = 'nombre';
   profesorFormName: string = 'profesor';
 
   profesorLabel: string | undefined;
 
-  private dialog?: NbDialogRef<GenericDialogCancelComponent> ;
+  private dialog?: NbDialogRef<GenericDialogCancelComponent>;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -56,6 +57,13 @@ export class GrupoManageCreationComponent implements OnInit {
     this.route.queryParams.pipe(take(1)).subscribe(params => {
       if (params.id) {
         this.getGrupo(params.id);
+        this.headerTitle = 'Detalles de grupo'
+      } else {
+        this.isReadOnly = false;
+      }
+      if (params.state) {
+        this.isReadOnly = params.state === 'edit';
+        this.headerTitle = 'Editar grupo'
       }
     });
     this.buildColumns();
@@ -71,11 +79,19 @@ export class GrupoManageCreationComponent implements OnInit {
     }
   }
 
+  onEdit() {
+    this.isReadOnly = false;
+  }
+
   onBack() {
     this.dialog = this.dialogService.open(GenericDialogCancelComponent, {
       context: {
         accept: () => {
-          this.router.navigate(['/grupo/administracion']);
+          if (this.grupo.id) {
+            this.isReadOnly = true;
+          } else {
+            this.router.navigate(['/grupo/administracion']);
+          }
           this.dialog!.close();
         }
       }
@@ -128,9 +144,11 @@ export class GrupoManageCreationComponent implements OnInit {
     this.loading = true;
     this.grupoService.save(this.grupo).pipe(take(1)).subscribe((data) => {
       if (data) {
+        this.grupo = data;
         this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
         this.loading = false;
-        this.router.navigate(['/grupo/administracion']);
+        this.isReadOnly = true;
+        // this.router.navigate(['/grupo/administracion']);
       } else {
         this.toastService.showError('Error', 'No se ha podido guardar el grupo');
         this.loading = false;
@@ -151,25 +169,6 @@ export class GrupoManageCreationComponent implements OnInit {
     //     }
     //   }
     // });
-  }
-
-  private deletePatron(value: PatronDTO) {
-    // if (value.id) {
-    //   this.patroneService.deleteById(value.id).pipe(take(1)).subscribe((data) => {
-    //     if (data) {
-    //       this.getAlumnos();
-    //       this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
-    //     } else {
-    //       this.toastService.showError('Error', 'No se ha podido borrar el patrón');
-    //     }
-    //     this.dialog!.close();
-    //   }, (error) => {
-    //     if (error) {
-    //       this.toastService.showError('Error', 'No se ha podido borrar el patrón');
-    //     }
-    //     this.dialog!.close();
-    //   });
-    // }
   }
 
   public onSort(value: any) {
@@ -205,11 +204,6 @@ export class GrupoManageCreationComponent implements OnInit {
   }
 
   private transformData() {
-    // this.page.content.map((row: PatronDTO) => {
-    //   row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
-    //   row.autor!.nick = AppUtilities.firstLetterUpper(row.autor!.nick!);
-    //   row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
-    // });
   }
 
   private buildColumns() {

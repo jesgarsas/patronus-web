@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent},
   { path: AppContants.GRUPO_ADMINISTRAR_PATH.substr(1), component: GrupoManageComponent},
   { path: AppContants.GRUPO_CREAR_PATH.substr(1), component: GrupoManageCreationComponent},
+  { path: AppContants.GRUPO_DETALLES_PATH.substr(1), component: GrupoManageCreationComponent},
 ];
 
 @NgModule({

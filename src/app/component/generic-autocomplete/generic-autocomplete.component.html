@@ -19,9 +19,9 @@
 
             <ng-template #readTemplate>
                 <div>
-                    <ng-container *ngIf="form.controls[formName] && form.controls[formName].value; else noValue">
-                        <ng-container *ngIf="form.value[formName].length > 0; else noValue">
-                            <span>{{ form.value[formName] }}</span>
+                    <ng-container *ngIf="formInput.controls['auto'] && formInput.controls['auto'].value; else noValue">
+                        <ng-container *ngIf="formInput.value['auto'].length > 0; else noValue">
+                            <span>{{ formInput.value['auto'] }}</span>
                         </ng-container>
                     </ng-container>
                 </div>
