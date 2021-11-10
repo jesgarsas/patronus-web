@@ -123,7 +123,7 @@ export class GrupoManageCreationComponent implements OnInit {
                   this.toastService.showConfirmation('Éxito', 'Usuario creado con éxito');
                   this.getAlumnos();
                 } else {
-                  this.toastService.showError('Error', 'Ha ocurrido un error en la creación');
+                  this.toastService.showError('Error', `El usuario ${user.nick} ya existe`);
                 }
                 this.loading = false;
               }, (error: any) => {
