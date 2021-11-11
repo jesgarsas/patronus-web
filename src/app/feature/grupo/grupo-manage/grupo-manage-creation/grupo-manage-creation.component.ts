@@ -8,6 +8,7 @@ import { GenericDialogCancelComponent } from 'src/app/component/generic-dialog/g
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
 import { UserDialogCreateComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
+import { UserDialogImportComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-import/user-dialog-import.component';
 import { UsuarioDetailsComponent } from 'src/app/feature/usuario/usuario-details/usuario-details.component';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
 import { Page } from 'src/app/models/page/page';
@@ -38,13 +39,17 @@ export class GrupoManageCreationComponent implements OnInit {
   loading: boolean = false;
   close: boolean = true;
   isReadOnly: boolean = true;
+  toolTipText: string = `Para poder importar alumnos es necesario usar 
+    una plantilla. Haz click en este icono para descargarla`;
+  file: File | undefined;
 
   nombreFormName: string = 'nombre';
   profesorFormName: string = 'profesor';
 
   profesorLabel: string | undefined;
 
-  private dialog?: NbDialogRef<GenericDialogCancelComponent> | NbDialogRef<UserDialogCreateComponent> | NbDialogRef<GenericDialogDeleteComponent>;
+  private dialog?: NbDialogRef<GenericDialogCancelComponent> | NbDialogRef<UserDialogCreateComponent> | NbDialogRef<GenericDialogDeleteComponent>
+    | NbDialogRef<UserDialogImportComponent>;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -143,7 +148,26 @@ export class GrupoManageCreationComponent implements OnInit {
     });
   }
 
-  onImportAlumno() { }
+  onImportAlumno() {
+    let formData: FormData = new FormData();
+    formData.append(`file`, this.file!);
+    this.loading = true;
+    this.usuarioService.createFromFile(formData, this.grupo.id!).pipe(take(1)).subscribe((data: String[]) => {
+      if (data && data.length > 0) {
+        this.dialog = this.dialogService.open(UserDialogImportComponent, {
+          context: {
+            nombres: data
+          }
+        });
+      } else {
+        this.toastService.showConfirmation('Éxito', 'Se han importado todos los usuarios');
+      }
+      this.loading = false;
+    }, error => {
+      this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+      this.loading = false;
+    });
+  }
 
   transformProfesores(data: any): void {
     if (data) {
@@ -196,7 +220,6 @@ export class GrupoManageCreationComponent implements OnInit {
         this.loading = false;
         this.isReadOnly = true;
         this.buildColumns();
-        // this.router.navigate(['/grupo/administracion']);
       } else {
         this.toastService.showError('Error', 'No se ha podido guardar el grupo');
         this.loading = false;
@@ -231,6 +254,20 @@ export class GrupoManageCreationComponent implements OnInit {
         }
       }
     });
+  }
+
+  handleFileInput(target: any) {
+    if (target.files) {
+      {
+        this.file = target.files.item(0);
+        this.onImportAlumno();
+      }
+      
+    }
+  }
+
+  onDownloadPlantilla() {
+    console.log("HI");
   }
 
   public onSort(value: any) {

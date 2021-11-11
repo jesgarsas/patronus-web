@@ -22,13 +22,20 @@
             <ng-container *ngIf="grupo.id && isReadOnly">
                 <span class="header-section">Alumnos</span>
                 <div class="margin-t20 margin-b20 row">
-                    <div class="margin-r20 col-2">
+                    <div class="margin-r20 col-2" style="width: 150px;">
                         <button (click)="onAddAlumno()" nbButton class="button-lowercase" status="basic">Añadir alumno</button>
                     </div>
-                    <div class="col-2">
-                        <button (click)="onImportAlumno()" nbButton class="button-lowercase" status="basic">Importar desde excel</button>
+                    <div class="col-2" style="width: 200px;">
+                        <button (click)="fileUpload.click()" nbButton class="button-lowercase" status="basic">Importar desde excel
+                            <input type="file" id="file" accept=".xlsx" #fileUpload style="display: none;"
+                                (change)="handleFileInput($event.target)">
+                        </button>
+                        
                     </div>
-                    
+                    <div class="col-1">
+                        <nb-icon style="margin-top: 10px;" icon="question-mark-circle" status="info" [nbTooltip]="toolTipText"
+                            nbTooltipPlacement="right" nbTooltipStatus="info" (click)="onDownloadPlantilla()"></nb-icon>
+                    </div>
                 </div>
                 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true"
                     [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns"

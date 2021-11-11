@@ -34,6 +34,10 @@ export class UsuarioService {
     return this.http.post<UsuarioDTO>(`${AppContants.URL_API_USUARIO_PROFE}/create`, usuario);
   }
 
+  public createFromFile(form: FormData, id: number): Observable<String[]> {
+    return this.http.post<String[]>(`${AppContants.URL_API_USUARIO_PROFE}/create-from-file/${id}`, form);
+  }
+
   public delete(id: number): Observable<Boolean> {
     return this.http.delete<Boolean>(`${AppContants.URL_API_USUARIO_PROFE}/delete/${id}`);
   }
