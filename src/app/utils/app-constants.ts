@@ -33,6 +33,7 @@ export class AppContants {
     public static URL_API_GRUPO = `${AppContants.URL_API}/grupo`
     public static URL_API_GRUPO_ALL = `${AppContants.URL_API_GRUPO}/alumno`;
     public static URL_API_GRUPO_PROFE = `${AppContants.URL_API_GRUPO}/profesor`;
+    public static URL_API_PLANTILLA = `${AppContants.URL_API_USUARIO}/plantilla`;
 
     // Configurations
     public static editorConfig: AngularEditorConfig = {

@@ -34,7 +34,8 @@
                     </div>
                     <div class="col-1">
                         <nb-icon style="margin-top: 10px;" icon="question-mark-circle" status="info" [nbTooltip]="toolTipText"
-                            nbTooltipPlacement="right" nbTooltipStatus="info" (click)="onDownloadPlantilla()"></nb-icon>
+                            nbTooltipPlacement="right" nbTooltipStatus="info" (click)="onDownloadPlantilla()">
+                        </nb-icon>
                     </div>
                 </div>
                 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true"

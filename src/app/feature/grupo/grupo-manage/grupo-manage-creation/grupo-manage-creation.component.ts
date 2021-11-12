@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -9,10 +9,8 @@ import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/g
 import { ConfigAction } from 'src/app/component/generic-table/model/config-action';
 import { UserDialogCreateComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
 import { UserDialogImportComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-import/user-dialog-import.component';
-import { UsuarioDetailsComponent } from 'src/app/feature/usuario/usuario-details/usuario-details.component';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
 import { Page } from 'src/app/models/page/page';
-import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { UsuarioFilterDto } from 'src/app/models/usuario/filter/usuario-filter-dto';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 import { GrupoService } from 'src/app/service/grupo.service';
@@ -28,6 +26,8 @@ import { AppUtilities } from 'src/app/utils/app-uitilites';
 })
 export class GrupoManageCreationComponent implements OnInit {
 
+  @ViewChild('fileUpload') private fileUpload!: any;
+
   public columns: TableColumn[] = [];
   public page: Page = new Page();
   private filter: UsuarioFilterDto = new UsuarioFilterDto();
@@ -42,6 +42,7 @@ export class GrupoManageCreationComponent implements OnInit {
   toolTipText: string = `Para poder importar alumnos es necesario usar 
     una plantilla. Haz click en este icono para descargarla`;
   file: File | undefined;
+  urlPlantilla = AppContants.URL_API_PLANTILLA;
 
   nombreFormName: string = 'nombre';
   profesorFormName: string = 'profesor';
@@ -162,6 +163,7 @@ export class GrupoManageCreationComponent implements OnInit {
       } else {
         this.toastService.showConfirmation('Éxito', 'Se han importado todos los usuarios');
       }
+      this.getAlumnos();
       this.loading = false;
     }, error => {
       this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
@@ -257,17 +259,19 @@ export class GrupoManageCreationComponent implements OnInit {
   }
 
   handleFileInput(target: any) {
-    if (target.files) {
+    this.file = undefined;
+    if (target.files && target.files.length > 0) {
       {
         this.file = target.files.item(0);
         this.onImportAlumno();
+        this.fileUpload.nativeElement.value = '';
       }
       
     }
   }
 
   onDownloadPlantilla() {
-    console.log("HI");
+    window.open(this.urlPlantilla, "_blank")
   }
 
   public onSort(value: any) {
