@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 import { LoginService } from 'src/app/service/login.service';
@@ -12,6 +12,9 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { DialogPasswordChangeComponent } from 'src/app/component/generic-dialog/dialog-password-change/dialog-password-change.component';
 import { Md5 } from 'md5-typescript';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
+import { Usuario } from 'src/app/models/usuario/usuario';
+import { GenericDialogComponent } from 'src/app/component/generic-dialog/generic-dialog.component';
+import { UserDialogResetPasswordComponent } from '../user-dialog/user-dialog-reset-password/user-dialog-reset-password.component';
 
 @Component({
   selector: 'app-usuario-details',
@@ -20,11 +23,12 @@ import { AppUtilities } from 'src/app/utils/app-uitilites';
 })
 export class UsuarioDetailsComponent implements OnInit {
 
-  private dialog?: NbDialogRef<DialogPasswordChangeComponent>;
+  private dialog?: NbDialogRef<DialogPasswordChangeComponent> | NbDialogRef<GenericDialogComponent>;
   imageURI: string = AppContants.URI_PROFILE_IMAGE;
   user: UsuarioDTO = new UsuarioDTO;
   isAlumno: boolean = true;
   isProfesor: boolean = true;
+  canResetPassword: boolean = false;
   id: number = 0;
   form: FormGroup = new FormGroup({});
   loading: boolean = false;
@@ -32,6 +36,7 @@ export class UsuarioDetailsComponent implements OnInit {
   constructor(private usuarioService: UsuarioService,
     private loginService: LoginService,
     private route: ActivatedRoute,
+    private router: Router,
     private toastService: ToastService,
     private rolService: RolService,
     private dialogService: NbDialogService) { }
@@ -53,11 +58,12 @@ export class UsuarioDetailsComponent implements OnInit {
   getProfileValues(id: Number): void {
     let user = this.loginService.getUser();
     this.usuarioService.getUserInformation(+id, user!.token!).pipe(take(1)).subscribe(user => {
-      if (user) {
+      if (user && user.id) {
         this.user = user;
         this.setValues();
       } else {
         this.toastService.showError('Error', 'El usuario no existe');
+        this.router.navigate(['..']);
       }
     }, _ => {
       this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
@@ -80,7 +86,32 @@ export class UsuarioDetailsComponent implements OnInit {
     if (id != NaN) {
       this.id = +id;
       this.getProfileValues(id);
+      let usuario: Usuario | undefined = this.loginService.getUser();
+      if (usuario) {
+        this.canResetPassword = usuario.rolId! > 1;
+      }
     }
+  }
+
+  onResetPassword(): void {
+    this.dialog = this.dialogService.open(UserDialogResetPasswordComponent, {
+      context: {
+        accept: () => {
+          this.usuarioService.resetPassword(this.user.id!).pipe(take(1)).subscribe(data => {
+            if (data) {
+              this.toastService.showConfirmation('Éxito', 'La contraseña ha sido reseteada');
+            } else {
+              this.toastService.showError('Error', 'No ha sido posible realizar el cambio');
+            }
+            this.loading = false;
+          }, error => {
+            this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+            this.loading = false;
+          });
+          this.dialog?.close();
+        }
+      }
+    });
   }
 
   onChangePassword(): void {
@@ -129,9 +160,9 @@ export class UsuarioDetailsComponent implements OnInit {
     return (control: any): ValidationErrors | null => {
       const isValid = (control.controls['newPassword'] && control.controls['newPassword2'] &&
         !control.controls['newPassword'].value && !control.controls['newPassword2'].value) || (control.controls['newPassword'] && control.controls['newPassword2'] &&
-        control.controls['newPassword'].value && control.controls['newPassword2'].value &&
-        control.controls['newPassword'].value.trim().length > 0 && control.controls['newPassword2'].value.trim().length > 0
-        && control.controls['newPassword'].value.trim() === control.controls['newPassword2'].value.trim());
+          control.controls['newPassword'].value && control.controls['newPassword2'].value &&
+          control.controls['newPassword'].value.trim().length > 0 && control.controls['newPassword2'].value.trim().length > 0
+          && control.controls['newPassword'].value.trim() === control.controls['newPassword2'].value.trim());
       return isValid ? null : { 'newPassword': true };
     }
   }

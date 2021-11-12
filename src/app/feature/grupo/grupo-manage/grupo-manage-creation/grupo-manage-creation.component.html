@@ -40,7 +40,7 @@
                 </div>
                 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true"
                     [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns"
-                    [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)">
+                    [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)" (onEdit)="onEditAlumno($event)">
                 </app-generic-table>
             </ng-container>
         </div>

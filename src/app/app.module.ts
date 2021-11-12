@@ -40,6 +40,7 @@ import { GenericAutocompleteComponent } from './component/generic-autocomplete/g
 import { GenericDialogComponent } from './component/generic-dialog/generic-dialog.component';
 import { UserDialogCreateComponent } from './feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
 import { UserDialogImportComponent } from './feature/usuario/user-dialog/user-dialog-import/user-dialog-import.component';
+import { UserDialogResetPasswordComponent } from './feature/usuario/user-dialog/user-dialog-reset-password/user-dialog-reset-password.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { UserDialogImportComponent } from './feature/usuario/user-dialog/user-di
     GenericDialogComponent,
     UserDialogCreateComponent,
     UserDialogImportComponent,
+    UserDialogResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

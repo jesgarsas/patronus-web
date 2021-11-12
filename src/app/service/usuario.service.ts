@@ -41,4 +41,8 @@ export class UsuarioService {
   public delete(id: number): Observable<Boolean> {
     return this.http.delete<Boolean>(`${AppContants.URL_API_USUARIO_PROFE}/delete/${id}`);
   }
+
+  public resetPassword(id: number): Observable<Boolean> {
+    return this.http.post<Boolean>(`${AppContants.URL_API_USUARIO_PROFE}/resetPassword/${id}`, undefined);
+  }
 }

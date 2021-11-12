@@ -31,7 +31,7 @@ export class GrupoManageCreationComponent implements OnInit {
   public columns: TableColumn[] = [];
   public page: Page = new Page();
   private filter: UsuarioFilterDto = new UsuarioFilterDto();
-  public configActions: ConfigAction = new ConfigAction({ delete: true });
+  public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
 
   form: FormGroup = new FormGroup({});
   grupo: GrupoDTO = new GrupoDTO();
@@ -274,6 +274,10 @@ export class GrupoManageCreationComponent implements OnInit {
     window.open(this.urlPlantilla, "_blank")
   }
 
+  onEditAlumno(value: any) {
+    this.router.navigate([AppContants.USUARIO_DETALLES_PATH], { queryParams: { id: value.id }, queryParamsHandling: 'merge' });
+  }
+
   public onSort(value: any) {
     if (value.sorts && value.sorts[0]) {
       this.filter.sort = value.sorts[0].dir;
@@ -312,8 +316,8 @@ export class GrupoManageCreationComponent implements OnInit {
   private buildColumns() {
     this.columns = [
       { prop: 'id', name: 'Identificador', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
-      { prop: 'nick', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
-      { prop: 'email', name: 'Email', resizeable: false, sortable: true, draggable: false, flexGrow: 1 }
+      { prop: 'nick', name: 'Nombre', resizeable: false, sortable: true, minWidth: 100, draggable: false, flexGrow: 1 },
+      { prop: 'email', name: 'Email', resizeable: false, sortable: true, draggable: false, flexGrow: 2 }
     ];
   }
 }
