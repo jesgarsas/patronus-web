@@ -10,6 +10,7 @@ import { PatronManageCreationComponent } from './feature/patron/patron-manage/pa
 import { PatronManageComponent } from './feature/patron/patron-manage/patron-manage.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
 import { UsuarioDetailsComponent } from './feature/usuario/usuario-details/usuario-details.component';
+import { UsuarioManageComponent } from './feature/usuario/usuario-manage/usuario-manage.component';
 import { AuthGuardService as AuthGuard} from './guard/auth-guard.service';
 import { AppContants } from './utils/app-constants';
 
@@ -22,9 +23,10 @@ const routes: Routes = [
   { path: AppContants.LOGOUT_PATH.substr(1), component: LogoutComponent },
   { path: AppContants.NO_PERMISION_PATH.substr(1), component: NoPermisionComponent },
   { path: AppContants.USUARIO_DETALLES_PATH.substr(1), component: UsuarioDetailsComponent},
-  { path: AppContants.GRUPO_ADMINISTRAR_PATH.substr(1), component: GrupoManageComponent},
-  { path: AppContants.GRUPO_CREAR_PATH.substr(1), component: GrupoManageCreationComponent},
-  { path: AppContants.GRUPO_DETALLES_PATH.substr(1), component: GrupoManageCreationComponent},
+  { path: AppContants.GRUPO_ADMINISTRAR_PATH.substr(1), component: GrupoManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.GRUPO_CREAR_PATH.substr(1), component: GrupoManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.GRUPO_DETALLES_PATH.substr(1), component: GrupoManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.USUARIO_ADMINISTRAR_PATH.substr(1), component: UsuarioManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_ADMINISTRADOR } },
 ];
 
 @NgModule({

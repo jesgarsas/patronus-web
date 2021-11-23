@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule, NbAutocompleteModule, NbTooltipModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule, NbAutocompleteModule, NbTooltipModule, NbSelectModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -41,6 +41,9 @@ import { GenericDialogComponent } from './component/generic-dialog/generic-dialo
 import { UserDialogCreateComponent } from './feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
 import { UserDialogImportComponent } from './feature/usuario/user-dialog/user-dialog-import/user-dialog-import.component';
 import { UserDialogResetPasswordComponent } from './feature/usuario/user-dialog/user-dialog-reset-password/user-dialog-reset-password.component';
+import { UsuarioManageComponent } from './feature/usuario/usuario-manage/usuario-manage.component';
+import { UsuarioManageTableComponent } from './feature/usuario/usuario-manage/usuario-manage-table/usuario-manage-table.component';
+import { GenericSelectorComponent } from './component/generic-selector/generic-selector.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +75,9 @@ import { UserDialogResetPasswordComponent } from './feature/usuario/user-dialog/
     UserDialogCreateComponent,
     UserDialogImportComponent,
     UserDialogResetPasswordComponent,
+    UsuarioManageComponent,
+    UsuarioManageTableComponent,
+    GenericSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +109,8 @@ import { UserDialogResetPasswordComponent } from './feature/usuario/user-dialog/
     NbContextMenuModule,
     NbUserModule,
     NbAutocompleteModule,
-    NbTooltipModule
+    NbTooltipModule,
+    NbSelectModule
   ],
   providers: [
     PatronService,

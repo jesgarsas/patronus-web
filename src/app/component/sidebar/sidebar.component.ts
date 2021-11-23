@@ -36,6 +36,12 @@ export class SidebarComponent implements OnInit {
       icon: 'folder-outline',
       link: AppContants.GRUPO_ADMINISTRAR_PATH,
       pathMatch: "full"
+    },
+    {
+      title: 'Administrar usuarios',
+      icon: 'folder-outline',
+      link: AppContants.USUARIO_ADMINISTRAR_PATH,
+      pathMatch: "full"
     }
   ];
 

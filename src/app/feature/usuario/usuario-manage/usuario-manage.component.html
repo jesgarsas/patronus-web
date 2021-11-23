@@ -1,0 +1,12 @@
+<nb-card status="default" class="stretch">
+    <nb-card-header>Administración de usuarios</nb-card-header>
+    <nb-card-body>
+        <div class="button-create width100">
+            <div>
+                <button (click)="crearProfesor()" nbButton status="primary" size="large" style="margin-right: 25px;">Crear profesor</button>
+                <button (click)="crearAdmin()" nbButton status="primary" size="large">Crear administrator</button>
+            </div>
+        </div>
+        <app-usuario-manage-table></app-usuario-manage-table>
+    </nb-card-body>
+</nb-card>

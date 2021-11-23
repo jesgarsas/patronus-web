@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterDto } from '../models/filter/filter-dto';
+import { GrupoFilterDto } from '../models/grupo/filters/grupo-filter-dto';
 import { Page } from '../models/page/page';
+import { UsuarioFilterDto } from '../models/usuario/filter/usuario-filter-dto';
 import { Usuario } from '../models/usuario/usuario';
 import { UsuarioDTO } from '../models/usuario/usuario-dto';
 import { AppContants } from '../utils/app-constants';
@@ -44,5 +46,9 @@ export class UsuarioService {
 
   public resetPassword(id: number): Observable<Boolean> {
     return this.http.post<Boolean>(`${AppContants.URL_API_USUARIO_PROFE}/resetPassword/${id}`, undefined);
+  }
+
+  public getAllByPageFilter(filter: UsuarioFilterDto) {
+    return this.http.post<Page>(`${AppContants.URL_API_USUARIO_PROFE}/all/filtered/`, filter);
   }
 }
