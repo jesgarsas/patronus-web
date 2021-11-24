@@ -13,6 +13,7 @@ import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { UsuarioFilterDto } from 'src/app/models/usuario/filter/usuario-filter-dto';
 import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 import { GrupoService } from 'src/app/service/grupo.service';
+import { LoginService } from 'src/app/service/login.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
@@ -55,7 +56,8 @@ export class UsuarioManageTableComponent implements OnInit, OnChanges {
   constructor(private usuarioService: UsuarioService,
     private dialogService: NbDialogService,
     private toastService: ToastService,
-    private router: Router) { }
+    private router: Router,
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.buildColumns();
@@ -119,7 +121,7 @@ export class UsuarioManageTableComponent implements OnInit, OnChanges {
   }
 
   public onEdit(value: PatronDTO) {
-    this.router.navigate([AppContants.GRUPO_DETALLES_PATH], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
+    this.router.navigate([AppContants.USUARIO_DETALLES_PATH], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private buildColumns(): void {

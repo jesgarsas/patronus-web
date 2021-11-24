@@ -32,6 +32,7 @@ export class UsuarioDetailsComponent implements OnInit {
   id: number = 0;
   form: FormGroup = new FormGroup({});
   loading: boolean = false;
+  editMode: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
     private loginService: LoginService,
@@ -47,6 +48,7 @@ export class UsuarioDetailsComponent implements OnInit {
       if (map.get("profile")) {
         let user = this.loginService.getUser();
         if (user) {
+          this.id = user.id!;
           this.getProfileValues(user.id!);
         }
       } else {
@@ -154,6 +156,42 @@ export class UsuarioDetailsComponent implements OnInit {
         }
       }
     });
+  }
+
+  onEdit() {
+    this.editMode = true;
+  }
+
+  onCancelEdit() {
+    this.editMode = false;
+    this.getProfileValues(this.id);
+  }
+
+  onSubmit() {
+    let user: UsuarioDTO = new UsuarioDTO();
+    if (this.form.valid) {
+      user.id = this.id;
+      user.email = this.form.value['email'];
+      user.nick = this.form.value['nick'];
+      this.usuarioService.edit(user).pipe(take(1)).subscribe(data => {
+        if (data) {
+          this.toastService.showConfirmation('Éxito', 'Se han guardado los cambios');
+        } else {
+          this.toastService.showError('Error', 'No se han podido guardar los cambios');
+        }
+        this.editMode = false;
+        this.getProfileValues(this.id);
+      }, error => {
+        this.toastService.showError('Error', 'No se han podido guardar los cambios');
+        this.editMode = false;
+        this.getProfileValues(this.id);
+      })
+    } else {
+      let errors: string[] = AppUtilities.getErrorsFromForm(this.form);
+      errors.forEach(msg => {
+        this.toastService.showError('Error', msg);
+      });
+    }
   }
 
   private samePassword(): ValidatorFn {

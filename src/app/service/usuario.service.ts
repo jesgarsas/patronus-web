@@ -51,4 +51,8 @@ export class UsuarioService {
   public getAllByPageFilter(filter: UsuarioFilterDto) {
     return this.http.post<Page>(`${AppContants.URL_API_USUARIO_PROFE}/all/filtered/`, filter);
   }
+
+  public edit(user: UsuarioDTO) {
+    return this.http.post<UsuarioDTO>(`${AppContants.URL_API_USUARIO_ADMIN}/edit/`, user);
+  }
 }
