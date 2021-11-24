@@ -36,7 +36,11 @@ export class SidebarComponent implements OnInit {
       icon: 'folder-outline',
       link: AppContants.GRUPO_ADMINISTRAR_PATH,
       pathMatch: "full"
-    },
+    }
+  ];
+
+  public optionsAdmin: NbMenuItem[] = [
+    ...this.optionsProfesores,
     {
       title: 'Administrar usuarios',
       icon: 'folder-outline',
@@ -46,6 +50,7 @@ export class SidebarComponent implements OnInit {
   ];
 
   public notAlumno: number | boolean | undefined;
+  public admin: number | boolean | undefined;
 
   constructor(private notifierService: NotifierService,
     private loginService: LoginService,
@@ -64,6 +69,7 @@ export class SidebarComponent implements OnInit {
   private setMenuItems(): void {
     let user = this.loginService.getUser();
     this.notAlumno = user && user?.rolId && user?.rolId > 1;
+    this.admin = user && user?.rolId && user?.rolId === 3;
   }
 
 }

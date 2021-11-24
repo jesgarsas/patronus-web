@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { GenericDialogComponent } from 'src/app/component/generic-dialog/generic-dialog.component';
 
@@ -17,6 +18,7 @@ export class UserDialogCreateComponent extends GenericDialogComponent implements
   }
 
   ngOnInit(): void {
+    this.form.addControl('rol', new FormControl(this.rol));
   }
 
 }

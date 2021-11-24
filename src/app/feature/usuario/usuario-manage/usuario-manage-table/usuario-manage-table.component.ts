@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -23,8 +23,11 @@ import { AppUtilities } from 'src/app/utils/app-uitilites';
   templateUrl: './usuario-manage-table.component.html',
   styleUrls: ['./usuario-manage-table.component.scss']
 })
-export class UsuarioManageTableComponent implements OnInit {
+export class UsuarioManageTableComponent implements OnInit, OnChanges {
 
+  @Input() refresh: boolean = false;
+
+  @Output() public refreshEvent: EventEmitter<any> = new EventEmitter();
 
   public columns: TableColumn[] = [];
   public page: Page = new Page();
@@ -57,6 +60,12 @@ export class UsuarioManageTableComponent implements OnInit {
   ngOnInit(): void {
     this.buildColumns();
     this.getUsuarios();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.refresh && changes.refresh.currentValue) {
+      this.getUsuarios();
+    }
   }
 
   public onDelete(value: GrupoDTO) {
@@ -128,10 +137,12 @@ export class UsuarioManageTableComponent implements OnInit {
         this.transformData();
       }
       this.loading = false;
+      this.refreshEvent.emit();
     },
       (error) => {
         this.loading = false;
         this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
+        this.refreshEvent.emit();
       });
   }
   

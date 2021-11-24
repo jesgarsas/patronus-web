@@ -7,6 +7,6 @@
                 <button (click)="crearAdmin()" nbButton status="primary" size="large">Crear administrator</button>
             </div>
         </div>
-        <app-usuario-manage-table></app-usuario-manage-table>
+        <app-usuario-manage-table [refresh]="refresh" (refreshEvent)="handleRefresh()"></app-usuario-manage-table>
     </nb-card-body>
 </nb-card>
