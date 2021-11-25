@@ -53,6 +53,6 @@ export class UsuarioService {
   }
 
   public edit(user: UsuarioDTO) {
-    return this.http.post<UsuarioDTO>(`${AppContants.URL_API_USUARIO_ADMIN}/edit/`, user);
+    return this.http.post<Boolean>(`${AppContants.URL_API_USUARIO_ADMIN}/edit/`, user);
   }
 }

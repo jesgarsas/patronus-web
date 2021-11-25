@@ -30,6 +30,7 @@ export class UsuarioDetailsComponent implements OnInit {
   isProfesor: boolean = true;
   canResetPassword: boolean = false;
   id: number = 0;
+  loggedId: number = 0;
   form: FormGroup = new FormGroup({});
   loading: boolean = false;
   editMode: boolean = false;
@@ -43,10 +44,12 @@ export class UsuarioDetailsComponent implements OnInit {
     private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
-
+    let user = this.loginService.getUser();
+    if (user) {
+      this.loggedId = user.id!;
+    }
     this.route.queryParamMap.pipe(take(1)).subscribe(map => {
       if (map.get("profile")) {
-        let user = this.loginService.getUser();
         if (user) {
           this.id = user.id!;
           this.getProfileValues(user.id!);
