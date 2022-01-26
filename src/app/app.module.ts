@@ -44,6 +44,8 @@ import { UserDialogResetPasswordComponent } from './feature/usuario/user-dialog/
 import { UsuarioManageComponent } from './feature/usuario/usuario-manage/usuario-manage.component';
 import { UsuarioManageTableComponent } from './feature/usuario/usuario-manage/usuario-manage-table/usuario-manage-table.component';
 import { GenericSelectorComponent } from './component/generic-selector/generic-selector.component';
+import { EjercicioManageComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage.component';
+import { EjercicioManageTableComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-table/ejercicio-manage-table.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,8 @@ import { GenericSelectorComponent } from './component/generic-selector/generic-s
     UsuarioManageComponent,
     UsuarioManageTableComponent,
     GenericSelectorComponent,
+    EjercicioManageComponent,
+    EjercicioManageTableComponent,
   ],
   imports: [
     BrowserModule,

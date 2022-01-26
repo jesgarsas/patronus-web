@@ -20,6 +20,10 @@ export class AppContants {
     public static GRUPO_ADMINISTRAR_PATH = `${AppContants.GRUPO_PATH}/administracion`;
     public static GRUPO_CREAR_PATH = `${AppContants.GRUPO_ADMINISTRAR_PATH}/crear`;
     public static GRUPO_DETALLES_PATH = `${AppContants.GRUPO_ADMINISTRAR_PATH}/detalles`;
+    public static EJERCICIO_PATH = '/ejercicio'
+    public static EJERCICIO_ADMINISTRAR_PATH = `${AppContants.EJERCICIO_PATH}/administracion`;
+    public static EJERCICIO_CREAR_PATH = `${AppContants.EJERCICIO_ADMINISTRAR_PATH}/crear`;
+    public static EJERCICIO_DETALLES_PATH = `${AppContants.EJERCICIO_ADMINISTRAR_PATH}/detalles`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';
@@ -35,6 +39,10 @@ export class AppContants {
     public static URL_API_GRUPO_ALL = `${AppContants.URL_API_GRUPO}/alumno`;
     public static URL_API_GRUPO_PROFE = `${AppContants.URL_API_GRUPO}/profesor`;
     public static URL_API_PLANTILLA = `${AppContants.URL_API_USUARIO}/plantilla`;
+    public static URL_API_EJERCIO = `${AppContants.URL_API}/ejercicio`;
+    public static URL_API_EJERCIO_ALL = `${AppContants.URL_API_EJERCIO}/alumno`;
+    public static URL_API_EJERCIO_PROFE = `${AppContants.URL_API_EJERCIO}/profesor`;
+    public static URL_API_EJERCIO_ADMIN = `${AppContants.URL_API_EJERCIO}/administrador`;
 
     // Configurations
     public static editorConfig: AngularEditorConfig = {

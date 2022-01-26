@@ -32,6 +32,12 @@ export class SidebarComponent implements OnInit {
       pathMatch: "full"
     },
     {
+      title: 'Administrar ejercicios',
+      icon: 'folder-outline',
+      link: AppContants.EJERCICIO_ADMINISTRAR_PATH,
+      pathMatch: "full"
+    },
+    {
       title: 'Administrar grupos',
       icon: 'folder-outline',
       link: AppContants.GRUPO_ADMINISTRAR_PATH,
