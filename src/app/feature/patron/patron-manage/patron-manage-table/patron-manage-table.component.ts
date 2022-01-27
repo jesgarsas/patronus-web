@@ -120,7 +120,7 @@ export class PatronManageTableComponent implements OnInit {
 
   private transformData() {
     this.page.content.map((row: PatronDTO) => {
-      row.fechaCreacion = moment(row.fechaCreacion, 'YYYY-MM-DD').format('DD/MM/YYYY');
+      row.fechaCreacion = AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion);
       row.autor!.nick = AppUtilities.firstLetterUpper(row.autor!.nick!);
       row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
     });

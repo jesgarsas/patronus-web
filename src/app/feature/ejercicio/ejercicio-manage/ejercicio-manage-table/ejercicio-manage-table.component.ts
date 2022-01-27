@@ -9,8 +9,9 @@ import { ConfigAction } from 'src/app/component/generic-table/model/config-actio
 import { GrupoFilterDto } from 'src/app/models/grupo/filters/grupo-filter-dto';
 import { GrupoDTO } from 'src/app/models/grupo/grupo-dto';
 import { Page } from 'src/app/models/page/page';
+import { EjercicioDTO } from 'src/app/models/patron/ejercicio-dto';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
-import { ejercicioService } from 'src/app/service/grupo.service';
+import { EjercicioService } from 'src/app/service/ejercicio.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { AppContants } from 'src/app/utils/app-constants';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
@@ -31,32 +32,32 @@ export class EjercicioManageTableComponent implements OnInit {
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
 
-  constructor(private ejercicioService: ejercicioService,
+  constructor(private ejercicioService: EjercicioService,
     private dialogService: NbDialogService,
     private toastService: ToastService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.buildColumns();
-    this.getGrupos();
+    this.getEjercicios();
   }
 
   public onDelete(value: GrupoDTO) {
     this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
       context: {
         accept: () => {
-          this.ejercicioService.delete(value.id!).pipe(take(1)).subscribe((isDeleted) => {
-            if (isDeleted) {
-              this.getGrupos();
-              this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
-            } else {
-              this.toastService.showError('Error', 'No se ha podido borrar el grupo');
-            }
-            this.dialog!.close();
-          }, error => {
-            this.toastService.showError('Error', 'No se ha podido borrar el grupo');
-            this.dialog!.close();
-          })
+          // this.ejercicioService.delete(value.id!).pipe(take(1)).subscribe((isDeleted: boolean) => {
+          //   if (isDeleted) {
+          //     this.getGrupos();
+          //     this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
+          //   } else {
+          //     this.toastService.showError('Error', 'No se ha podido borrar el grupo');
+          //   }
+          //   this.dialog!.close();
+          // }, (error: any) => {
+          //   this.toastService.showError('Error', 'No se ha podido borrar el grupo');
+          //   this.dialog!.close();
+          // })
         }
       }
     });
@@ -67,7 +68,7 @@ export class EjercicioManageTableComponent implements OnInit {
       this.filter.sort = value.sorts[0].dir;
       this.filter.column = value.sorts[0].prop;
       this.filter.pageNumber = 0;
-      this.getGrupos();
+      this.getEjercicios();
     }
   }
 
@@ -75,19 +76,19 @@ export class EjercicioManageTableComponent implements OnInit {
     if (this.form) {
       this.filter.nombre = this.form.value['nombre'];
       this.filter.profesor = this.form.value['profesor'];
-      this.getGrupos();
+      this.getEjercicios();
     }
   }
 
   public eraseForm() {
     this.form.reset();
     this.filter.reset();
-    this.getGrupos();
+    this.getEjercicios();
   }
 
   public onPage(value: any) {
     this.filter.pageNumber = value.offset;
-    this.getGrupos();
+    this.getEjercicios();
   }
 
   public onEdit(value: PatronDTO) {
@@ -97,12 +98,14 @@ export class EjercicioManageTableComponent implements OnInit {
   private buildColumns(): void {
     this.columns = [
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: true, minWidth: 200, draggable: false, flexGrow: 2 },
-      { prop: 'profesor.nick', name: 'Profesor', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
-      { prop: 'numPreguntas', name: 'Nº Alumnos', resizeable: false, draggable: false, sortable: false, flexGrow: 1 }
+      { prop: 'fechaCreacion', name: 'Fecha creación', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
+      { prop: 'patron.nombre', name: 'Patrón', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
+      { prop: 'nombreAutor', name: 'Autor', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
+      { prop: 'numPreguntas', name: 'Nº Preguntas', resizeable: false, draggable: false, sortable: false, flexGrow: 1 }
     ];
   }
 
-  private getGrupos(): void {
+  private getEjercicios(): void {
     this.ejercicioService.getAllByPageFilter(this.filter).pipe(take(1)).subscribe((data: Page) => {
       if (data) {
         this.page = data;
@@ -110,15 +113,18 @@ export class EjercicioManageTableComponent implements OnInit {
       }
       this.loading = false;
     },
-      (error) => {
+      (error: any) => {
         this.loading = false;
         this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
       });
   }
 
   private transformData() {
-    this.page.content.map((row: GrupoDTO) => {
-      row.profesor!.nick = AppUtilities.firstLetterUpper(row.profesor!.nick!);
+    this.page.content.map((row: EjercicioDTO) => {
+      row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
+      row.fechaCreacion =  AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion!);
+      row.nombreAutor = AppUtilities.firstLetterUpper(row.nombreAutor!);
+      row.patron!.nombre = AppUtilities.firstLetterUpper(row.patron?.nombre!);
     });
   }
 

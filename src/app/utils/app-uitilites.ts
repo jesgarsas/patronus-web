@@ -1,4 +1,6 @@
 import { FormControl, FormGroup, ValidationErrors } from "@angular/forms";
+import * as moment from "moment";
+import { Moment } from "moment";
 import { AppContants } from "./app-constants";
 
 export class AppUtilities {
@@ -25,6 +27,7 @@ export class AppUtilities {
     }
 
     public static firstLetterUpper(text: string) {
+        if (!text || text.length === 0) return '';
         let textFormatted: string = text.substr(0, 1).toUpperCase();
         if (text.length > 1) {
             textFormatted = `${textFormatted}${text.substr(1, text.length).toLowerCase()}`;
@@ -38,5 +41,9 @@ export class AppUtilities {
             if(AppContants.ROLES[key] === name) { id = key; }
         });
         return Number(id);
+    }
+
+    public static fomatDateToDDMMYYYY(date: any): string {
+        return moment(date, 'YYYY-MM-DD').format('DD/MM/YYYY');
     }
 }
