@@ -42,27 +42,6 @@ export class EjercicioManageTableComponent implements OnInit {
     this.getEjercicios();
   }
 
-  public onDelete(value: GrupoDTO) {
-    this.dialog = this.dialogService.open(GenericDialogDeleteComponent, {
-      context: {
-        accept: () => {
-          // this.ejercicioService.delete(value.id!).pipe(take(1)).subscribe((isDeleted: boolean) => {
-          //   if (isDeleted) {
-          //     this.getGrupos();
-          //     this.toastService.showConfirmation('Éxito', 'Se ha borrado con éxito');
-          //   } else {
-          //     this.toastService.showError('Error', 'No se ha podido borrar el grupo');
-          //   }
-          //   this.dialog!.close();
-          // }, (error: any) => {
-          //   this.toastService.showError('Error', 'No se ha podido borrar el grupo');
-          //   this.dialog!.close();
-          // })
-        }
-      }
-    });
-  }
-
   public onSort(value: any) {
     if (value.sorts && value.sorts[0]) {
       this.filter.sort = value.sorts[0].dir;
@@ -76,6 +55,7 @@ export class EjercicioManageTableComponent implements OnInit {
     if (this.form) {
       this.filter.nombre = this.form.value['nombre'];
       this.filter.profesor = this.form.value['profesor'];
+      this.filter.patron = this.form.value['patron'];
       this.getEjercicios();
     }
   }

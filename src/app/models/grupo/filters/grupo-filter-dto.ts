@@ -6,6 +6,7 @@ export class GrupoFilterDto extends FilterDto {
         public nombre?: string,
         public profesor?: string,
         public alumnosCount?: number,
+        public patron?: string,
 
     ) { super(); }
 
@@ -13,5 +14,6 @@ export class GrupoFilterDto extends FilterDto {
         this.nombre = undefined;
         this.profesor = undefined;
         this.alumnosCount = undefined;
+        this.patron = undefined;
     }
 }
