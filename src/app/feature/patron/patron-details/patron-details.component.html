@@ -13,7 +13,8 @@
                             <nb-icon icon="download-outline"></nb-icon>
                             Proyectos
                         </div>
-                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
+                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span>
+                        </ng-container>
                         <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
                             <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
                                 <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
@@ -31,7 +32,8 @@
                         Proyectos
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
-                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span></ng-container>
+                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span>
+                        </ng-container>
                         <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
                             <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
                                 <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
@@ -47,7 +49,12 @@
                         Ejercicios
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
-                        Aquí mostrar los ejercicios
+                        <div class="margin-b20">
+                            <button nbButton class="button-lowercase" (click)="createEjercicio()" status="info"
+                            size="small">Crear Ejercicio</button>
+                        </div>
+                        <app-generic-table (onSort)="onSortEjercicio($event)" [loading]="loading" [columns]="columns" [rows]="rows" 
+                        (onEdit)="onEditEjercicio($event)" (onDelete)="onDeleteEjercicio($event)"></app-generic-table>
                     </nb-accordion-item-body>
                 </nb-accordion-item>
             </nb-accordion>

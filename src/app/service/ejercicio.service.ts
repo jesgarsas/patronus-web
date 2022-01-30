@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FilterDto } from '../models/filter/filter-dto';
 import { Page } from '../models/page/page';
+import { EjercicioDTO } from '../models/patron/ejercicio-dto';
 import { AppContants } from '../utils/app-constants';
 
 @Injectable({
@@ -14,5 +15,9 @@ export class EjercicioService {
 
   public getAllByPageFilter(filter: FilterDto): Observable<Page> {
     return this.http.post<Page>(`${AppContants.URL_API_EJERCIO_PROFE}/all/filtered`, filter);
+  }
+
+  public getEjerciciosByUserPatron(id: number, userId: number) {
+    return this.http.get<EjercicioDTO[]>(`${AppContants.URL_API_EJERCIO_ALL}/patron/${id}/usuario/${userId}`);
   }
 }
