@@ -67,6 +67,7 @@ export class PatronDetailsComponent implements OnInit {
   private buildColumns() {
     this.columns = [
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: false, minWidth: 200, draggable: false, flexGrow: 2 },
+      { prop: 'nota', name: 'Nota', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'realizados', name: 'Nº realizado', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'intentos', name: 'Intentos', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'fechaCreacion', name: 'Fecha creación', resizeable: false, sortable: false, draggable: false, flexGrow: 1 }
@@ -78,6 +79,7 @@ export class PatronDetailsComponent implements OnInit {
       row.fechaCreacion = AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion);
       row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
       row.intentos = !row.intentos || row.intentos === 0 ? 'Ilimitados' : row.intentos;
+      row.nota = row.nota ? row.nota : '-';
     });
   }
 

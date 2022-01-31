@@ -14,5 +14,6 @@ export class EjercicioDTO {
 	public numPreguntas?: number;
 	public patron?: PatronDTO;
 	public intentos?: number | string;
-	public realizados?: number;
+	public realizados?: number | string;
+	public nota?: number | string;
 }
