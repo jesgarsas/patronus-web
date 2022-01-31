@@ -49,7 +49,7 @@
                         Ejercicios
                     </nb-accordion-item-header>
                     <nb-accordion-item-body>
-                        <div class="margin-b20">
+                        <div class="margin-b20" *ngIf="!isAlumno">
                             <button nbButton class="button-lowercase" (click)="createEjercicio()" status="info"
                             size="small">Crear Ejercicio</button>
                         </div>

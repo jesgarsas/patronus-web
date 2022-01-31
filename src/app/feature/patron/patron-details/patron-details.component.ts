@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { EjercicioDTO } from 'src/app/models/patron/ejercicio-dto';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { ProyectoDTO } from 'src/app/models/patron/proyecto-dto';
+import { Usuario } from 'src/app/models/usuario/usuario';
 import { EjercicioService } from 'src/app/service/ejercicio.service';
 import { LoginService } from 'src/app/service/login.service';
 import { PatronService } from 'src/app/service/patron.service';
@@ -24,9 +25,11 @@ export class PatronDetailsComponent implements OnInit {
   public patron: PatronDTO | undefined = undefined;
   public mobile: boolean = false;
 
+  isAlumno: boolean = true;
   columns: TableColumn[] = [];
   rows: ProyectoDTO[] = [];
   loading: boolean = false;
+  private usuario?: Usuario;
 
   constructor(
     private patronService: PatronService,
@@ -42,7 +45,17 @@ export class PatronDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.resizeInteface();
-    this.buildColumns();
+
+    this.usuario = this.loginService.getUser();
+    if (this.usuario) {
+      this.isAlumno = this.usuario.rolId === AppContants.ROL_ALUMNO;
+    }
+
+    if (this.isAlumno) {
+      this.buildColumnsAlumno();
+    } else {
+      this.buildColumnsProfesor();
+    }
 
     this.route.queryParams.pipe(take(1)).subscribe(params => {
       this.idPatron = params.id;
@@ -64,13 +77,19 @@ export class PatronDetailsComponent implements OnInit {
 
   public onSortEjercicio(event: any) {}
 
-  private buildColumns() {
+  private buildColumnsAlumno() {
     this.columns = [
       { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: false, minWidth: 200, draggable: false, flexGrow: 2 },
       { prop: 'nota', name: 'Nota', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'realizados', name: 'Nº realizado', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'intentos', name: 'Intentos', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
       { prop: 'fechaCreacion', name: 'Fecha creación', resizeable: false, sortable: false, draggable: false, flexGrow: 1 }
+    ];
+  }
+
+  private buildColumnsProfesor() {
+    this.columns = [
+     
     ];
   }
 
@@ -88,9 +107,9 @@ export class PatronDetailsComponent implements OnInit {
   }
 
   private getEjercicioTable() {
-    let user = this.loginService.getUser();
-    if (user) {
-      this.ejercicioService.getEjerciciosByUserPatron(this.idPatron, user.id!).pipe(take(1)).subscribe(data => {
+    
+    if (this.usuario) {
+      this.ejercicioService.getEjerciciosByUserPatron(this.idPatron, this.usuario.id!).pipe(take(1)).subscribe(data => {
         this.rows = data;
         this.transformData();
       });
