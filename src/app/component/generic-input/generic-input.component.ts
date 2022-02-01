@@ -15,6 +15,8 @@ export class GenericInputComponent implements OnInit {
   @Input() required: boolean = false;
   @Input() readOnly: boolean = false;
   @Input() defaultValue: string | undefined;
+  @Input() onlyNumbers: boolean = false;
+  @Input() maxLength: string | null = null;
 
   @Output() onSubmit: EventEmitter<Boolean> = new EventEmitter();
 
@@ -32,6 +34,14 @@ export class GenericInputComponent implements OnInit {
 
   onKeypress(e: any) {
     this.onSubmit.emit();
+  }
+
+  getType() {
+    if (this.onlyNumbers) {
+      return 'number';
+    } else {
+      return 'text';
+    }
   }
 
 }

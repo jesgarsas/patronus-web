@@ -46,6 +46,7 @@ import { UsuarioManageTableComponent } from './feature/usuario/usuario-manage/us
 import { GenericSelectorComponent } from './component/generic-selector/generic-selector.component';
 import { EjercicioManageComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage.component';
 import { EjercicioManageTableComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-table/ejercicio-manage-table.component';
+import { EjercicioManageCreationComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-creation/ejercicio-manage-creation.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { EjercicioManageTableComponent } from './feature/ejercicio/ejercicio-man
     GenericSelectorComponent,
     EjercicioManageComponent,
     EjercicioManageTableComponent,
+    EjercicioManageCreationComponent
   ],
   imports: [
     BrowserModule,

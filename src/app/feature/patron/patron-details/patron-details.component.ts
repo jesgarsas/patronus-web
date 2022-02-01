@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TableColumn } from '@swimlane/ngx-datatable';
 import { take } from 'rxjs/operators';
 import { EjercicioDTO } from 'src/app/models/patron/ejercicio-dto';
@@ -35,7 +35,8 @@ export class PatronDetailsComponent implements OnInit {
     private patronService: PatronService,
     private route: ActivatedRoute,
     private ejercicioService: EjercicioService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   @HostListener('window:resize', ['$event'])
@@ -69,7 +70,9 @@ export class PatronDetailsComponent implements OnInit {
     
   }
 
-  public createEjercicio() {}
+  public createEjercicio() {
+    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH.substr(1)]);
+  }
   
   public onEditEjercicio(event: any) {}
   
@@ -89,7 +92,9 @@ export class PatronDetailsComponent implements OnInit {
 
   private buildColumnsProfesor() {
     this.columns = [
-     
+      { prop: 'nombre', name: 'Nombre', resizeable: false, sortable: false, minWidth: 200, draggable: false, flexGrow: 2 },
+      { prop: 'intentos', name: 'Intentos', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
+      { prop: 'fechaCreacion', name: 'Fecha creación', resizeable: false, sortable: false, draggable: false, flexGrow: 1 }
     ];
   }
 

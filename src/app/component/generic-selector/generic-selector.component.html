@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">
             <div>
-                <span class="header-section">{{ label }}</span>
+                <span class="header-section">{{ label }} <ng-container *ngIf="required && !readOnly"><span style="color:orangered">*</span></ng-container></span>
             </div>
             <div>
                 <ng-container *ngIf="!readOnly; else readTemplate">
