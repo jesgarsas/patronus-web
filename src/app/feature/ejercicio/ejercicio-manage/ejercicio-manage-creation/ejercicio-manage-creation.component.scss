@@ -1,0 +1,11 @@
+.add-question-button:hover {
+    background-color: rgba($color: #525252, $alpha: 0.2) !important;
+}
+
+.add-question-button {
+    height: 40px;
+    width: 150px;
+    background-color: transparent;
+    border: transparent;
+    border-radius: 10px;
+}
