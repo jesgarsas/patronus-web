@@ -9,3 +9,9 @@
     border: transparent;
     border-radius: 10px;
 }
+
+.div-scrollable{
+    max-height: 800px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
