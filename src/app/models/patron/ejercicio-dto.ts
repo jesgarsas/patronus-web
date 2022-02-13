@@ -10,7 +10,7 @@ export class EjercicioDTO {
 	public fechaCreacion?: Moment | string;
 	public nombreAutor?: string;	
 	public idAutor?: number;
-	public preguntas?: PreguntaDTO;
+	public preguntas?: PreguntaDTO[];
 	public numPreguntas?: number;
 	public patron?: PatronDTO;
 	public intentos?: number | string;
