@@ -19,8 +19,8 @@
             <div class="mt-4">
                 <span class=label-form>Preguntas</span>
             </div>
-            <nb-list *ngIf="form.value[preguntasFormName] && form.value[preguntasFormName].length > 0" style="list-style: decimal; list-style-position: inside;" >
-                <nb-list-item style="margin-top: 20px;" *ngFor="let pregunta of form.value[preguntasFormName]; let indexP = index">
+            <nb-list *ngIf="anyPreguntas()" style="list-style: decimal; list-style-position: inside;" >
+                <nb-list-item style="margin-top: 20px;" *ngFor="let pregunta of getPreguntasForm(); let indexP = index">
                     <form [formGroup]="pregunta" style="width: 100% !important;">
                         <span><b>Tipo de pregunta</b> 
                             <button nbButton ghost (click)="deletePregunta(indexP)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></button>
@@ -43,7 +43,7 @@
                                         </ng-container>
                                         <div>
                                             <textarea style="resize: vertical;" placeholder="Cuerpo de la opción"
-                                                nbInput fullWidth [formControl]="opcion.controls[this.textoFormName]"
+                                                nbInput fullWidth [formControl]="opcion.controls[this.texto2FormName]"
                                                 status="basic"></textarea>
                                         </div>
                                     </li>

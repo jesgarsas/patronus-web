@@ -1,6 +1,6 @@
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, destroyPlatform, Input, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import * as moment from 'moment';
@@ -17,6 +17,8 @@ import { LoginService } from 'src/app/service/login.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
+import { AppUtilities } from 'src/app/utils/app-uitilites';
+import { EjercicioManageCreationValidators } from './ejercicio-manage-creation.validators';
 
 @Component({
   selector: 'app-ejercicio-manage-creation',
@@ -34,7 +36,8 @@ export class EjercicioManageCreationComponent implements OnInit {
   readonly intentosFormName: string = 'intentos';
   readonly preguntasFormName: string = 'preguntas';
   readonly opcionesFormName: string = 'opciones';
-  readonly textoFormName: string = 'texto';
+  readonly textoFormName: string = 'cuerpo de pregunta';
+  readonly texto2FormName: string = 'cuerpo de opción';
   readonly tipoFormName: string = 'tipo';
   readonly correcta: string = 'correcta';
 
@@ -53,18 +56,18 @@ export class EjercicioManageCreationComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({});
-    this.form.addControl(this.preguntasFormName, new FormArray([]));
+    this.form.addControl(this.preguntasFormName, new FormArray([], [EjercicioManageCreationValidators.minUnaPreguntaValidator()]));
   }
 
   addPregunta() {
     if (this.form && this.form.value[this.preguntasFormName]) {
       let preguntaForm = new FormGroup({});
-      preguntaForm.addControl(this.textoFormName, new FormControl(undefined));
-      preguntaForm.addControl(this.opcionesFormName, new FormArray([
-        this.createOptionForm(),
-        this.createOptionForm(),
-      ]));
-      (this.form.controls[this.preguntasFormName] as FormArray).value.push(preguntaForm);
+      preguntaForm.addControl(this.textoFormName, new FormControl(undefined, Validators.required));
+      preguntaForm.addControl(this.opcionesFormName, new FormArray([], [EjercicioManageCreationValidators.minDosOpcionesValidator(), 
+        EjercicioManageCreationValidators.minUnaOpcionCorrectaValidator()]));
+      (preguntaForm.controls[this.opcionesFormName] as FormArray).push(this.createOptionForm());
+      (preguntaForm.controls[this.opcionesFormName] as FormArray).push(this.createOptionForm());
+      (this.form.controls[this.preguntasFormName] as FormArray).push(preguntaForm);
     }
   }
 
@@ -73,8 +76,16 @@ export class EjercicioManageCreationComponent implements OnInit {
   }
 
   onSave() {
-    let dto: EjercicioDTO = this.transformDTO();
-    console.log(dto);
+    console.log(this.form)
+    if (this.form.valid) {
+      let dto: EjercicioDTO = this.transformDTO();
+      console.log(dto);
+    } else {
+      let errors: string[] = AppUtilities.getErrorsFromForm(this.form);
+      errors.forEach(error => {
+        this.toastService.showError('Error', error);
+      });
+    }
   }
 
   onBack() {
@@ -90,8 +101,7 @@ export class EjercicioManageCreationComponent implements OnInit {
 
   deletePregunta(index: number) {
     if (this.form && this.form.value[this.preguntasFormName] && this.form.value[this.preguntasFormName].length > index) {
-      (this.form.controls[this.preguntasFormName] as FormArray).value.splice(index, 1);
-
+      (this.form.controls[this.preguntasFormName] as FormArray).removeAt(index);
     }
   }
 
@@ -101,9 +111,17 @@ export class EjercicioManageCreationComponent implements OnInit {
     }
   }
 
-  private createOptionForm() {
+  getPreguntasForm(): any[] {
+    return (this.form.controls[this.preguntasFormName] as FormArray).controls;
+  }
+
+  anyPreguntas(): boolean {
+    return this.form.controls[this.preguntasFormName] && (this.form.controls[this.preguntasFormName] as FormArray).controls.length > 0;
+  }
+
+  private createOptionForm(): FormGroup {
     let form = new FormGroup({});
-    form.addControl(this.textoFormName, new FormControl(undefined));
+    form.addControl(this.texto2FormName, new FormControl(undefined, Validators.required));
     form.addControl(this.correcta, new FormControl(undefined));
     return form;
   }
@@ -150,7 +168,7 @@ export class EjercicioManageCreationComponent implements OnInit {
     if (pregunta.controls[this.opcionesFormName]) {
       (pregunta.controls[this.opcionesFormName] as FormArray).controls.forEach((opcion) => {
         let opcionDTO: OpcionDTO = new OpcionDTO();
-        opcionDTO.texto = opcion.value[this.textoFormName];
+        opcionDTO.texto = opcion.value[this.texto2FormName];
         opcionDTO.correcta = opcion.value[this.correcta] ? opcion.value[this.correcta] : false;
 
         preguntaDTO.opciones?.push(opcionDTO);
