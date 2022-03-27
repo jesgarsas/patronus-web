@@ -71,7 +71,7 @@ export class PatronDetailsComponent implements OnInit {
   }
 
   public createEjercicio() {
-    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH.substr(1)]);
+    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH.substr(1)], { queryParams: { idPatron: this.idPatron}});
   }
   
   public onEditEjercicio(event: any) {}

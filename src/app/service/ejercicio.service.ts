@@ -20,4 +20,8 @@ export class EjercicioService {
   public getEjerciciosByUserPatron(id: number, userId: number) {
     return this.http.get<EjercicioDTO[]>(`${AppContants.URL_API_EJERCIO_ALL}/patron/${id}/usuario/${userId}`);
   }
+
+  public save(ejercicio: EjercicioDTO) {
+    return this.http.post(`${AppContants.URL_API_EJERCIO_PROFE}/save`, ejercicio);
+  }
 }

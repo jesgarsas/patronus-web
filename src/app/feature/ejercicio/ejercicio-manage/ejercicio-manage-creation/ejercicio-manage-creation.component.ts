@@ -1,9 +1,10 @@
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y/input-modality/input-modality-detector';
 import { Component, destroyPlatform, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import * as moment from 'moment';
+import { take } from 'rxjs/operators';
 import { GenericDialogCancelComponent } from 'src/app/component/generic-dialog/generic-dialog-cancel/generic-dialog-cancel.component';
 import { GenericDialogDeleteComponent } from 'src/app/component/generic-dialog/generic-dialog-delete/generic-dialog-delete.component';
 import { UserDialogCreateComponent } from 'src/app/feature/usuario/user-dialog/user-dialog-create/user-dialog-create.component';
@@ -13,7 +14,9 @@ import { EjercicioDTO } from 'src/app/models/patron/ejercicio-dto';
 import { OpcionDTO } from 'src/app/models/patron/opcion-dto';
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PreguntaDTO } from 'src/app/models/patron/pregunta-dto';
+import { EjercicioService } from 'src/app/service/ejercicio.service';
 import { LoginService } from 'src/app/service/login.service';
+import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
@@ -49,7 +52,9 @@ export class EjercicioManageCreationComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private route: ActivatedRoute,
-    private userService: LoginService) {
+    private userService: LoginService,
+    private patronService: PatronService,
+    private ejercicioService: EjercicioService) {
     this.autorId = this.userService.getUser()?.id;
 
   }
@@ -57,6 +62,13 @@ export class EjercicioManageCreationComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({});
     this.form.addControl(this.preguntasFormName, new FormArray([], [EjercicioManageCreationValidators.minUnaPreguntaValidator()]));
+    this.route.queryParams.pipe(take(1)).subscribe((params: Params) => {
+      this.patronId = params.idPatron;
+      if (!this.patronId) {
+        this.router.navigate(['/']);
+      }
+      this.getPatronTitulo();
+    })
   }
 
   addPregunta() {
@@ -79,7 +91,14 @@ export class EjercicioManageCreationComponent implements OnInit {
     console.log(this.form)
     if (this.form.valid) {
       let dto: EjercicioDTO = this.transformDTO();
-      console.log(dto);
+      this.ejercicioService.save(dto).pipe(take(1)).subscribe((patronId) => {
+        if (patronId) {
+          this.toastService.showConfirmation('Guardado', 'Ejercicio guardado');
+          this.router.navigate([AppContants.PATRON_DETALLES_PATH], {queryParams: { id: this.patronId }});
+        }
+      }, (error) => {
+        this.toastService.showError('Error', 'Error en el guardado');
+      });
     } else {
       let errors: string[] = AppUtilities.getErrorsFromForm(this.form);
       errors.forEach(error => {
@@ -149,10 +168,10 @@ export class EjercicioManageCreationComponent implements OnInit {
 
   private transformPreguntas(dto: EjercicioDTO) {
     if (this.form.value[this.preguntasFormName]) {
-      this.form.value[this.preguntasFormName].forEach((pregunta: FormGroup) => {
+      (this.form.controls[this.preguntasFormName] as FormArray).controls.forEach((pregunta: any) => {
         let preguntaDTO: PreguntaDTO = new PreguntaDTO();
-        preguntaDTO.texto = pregunta.value[this.textoFormName];
-        preguntaDTO.tipo = pregunta.value[this.tipoFormName];
+        preguntaDTO.pregunta = pregunta.controls[this.textoFormName].value;
+        // preguntaDTO.tipo = pregunta.controls[this.tipoFormName].value;
         preguntaDTO.opciones = [];
 
         // Transform opciones
@@ -166,13 +185,24 @@ export class EjercicioManageCreationComponent implements OnInit {
 
   private transformOpciones(pregunta: FormGroup, preguntaDTO: PreguntaDTO) {
     if (pregunta.controls[this.opcionesFormName]) {
-      (pregunta.controls[this.opcionesFormName] as FormArray).controls.forEach((opcion) => {
+      
+      (pregunta.controls[this.opcionesFormName] as FormArray).controls.forEach((opcion, index) => {
         let opcionDTO: OpcionDTO = new OpcionDTO();
         opcionDTO.texto = opcion.value[this.texto2FormName];
         opcionDTO.correcta = opcion.value[this.correcta] ? opcion.value[this.correcta] : false;
-
+        opcionDTO.opcion = index;
         preguntaDTO.opciones?.push(opcionDTO);
       });
     }
+  }
+
+  private getPatronTitulo() {
+    this.patronService.getByIdAndLocale(this.patronId, LocaleDTO.spanish.id!).pipe(take(1)).subscribe((patron: PatronDTO) => {
+      if (patron && patron.id) {
+        this.form.controls[this.patronFormName].setValue(patron.nombre);
+      } else {
+        this.router.navigate(['/']);
+      }
+    });
   }
 }
