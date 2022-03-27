@@ -24,4 +24,8 @@ export class EjercicioService {
   public save(ejercicio: EjercicioDTO) {
     return this.http.post(`${AppContants.URL_API_EJERCIO_PROFE}/save`, ejercicio);
   }
+
+  public delete(id: number) {
+    return this.http.delete(`${AppContants.URL_API_EJERCIO_PROFE}/delete/${id}`);
+  }
 }

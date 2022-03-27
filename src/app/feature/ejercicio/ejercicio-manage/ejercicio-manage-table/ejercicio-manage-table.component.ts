@@ -27,7 +27,7 @@ export class EjercicioManageTableComponent implements OnInit {
   public page: Page = new Page();
   private filter: GrupoFilterDto = new GrupoFilterDto();
   public loading: boolean = false;
-  public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true });
+  public configActions: ConfigAction = new ConfigAction({ show: true, delete: true });
   public form: FormGroup = new FormGroup({});
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
@@ -71,8 +71,15 @@ export class EjercicioManageTableComponent implements OnInit {
     this.getEjercicios();
   }
 
-  public onEdit(value: PatronDTO) {
-    this.router.navigate([AppContants.GRUPO_DETALLES_PATH], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
+  public onDelete(row: PatronDTO) {
+    this.ejercicioService.delete(row.id!).pipe(take(1)).subscribe((result) => {
+      if (result) {
+        this.toastService.showConfirmation('Éxito', 'Borrado con éxito');
+        this.getEjercicios();
+      }
+    }, error => {
+      this.toastService.showError('Error', 'No se pudo borrar el ejercicio');
+    })
   }
 
   private buildColumns(): void {
@@ -102,7 +109,7 @@ export class EjercicioManageTableComponent implements OnInit {
   private transformData() {
     this.page.content.map((row: EjercicioDTO) => {
       row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
-      row.fechaCreacion =  AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion!);
+      row.fechaCreacion = AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion!);
       row.nombreAutor = AppUtilities.firstLetterUpper(row.nombreAutor!);
       row.patron!.nombre = AppUtilities.firstLetterUpper(row.patron?.nombre!);
     });
