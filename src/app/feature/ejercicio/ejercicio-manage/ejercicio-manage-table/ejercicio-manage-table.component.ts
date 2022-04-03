@@ -27,7 +27,7 @@ export class EjercicioManageTableComponent implements OnInit {
   public page: Page = new Page();
   private filter: GrupoFilterDto = new GrupoFilterDto();
   public loading: boolean = false;
-  public configActions: ConfigAction = new ConfigAction({ show: true, delete: true });
+  public configActions: ConfigAction = new ConfigAction({ edit: true, delete: true, show: true });
   public form: FormGroup = new FormGroup({});
 
   private dialog?: NbDialogRef<GenericDialogDeleteComponent>;
@@ -69,6 +69,11 @@ export class EjercicioManageTableComponent implements OnInit {
   public onPage(value: any) {
     this.filter.pageNumber = value.offset;
     this.getEjercicios();
+  }
+
+  public onEdit(row: PatronDTO) {
+    console.log(row);
+    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH], {queryParams: { idPatron: row.patron!.id, idEjercicio: row.id}})
   }
 
   public onDelete(row: PatronDTO) {

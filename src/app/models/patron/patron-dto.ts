@@ -9,6 +9,7 @@ export class PatronDTO {
     constructor(
         public id?: number,
         public nombre?: string,
+        public patron?: PatronDTO,
         public fechaCreacion?: Moment | string,
         public autor?: AutorDTO,
         public descripciones?: DescripcionDTO[],

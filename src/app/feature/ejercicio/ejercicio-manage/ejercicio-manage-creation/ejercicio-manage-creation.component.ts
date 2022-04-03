@@ -30,10 +30,6 @@ import { EjercicioManageCreationValidators } from './ejercicio-manage-creation.v
 })
 export class EjercicioManageCreationComponent implements OnInit {
 
-  @Input() patronId: number = 0;
-
-  form!: FormGroup;
-
   readonly nombreFormName: string = 'nombre';
   readonly patronFormName: string = 'patron';
   readonly intentosFormName: string = 'intentos';
@@ -43,6 +39,16 @@ export class EjercicioManageCreationComponent implements OnInit {
   readonly texto2FormName: string = 'cuerpo de opción';
   readonly tipoFormName: string = 'tipo';
   readonly correcta: string = 'correcta';
+  readonly idFormName: string = 'id';
+
+  readonly editHeader: string = 'Editar ejercicio'
+  readonly crearHeader: string = 'Crear nuevo ejercicio'
+  
+  @Input() patronId: number = 0;
+  ejercioId: number | undefined = undefined;
+
+  form!: FormGroup;
+  headerTitle: string = this.crearHeader;
 
   private dialog?: NbDialogRef<GenericDialogCancelComponent> | NbDialogRef<UserDialogCreateComponent> | NbDialogRef<GenericDialogDeleteComponent>
     | NbDialogRef<UserDialogImportComponent>;
@@ -68,6 +74,12 @@ export class EjercicioManageCreationComponent implements OnInit {
         this.router.navigate(['/']);
       }
       this.getPatronTitulo();
+      this.ejercioId = params.idEjercicio;
+      if (this.ejercioId) {
+        this.headerTitle = this.editHeader;
+        this.trasnformEjercicioToForm(this.ejercioId!);
+      }
+      
     })
   }
 
@@ -75,6 +87,7 @@ export class EjercicioManageCreationComponent implements OnInit {
     if (this.form && this.form.value[this.preguntasFormName]) {
       let preguntaForm = new FormGroup({});
       preguntaForm.addControl(this.textoFormName, new FormControl(undefined, Validators.required));
+      preguntaForm.addControl(this.idFormName, new FormControl(undefined));
       preguntaForm.addControl(this.opcionesFormName, new FormArray([], [EjercicioManageCreationValidators.minDosOpcionesValidator(), 
         EjercicioManageCreationValidators.minUnaOpcionCorrectaValidator()]));
       (preguntaForm.controls[this.opcionesFormName] as FormArray).push(this.createOptionForm());
@@ -138,16 +151,65 @@ export class EjercicioManageCreationComponent implements OnInit {
     return this.form.controls[this.preguntasFormName] && (this.form.controls[this.preguntasFormName] as FormArray).controls.length > 0;
   }
 
+  private trasnformEjercicioToForm(ejercicioId: number) {
+    this.ejercicioService.getById(ejercicioId).pipe(take(1)).subscribe((ejercicio) => {
+      if (ejercicio) {
+        this.form.controls[this.nombreFormName].setValue(ejercicio.nombre);
+        this.form.controls[this.intentosFormName].setValue(ejercicio.intentos);
+        this.transformPreguntasToForm(ejercicio);
+        
+        if (!this.patronId) {
+          this.toastService.showError("Error", "El ejercicio no esxite");
+          this.router.navigate(['/']);
+        }
+      }
+    }, (error) => {
+      this.toastService.showError("Error", "Error en cargar el ejercicio");
+    });
+  }
+
+  private transformPreguntasToForm(ejercicio: EjercicioDTO) {
+    if (ejercicio.preguntas) {
+      let preguntas = ejercicio.preguntas;
+      for (let index in preguntas) {
+        this.addPregunta();
+        let formP: FormGroup = ((this.form.controls[this.preguntasFormName] as FormArray).controls[index] as FormGroup);
+        formP.controls[this.textoFormName].setValue(preguntas[index].pregunta);
+        formP.controls[this.idFormName].setValue(preguntas[index].id);
+        this.transformOpcionToForm(preguntas[index].opciones!, formP);
+      }
+    }
+  }
+
+  private transformOpcionToForm(opciones: OpcionDTO[], form: FormGroup) {
+    if (opciones) {
+      let formOs: FormArray = form.controls[this.opcionesFormName] as FormArray;
+      for (let index in opciones) {
+        if (formOs.controls.length === +index) {
+          this.addOptionForm(formOs);
+        }
+        let formO: FormGroup = formOs.controls[index] as FormGroup;
+        let opcion: OpcionDTO = opciones[index];
+        formO.controls[this.texto2FormName].setValue(opcion.texto);
+        formO.controls[this.correcta].setValue(opcion.correcta);
+        formO.controls[this.idFormName].setValue(opcion.id);
+      }
+    }
+  }
+
   private createOptionForm(): FormGroup {
     let form = new FormGroup({});
     form.addControl(this.texto2FormName, new FormControl(undefined, Validators.required));
     form.addControl(this.correcta, new FormControl(undefined));
+    form.addControl(this.idFormName, new FormControl(undefined));
     return form;
   }
 
   private transformDTO(): EjercicioDTO {
     let dto = new EjercicioDTO();
-
+    if (this.ejercioId) {
+      dto.id = this.ejercioId;
+    }
     if (this.form && this.form.controls) {
       dto.patron = new PatronDTO();
       dto.patron!.id = this.patronId;
@@ -171,6 +233,7 @@ export class EjercicioManageCreationComponent implements OnInit {
       (this.form.controls[this.preguntasFormName] as FormArray).controls.forEach((pregunta: any) => {
         let preguntaDTO: PreguntaDTO = new PreguntaDTO();
         preguntaDTO.pregunta = pregunta.controls[this.textoFormName].value;
+        preguntaDTO.id = pregunta.controls[this.idFormName].value;
         // preguntaDTO.tipo = pregunta.controls[this.tipoFormName].value;
         preguntaDTO.opciones = [];
 
@@ -191,6 +254,7 @@ export class EjercicioManageCreationComponent implements OnInit {
         opcionDTO.texto = opcion.value[this.texto2FormName];
         opcionDTO.correcta = opcion.value[this.correcta] ? opcion.value[this.correcta] : false;
         opcionDTO.opcion = index;
+        opcionDTO.id = opcion.value[this.idFormName];
         preguntaDTO.opciones?.push(opcionDTO);
       });
     }

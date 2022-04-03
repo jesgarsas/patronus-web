@@ -28,4 +28,8 @@ export class EjercicioService {
   public delete(id: number) {
     return this.http.delete(`${AppContants.URL_API_EJERCIO_PROFE}/delete/${id}`);
   }
+
+  public getById(id: number): Observable<EjercicioDTO> {
+    return this.http.get<EjercicioDTO>(`${AppContants.URL_API_EJERCIO_PROFE}/${id}`);
+  }
 }

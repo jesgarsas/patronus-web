@@ -28,4 +28,5 @@
 </nb-accordion>
 
 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading"
-    [columns]="columns" [actionsColumn]="true" [configActions]="configActions" [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)"></app-generic-table>
+    [columns]="columns" [actionsColumn]="true" [configActions]="configActions" [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)"
+    (onEdit)="onEdit($event)"></app-generic-table>
