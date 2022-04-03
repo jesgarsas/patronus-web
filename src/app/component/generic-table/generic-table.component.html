@@ -8,6 +8,12 @@
                 [sortable]="col.sortable === null ? false : col.sortable!">
                 <ng-template #acciones let-row="row">
                     <div style="display: inline;">
+                        <ng-container *ngIf="configActions.show">
+                            <button (click)="onShowClick(row)" nbButton ghost status="info"
+                                style="padding: 0px !important; margin-right: 15px;">
+                                <nb-icon icon="arrow-right-outline"></nb-icon>
+                            </button>
+                        </ng-container>
                         <ng-container *ngIf="configActions.edit">
                             <button (click)="onEditClick(row)" nbButton ghost status="primary"
                                 style="padding: 0px !important; margin-right: 15px;">

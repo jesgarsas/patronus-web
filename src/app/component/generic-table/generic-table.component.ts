@@ -27,6 +27,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();
   @Output() public onPage: EventEmitter<any> = new EventEmitter();
   @Output() public onSort: EventEmitter<any> = new EventEmitter();
+  @Output() public onShow: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('acciones')
   public accionesTemplate!: TemplateRef<any>;
@@ -58,6 +59,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
 
   public onSortClick(value: any) {
     this.onSort.emit(value);
+  }
+
+  public onShowClick(value: any) {
+    this.onShow.emit(value);
   }
 
   public onEditClick(value: any) {

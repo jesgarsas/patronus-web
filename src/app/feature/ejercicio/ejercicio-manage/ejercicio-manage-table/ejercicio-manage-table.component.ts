@@ -72,8 +72,7 @@ export class EjercicioManageTableComponent implements OnInit {
   }
 
   public onEdit(row: PatronDTO) {
-    console.log(row);
-    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH], {queryParams: { idPatron: row.patron!.id, idEjercicio: row.id}})
+    this.router.navigate([AppContants.EJERCICIO_CREAR_PATH], {queryParams: { idPatron: row.patron!.id, idEjercicio: row.id}});
   }
 
   public onDelete(row: PatronDTO) {

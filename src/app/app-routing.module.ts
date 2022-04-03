@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EjercicioAlumnoComponent } from './feature/ejercicio/ejercicio-alumno/ejercicio-alumno.component';
 import { EjercicioManageCreationComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-creation/ejercicio-manage-creation.component';
 import { EjercicioManageComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage.component';
 import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
   { path: AppContants.USUARIO_ADMINISTRAR_PATH.substr(1), component: UsuarioManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_ADMINISTRADOR } },
   { path: AppContants.EJERCICIO_ADMINISTRAR_PATH.substr(1), component: EjercicioManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
   { path: AppContants.EJERCICIO_DETALLES_PATH.substr(1), component: EjercicioManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
-  { path: AppContants.EJERCICIO_CREAR_PATH.substr(1), component: EjercicioManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } }
+  { path: AppContants.EJERCICIO_CREAR_PATH.substr(1), component: EjercicioManageCreationComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },
+  { path: AppContants.EJERCICIO_PATH.substr(1), component: EjercicioAlumnoComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_ALUMNO } }
 ];
 
 @NgModule({

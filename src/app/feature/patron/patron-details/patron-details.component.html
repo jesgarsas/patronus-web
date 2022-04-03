@@ -53,8 +53,8 @@
                             <button nbButton class="button-lowercase" (click)="createEjercicio()" status="info"
                             size="small">Crear Ejercicio</button>
                         </div>
-                        <app-generic-table (onSort)="onSortEjercicio($event)" [loading]="loading" [columns]="columns" [rows]="rows" 
-                        (onEdit)="onEditEjercicio($event)" (onDelete)="onDeleteEjercicio($event)"></app-generic-table>
+                        <app-generic-table (onSort)="onSortEjercicio($event)" [loading]="loading" [columns]="columns" [rows]="rows" [actionsColumn]="true" [configActions]="configActions"
+                        (onEdit)="onEditEjercicio($event)" (onDelete)="onDeleteEjercicio($event)"  (onShow)="onShowEjercicio($event)"></app-generic-table>
                     </nb-accordion-item-body>
                 </nb-accordion-item>
             </nb-accordion>
