@@ -102,7 +102,7 @@ export class PatronDetailsComponent implements OnInit {
 
   public onShowEjercicio(row: EjercicioDTO) {
     if (!this.isAlumno) {
-      this.router.navigate(['/']);
+      this.router.navigate([AppContants.EJERCICIO_PATH], { queryParams: { ejercicioId: row.id}});
     } else {
       this.router.navigate([AppContants.EJERCICIO_PATH], { queryParams: { ejercicioId: row.id}});
     }

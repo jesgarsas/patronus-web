@@ -1,5 +1,5 @@
 <nb-card status="default" class="stretch">
-  <nb-card-header>Ejercicio:</nb-card-header>
+  <nb-card-header>Ejercicio: {{ ejercicio ? ejercicio.nombre : '' }}</nb-card-header>
   <nb-card-body>
     <div class="box justify">
       <span>
@@ -14,23 +14,36 @@
     </div>
 
     <!-- Body de las preguntas-->
-    <nb-list style="list-style: decimal; list-style-position: inside;">
-      <nb-list-item class="justify" style="margin-top: 20px;">
+    <nb-list style="list-style: decimal; list-style-position: inside;" *ngIf="ejercicio">
+      <nb-list-item class="justify" style="margin-top: 20px;"
+        *ngFor="let pregunta of ejercicio!.preguntas; let index = index">
         <div class="justify">
           <span>
-            Texto pregunta test test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test test
+            <strong>{{ index + 1 }}.</strong>
+            {{ pregunta.pregunta }}
           </span>
           <div style="margin-top: 2em">
-            <ul style="list-style-type: lower-alpha; gap: 10px;">
-              <li>
-                Texto opcion test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test testtest test test test test test test test test test test test test test test test
-              </li>
-            </ul>
+            <table class="table-options" *ngIf="pregunta">
+              <tr *ngFor="let opcion of pregunta.opciones">
+                <th style="width: 28px;">
+                  <nb-checkbox (click)="onClickOption(opcion)">
+                  </nb-checkbox>
+                </th>
+                <th>
+                  <p>
+                    {{ opcion.texto }}
+                  </p>
+                </th>
+              </tr>
+
+            </table>
           </div>
         </div>
       </nb-list-item>
     </nb-list>
-
-
+    <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+      <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Enviar</button>
+      <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Atrás</button>
+    </div>
   </nb-card-body>
 </nb-card>

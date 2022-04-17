@@ -4,11 +4,11 @@ import { PatronDTO } from "./patron-dto";
 import { PreguntaDTO } from "./pregunta-dto";
 
 export class EjercicioDTO {
-    public id?: number;
+	public id?: number;
 	public locale?: LocaleDTO;
 	public nombre?: string;
 	public fechaCreacion?: Moment | string;
-	public nombreAutor?: string;	
+	public nombreAutor?: string;
 	public idAutor?: number;
 	public preguntas?: PreguntaDTO[];
 	public numPreguntas?: number;

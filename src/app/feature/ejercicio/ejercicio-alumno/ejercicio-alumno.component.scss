@@ -10,3 +10,11 @@
   text-align: justify;
   text-justify: inter-word;
 }
+
+.table-options tr th {
+  vertical-align: top;
+}
+
+.table-options tr th nb-checkbox {
+  margin-top: 2px;
+}

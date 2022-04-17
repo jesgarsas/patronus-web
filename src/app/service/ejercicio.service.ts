@@ -32,4 +32,8 @@ export class EjercicioService {
   public getById(id: number): Observable<EjercicioDTO> {
     return this.http.get<EjercicioDTO>(`${AppContants.URL_API_EJERCIO_PROFE}/${id}`);
   }
+
+  public getAsAlumnoById(id: number): Observable<EjercicioDTO> {
+    return this.http.get<EjercicioDTO>(`${AppContants.URL_API_EJERCIO_ALL}/${id}`);
+  }
 }
