@@ -10,6 +10,7 @@ import { Usuario } from 'src/app/models/usuario/usuario';
 import { EjercicioService } from 'src/app/service/ejercicio.service';
 import { LoginService } from 'src/app/service/login.service';
 import { PatronService } from 'src/app/service/patron.service';
+import { ResultadoService } from 'src/app/service/resultado.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AppContants } from 'src/app/utils/app-constants';
@@ -44,6 +45,7 @@ export class PatronDetailsComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private toastService: ToastService,
+    private resultadoService: ResultadoService
   ) { }
 
   @HostListener('window:resize', ['$event'])
@@ -104,7 +106,13 @@ export class PatronDetailsComponent implements OnInit {
     if (!this.isAlumno) {
       this.router.navigate([AppContants.EJERCICIO_PATH], { queryParams: { ejercicioId: row.id}});
     } else {
-      this.router.navigate([AppContants.EJERCICIO_PATH], { queryParams: { ejercicioId: row.id}});
+      this.resultadoService.checkIntentos(row.id!).pipe(take(1)).subscribe((res) => {
+        if (res) {
+          this.router.navigate([AppContants.EJERCICIO_PATH], { queryParams: { ejercicioId: row.id}});
+        } else {
+          this.toastService.showError('Acceso no disponible', 'Ya has realizado el máximo de intentos');
+        }
+      })
     }
   }
 
@@ -133,7 +141,7 @@ export class PatronDetailsComponent implements OnInit {
       row.fechaCreacion = AppUtilities.fomatDateToDDMMYYYY(row.fechaCreacion);
       row.nombre = AppUtilities.firstLetterUpper(row.nombre!);
       row.intentos = !row.intentos || row.intentos === 0 ? 'Ilimitados' : row.intentos;
-      row.nota = row.nota ? row.nota : '-';
+      row.nota = row.nota || row.nota === 0 ? Math.round((row.nota as number + Number.EPSILON) * 100) / 100 : '-';
     });
   }
 
