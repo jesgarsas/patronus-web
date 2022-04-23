@@ -75,6 +75,10 @@ export class EjercicioManageTableComponent implements OnInit {
     this.router.navigate([AppContants.EJERCICIO_CREAR_PATH], {queryParams: { idPatron: row.patron!.id, idEjercicio: row.id}});
   }
 
+  public onShow(row: PatronDTO) {
+    this.router.navigate([AppContants.EJERCICIO_ESTADÍSTICAS_PATH], { queryParams: { ejercicioId: row.id}});
+  }
+  
   public onDelete(row: PatronDTO) {
     this.ejercicioService.delete(row.id!).pipe(take(1)).subscribe((result) => {
       if (result) {

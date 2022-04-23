@@ -48,6 +48,7 @@ import { EjercicioManageComponent } from './feature/ejercicio/ejercicio-manage/e
 import { EjercicioManageTableComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-table/ejercicio-manage-table.component';
 import { EjercicioManageCreationComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-creation/ejercicio-manage-creation.component';
 import { EjercicioAlumnoComponent } from './feature/ejercicio/ejercicio-alumno/ejercicio-alumno.component';
+import { EjercicioEstadisticasComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-estadisticas/ejercicio-estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { EjercicioAlumnoComponent } from './feature/ejercicio/ejercicio-alumno/e
     EjercicioManageComponent,
     EjercicioManageTableComponent,
     EjercicioManageCreationComponent,
-    EjercicioAlumnoComponent
+    EjercicioAlumnoComponent,
+    EjercicioEstadisticasComponent
   ],
   imports: [
     BrowserModule,

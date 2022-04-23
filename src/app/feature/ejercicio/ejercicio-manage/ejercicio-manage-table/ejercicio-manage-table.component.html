@@ -29,4 +29,4 @@
 
 <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true" [loading]="loading"
     [columns]="columns" [actionsColumn]="true" [configActions]="configActions" [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)"
-    (onEdit)="onEdit($event)"></app-generic-table>
+    (onEdit)="onEdit($event)" (onShow)="onShow($event)"></app-generic-table>

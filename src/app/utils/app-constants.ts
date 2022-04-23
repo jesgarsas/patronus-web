@@ -24,6 +24,7 @@ export class AppContants {
     public static EJERCICIO_ADMINISTRAR_PATH = `${AppContants.EJERCICIO_PATH}/administracion`;
     public static EJERCICIO_CREAR_PATH = `${AppContants.EJERCICIO_ADMINISTRAR_PATH}/crear`;
     public static EJERCICIO_DETALLES_PATH = `${AppContants.EJERCICIO_ADMINISTRAR_PATH}/detalles`;
+    public static EJERCICIO_ESTADÍSTICAS_PATH = `${AppContants.EJERCICIO_PATH}/estadisticas`;
 
     // Apis URLS
     public static URL_API = 'http://localhost:8080/api';
