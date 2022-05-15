@@ -1,0 +1,33 @@
+<h3>{{ title }}</h3>
+<div class="container-flex">
+  <div class="single-chart">
+    <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="serie" [legend]="false" [labels]="false"
+      [animations]="true" [doughnut]="true" (select)="onSelect($event)" (activate)="onActivate($event)"
+      (deactivate)="onDesactivate($event)">
+    </ngx-charts-pie-chart>
+  </div>
+  <div class="single-legend-chart">
+    <div class="title">
+      {{ formatNumber(total!) }} <!-- total amount -->
+    </div>
+    <div class="subtitle">
+      {{ totalLabel }} <!-- total amount label -->
+    </div>
+    <div class="container-flex splited-legend"> <!-- Legend -->
+
+      <ng-container *ngFor="let item of serie; let index = index">
+        <div class="legend-item"  [ngStyle]="{'border-left-color': colorScheme.domain[index] }">
+          <div class="legend-item-title"> <!-- total amount portion -->
+            {{ formatNumber(item.value!) }}
+          </div>
+          <div class="legend-item-subtitle"> <!-- total amount portion label -->
+            {{ item.name }}
+          </div>
+          <div class="legend-item-subtitle"> <!-- fraction total amount portion -->
+            {{ calculatePercentage(item.value) }}%
+          </div>
+        </div>
+      </ng-container>
+      
+  </div>
+</div>

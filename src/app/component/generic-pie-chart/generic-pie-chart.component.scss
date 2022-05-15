@@ -1,0 +1,52 @@
+.container-flex {
+  display: flex; /* or inline-flex */
+}
+
+.single-chart {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.single-legend-chart {
+  width: auto;
+  margin-left: 25px;
+}
+
+.title {
+  margin-top: 30px;
+  margin-bottom: 8px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 26px;
+  font-weight: normal !important;
+}
+
+.splited-legend {
+  margin-top: 30px;
+  margin-left: 15px;
+  gap: 40px;
+}
+
+.legend-item {
+  border-left: solid 6px;
+  padding-left: 12px;
+}
+
+.legend-item-red {
+  border-left: #DE3C25 solid 6px;
+  padding-left: 12px;
+}
+
+.legend-item-title {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.legend-item-subtitle  {
+  font-size: 18px;
+  margin-bottom: 3px;
+  color: #808080;
+}

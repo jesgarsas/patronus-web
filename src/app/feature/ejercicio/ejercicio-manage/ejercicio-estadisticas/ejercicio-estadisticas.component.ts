@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/service/toast.service';
   styleUrls: ['./ejercicio-estadisticas.component.scss']
 })
 export class EjercicioEstadisticasComponent implements OnInit {
-  
+
   private ejercicioId?: number;
 
   constructor(private dialogService: NbDialogService,
@@ -41,6 +41,8 @@ export class EjercicioEstadisticasComponent implements OnInit {
 
   private getEstadisticas() {
     // Add code here
-    
+    this.respuestaService.getEstadisticas(this.ejercicioId!, [1,2,3]).pipe(take(1)).subscribe((dto) => {
+      console.log(dto);
+    });
   }
 }

@@ -49,6 +49,8 @@ import { EjercicioManageTableComponent } from './feature/ejercicio/ejercicio-man
 import { EjercicioManageCreationComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage-creation/ejercicio-manage-creation.component';
 import { EjercicioAlumnoComponent } from './feature/ejercicio/ejercicio-alumno/ejercicio-alumno.component';
 import { EjercicioEstadisticasComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-estadisticas/ejercicio-estadisticas.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { GenericPieChartComponent } from './component/generic-pie-chart/generic-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,8 @@ import { EjercicioEstadisticasComponent } from './feature/ejercicio/ejercicio-ma
     EjercicioManageTableComponent,
     EjercicioManageCreationComponent,
     EjercicioAlumnoComponent,
-    EjercicioEstadisticasComponent
+    EjercicioEstadisticasComponent,
+    GenericPieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -122,7 +125,8 @@ import { EjercicioEstadisticasComponent } from './feature/ejercicio/ejercicio-ma
     NbTooltipModule,
     NbSelectModule,
     NbCheckboxModule,
-    NbRadioModule
+    NbRadioModule,
+    NgxChartsModule
   ],
   providers: [
     PatronService,

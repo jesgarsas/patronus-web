@@ -17,4 +17,10 @@ export class ResultadoService {
   public checkIntentos(ejericioId: number) {
     return this.http.get(`${AppContants.URL_API_RESULTADO_ALL}/checkIntentos/${ejericioId}`);
   }
+
+  public getEstadisticas(ejericioId: number, grupos: number[]) {
+    let url: URL = new URL(`${AppContants.URL_API_RESULTADO_PROFE}/estadisticas/ejercicio/${ejericioId}`);
+    url.searchParams.append('idGrupos', grupos.toString());
+    return this.http.get(url.toString());
+  }
 }
