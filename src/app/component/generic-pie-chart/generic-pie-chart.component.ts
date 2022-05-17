@@ -1,30 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { EstSerieItem } from 'src/app/models/estadisticas/est-serie';
 import { ColorScheme } from './models/color-scheme';
-import { DataChart } from './models/data-chart';
 
 @Component({
   selector: 'app-generic-pie-chart',
   templateUrl: './generic-pie-chart.component.html',
   styleUrls: ['./generic-pie-chart.component.scss']
 })
-export class GenericPieChartComponent implements OnInit {
+export class GenericPieChartComponent implements OnInit, OnChanges {
 
-  @Input() title?: string = 'Gráfica del grupo';
+  @Input() title?: string = '';
   @Input() total?: number = 100;
-  @Input() serie?: DataChart[] = [
-    {
-      "name": "Aprobados",
-      "value": 60
-    },
-    {
-      "name": "Suspendidos",
-      "value": 35
-    },
-    {
-      "name": "No realizado",
-      "value": 5
-    }
-  ];
+  @Input() serie?: EstSerieItem[];
   @Input() totalLabel?: string = 'Total de alumnos';
   @Input() colorScheme: ColorScheme | any = {
     domain: ['#7FDD69', '#DE3C25', '#808080']
@@ -41,6 +28,12 @@ export class GenericPieChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.series && changes.series.currentValue) {
+      console.log(changes.series.currentValue);
+    }
   }
 
   onSelect(data: any): void {
@@ -60,6 +53,6 @@ export class GenericPieChartComponent implements OnInit {
   }
 
   formatNumber(num: number): string {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    return num ? num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') : '0';
   }
 }

@@ -1,6 +1,6 @@
 <h3>{{ title }}</h3>
 <div class="container-flex">
-  <div class="single-chart">
+  <div class="single-chart" *ngIf="serie">
     <ngx-charts-pie-chart [view]="view" [scheme]="colorScheme" [results]="serie" [legend]="false" [labels]="false"
       [animations]="true" [doughnut]="true" (select)="onSelect($event)" (activate)="onActivate($event)"
       (deactivate)="onDesactivate($event)">
