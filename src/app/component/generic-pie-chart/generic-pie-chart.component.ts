@@ -13,6 +13,7 @@ export class GenericPieChartComponent implements OnInit, OnChanges {
   @Input() total?: number = 100;
   @Input() serie?: EstSerieItem[];
   @Input() totalLabel?: string = 'Total de alumnos';
+  @Input() simple: boolean = true;
   @Input() colorScheme: ColorScheme | any = {
     domain: ['#7FDD69', '#DE3C25', '#808080']
   };

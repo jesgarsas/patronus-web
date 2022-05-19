@@ -5,4 +5,5 @@ export class EstEjercicioDTO {
   public nombre?: string;
   public grupos?: EstGrupoDTO[] = [];
   public numeroPreguntas?: number = 0;
+  public preguntas?: string[] = [];
 }

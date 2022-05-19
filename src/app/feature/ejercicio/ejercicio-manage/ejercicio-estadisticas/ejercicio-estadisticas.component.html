@@ -1,9 +1,9 @@
 <nb-card status="default" class="stretch">
   <nb-card-header>Estadisticas del ejercicio: </nb-card-header>
   <nb-card-body>
-    <p>A continuación se detallan las estdísticas del ejericio <strong>-</strong> para el grupo <strong>-</strong>.
-      Puede seleccionar otros
-      tipos de filtros con las opciones de abajo.
+    <p>A continuación se detallan las estdísticas del ejercicio <strong>{{ estadisticas ? estadisticas.nombre! :
+        '-'}}</strong>.
+      Puede seleccionar otros tipos de filtros con las opciones de abajo.
     </p>
 
     <nb-accordion class="margin-b25">
@@ -18,22 +18,38 @@
 
     <ng-container *ngIf="estadisticas">
       <ng-container *ngIf="estSerie">
-        <app-generic-pie-chart class="chart" [serie]="estSerie!.serie" [total]="estadisticas!.grupos![0].total" [title]="'Gráfica del grupo ' + estadisticas!.grupos![0].nombre"></app-generic-pie-chart>
+        <ng-container *ngIf="showGrupos.length < 2; else listC">
+          <app-generic-pie-chart class="chart" [serie]="estSerie!.serie" [total]="estadisticas!.grupos![0].total"
+            [title]="'Gráfica del grupo ' + estadisticas!.grupos![0].nombre"></app-generic-pie-chart>
+        </ng-container>
+        <ng-template #listC>
+          <div style="display: flex;">
+            <ng-container *ngFor="let item of estSeries; let index = index">
+              <app-generic-pie-chart class="chart" [serie]="item.serie" [total]="estadisticas!.grupos![index].total"
+                [title]="'Grupo ' + estadisticas!.grupos![index].nombre"></app-generic-pie-chart>
+            </ng-container>
+          </div>
+        </ng-template>
       </ng-container>
     </ng-container>
-
-    <nb-accordion class="margin-b25 vista-detallada">
-      <nb-accordion-item expanded>
-        <nb-accordion-item-header class="header-blue">
-          <nb-icon icon="expand-outline"></nb-icon>Vista detallada
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <ng-container *ngIf="estadisticas">
-            <app-ejercicio-estadisticas-details [detalles]="estadisticas!"></app-ejercicio-estadisticas-details>
-          </ng-container>
-        </nb-accordion-item-body>
-      </nb-accordion-item>
-    </nb-accordion>
+    <div style="width: 100%;">
+      <nb-accordion class="margin-b25 vista-detallada">
+        <nb-accordion-item expanded>
+          <nb-accordion-item-header class="header-blue">
+            <nb-icon icon="expand-outline"></nb-icon>Vista detallada
+          </nb-accordion-item-header>
+          <nb-accordion-item-body>
+            <ng-container *ngIf="estadisticas">
+              <nb-tabset>
+                <nb-tab *ngFor="let grupo of estadisticas.grupos" [tabTitle]="grupo.nombre!">
+                  <app-ejercicio-estadisticas-details [grupo]="grupo" [detalles]="estadisticas!"></app-ejercicio-estadisticas-details>
+                </nb-tab>
+              </nb-tabset>
+            </ng-container>
+          </nb-accordion-item-body>
+        </nb-accordion-item>
+      </nb-accordion>
+    </div>
 
   </nb-card-body>
 </nb-card>

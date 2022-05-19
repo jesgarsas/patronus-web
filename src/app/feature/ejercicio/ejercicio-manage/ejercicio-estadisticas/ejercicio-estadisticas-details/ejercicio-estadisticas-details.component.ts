@@ -1,25 +1,33 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { SortDirection, TableColumn } from '@swimlane/ngx-datatable';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { EstEjercicioDTO } from 'src/app/models/estadisticas/est-ejercicio-dto';
+import { EstGrupoDTO } from 'src/app/models/estadisticas/est-grupo-dto';
 
 @Component({
   selector: 'app-ejercicio-estadisticas-details',
   templateUrl: './ejercicio-estadisticas-details.component.html',
   styleUrls: ['./ejercicio-estadisticas-details.component.scss']
 })
-export class EjercicioEstadisticasDetailsComponent implements OnInit, OnChanges {
+export class EjercicioEstadisticasDetailsComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() public detalles?: EstEjercicioDTO;
+  @Input() public grupo?: EstGrupoDTO;
 
-  public columns?: TableColumn[] = [];
+  @ViewChild('column') public headerColTemplate?: TemplateRef<any>;
+
+  public columns?: any[] = [];
   public sorts: any[] = [];
   public rows?: any[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.buildColumns();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -36,14 +44,14 @@ export class EjercicioEstadisticasDetailsComponent implements OnInit, OnChanges 
       { prop: 'fechaS', name: 'Fecha', resizeable: false, draggable: false, sortable: true, flexGrow: 1 },
     ];
     for (let index = 0; index < this.detalles?.numeroPreguntas!; index++) {
-      this.columns.push({ prop: 'ejercicio' + (index + 1), name: 'Ejercicio' + (index + 1), resizeable: false, draggable: false, sortable: true, flexGrow: 1 })
+      this.columns.push({ prop: 'ejercicio' + (index + 1), name: 'Ejercicio ' + (index + 1), resizeable: false, draggable: false, sortable: true, flexGrow: 1, headerTemplate: this.headerColTemplate })
     }
     this.sorts[0] = { prop: 'nombre', dir: SortDirection.asc};
   }
 
   public buildRows() {
     this.rows = [];
-    for (let alumno of this.detalles?.grupos![0].alumnos!) {
+    for (let alumno of this.grupo!.alumnos!) {
       (alumno as any).notaS = this.formatNumber(alumno.nota!);
       (alumno as any).fechaS = this.formatDate(alumno.fecha!);
       for (let index = 0; index < this.detalles?.numeroPreguntas!; index++) {
@@ -87,6 +95,15 @@ export class EjercicioEstadisticasDetailsComponent implements OnInit, OnChanges 
       }
     }
     return 'primary';
+  }
+
+  public getPreguntaText(name: string): any {
+    let index = name.indexOf(' ');
+    let subs: string = name.substring(index + 1);
+    if (!isNaN(+subs)) {
+      return this.detalles!.preguntas![+subs - 1];
+    }
+    return undefined;
   }
 
   private formatNumber(num: number): string {

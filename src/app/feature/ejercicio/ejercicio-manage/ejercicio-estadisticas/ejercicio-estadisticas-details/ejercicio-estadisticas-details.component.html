@@ -1,4 +1,5 @@
 <div style="width: 100% !important;" *ngIf="detalles">
+  <ng-template #column let-column="column"> {{ column.name! }} <nb-icon icon="info" [nbTooltip]="getPreguntaText(column.name)"></nb-icon> </ng-template>
   <ngx-datatable [count]="detalles!.grupos![0].alumnos!.length" [swapColumns]="false" columnMode="flex" [rows]="rows"
     class="material" [headerHeight]="50" [rowHeight]="50" [footerHeight]="0" [sorts]="sorts">
     <ng-container *ngFor="let col of columns">
@@ -18,7 +19,7 @@
         <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
           [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
           headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate"
-          [sortable]="col.sortable === null ? false : col.sortable!">
+          [sortable]="col.sortable === null ? false : col.sortable!" [headerTemplate]="col.headerTemplate">
           <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <ng-container *ngIf="isEjercicioColumn(col)">
               <!-- <ng-container *ngIf="isEjercicioContestado(col, row); else noContestado"> -->

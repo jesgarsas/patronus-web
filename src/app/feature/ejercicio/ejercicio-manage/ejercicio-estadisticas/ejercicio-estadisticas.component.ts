@@ -19,6 +19,8 @@ export class EjercicioEstadisticasComponent implements OnInit {
 
   public estadisticas?: EstEjercicioDTO;
   public estSerie?: EstSerie = new EstSerie();
+  public estSeries?: EstSerie[] = [];
+  public showGrupos: number[] = [3,2,1];
 
   private ejercicioId?: number;
 
@@ -47,16 +49,36 @@ export class EjercicioEstadisticasComponent implements OnInit {
 
   private getEstadisticas() {
     // Add code here
-    this.respuestaService.getEstadisticas(this.ejercicioId!, [3]).pipe(take(1)).subscribe((dto) => {
+    this.respuestaService.getEstadisticas(this.ejercicioId!, this.showGrupos!).pipe(take(1)).subscribe((dto) => {
       this.estadisticas = dto;
-      this.transformSerie(0);
+      this.transformSerie();
     });
   }
 
-  private transformSerie(index: number) {
+  private transformSerie() {
     this.estSerie = new EstSerie();
-    this.estSerie.serie?.push(new EstSerieItem('Aprobados', this.estadisticas?.grupos![0].aprobados));
-    this.estSerie.serie?.push(new EstSerieItem('Suspendidos', this.estadisticas?.grupos![0].suspendidos));
-    this.estSerie.serie?.push(new EstSerieItem('No realizado', this.estadisticas?.grupos![0].noResueltos));
+    this.estSeries = [];
+    
+    if (this.showGrupos) {
+      if (this.showGrupos.length === 1) {
+        this.estSerie.serie?.push(new EstSerieItem('Aprobados', this.estadisticas?.grupos![0].aprobados));
+        this.estSerie.serie?.push(new EstSerieItem('Suspendidos', this.estadisticas?.grupos![0].suspendidos));
+        this.estSerie.serie?.push(new EstSerieItem('No realizado', this.estadisticas?.grupos![0].noResueltos));
+      } else {
+        this.showGrupos.forEach(group => {
+          for (let est of this.estadisticas!.grupos!) {
+            if (est.id === group) {
+              let serie = new EstSerie();
+              serie.serie?.push(new EstSerieItem('Aprobados', est.aprobados));
+              serie.serie?.push(new EstSerieItem('Suspendidos', est.suspendidos));
+              serie.serie?.push(new EstSerieItem('No realizado', est.noResueltos));
+              if (est.total !== 0) {
+                this.estSeries?.push(serie);
+              }
+            }
+          }
+        });
+      }
+    }
   }
 }

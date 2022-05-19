@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule, NbAutocompleteModule, NbTooltipModule, NbSelectModule, NbCheckboxModule, NbRadioModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbSidebarModule, NbIconModule, NbButtonModule, NbListModule, NbCardModule, NbInputModule, NbMenuModule, NbAccordionModule, NbDialogModule, NbToastrService, NbToastrModule, NbSpinnerModule, NbButtonGroupModule, NbDatepickerModule, NbFormFieldModule, NbContextMenuModule, NbUserModule, NbAutocompleteModule, NbTooltipModule, NbSelectModule, NbCheckboxModule, NbRadioModule, NbTabsetModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { PatronSearchComponent } from './feature/patron/patron-search/patron-search.component';
@@ -92,7 +92,7 @@ import { EjercicioEstadisticasDetailsComponent } from './feature/ejercicio/ejerc
     EjercicioAlumnoComponent,
     EjercicioEstadisticasComponent,
     GenericPieChartComponent,
-    EjercicioEstadisticasDetailsComponent
+    EjercicioEstadisticasDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,7 +128,8 @@ import { EjercicioEstadisticasDetailsComponent } from './feature/ejercicio/ejerc
     NbSelectModule,
     NbCheckboxModule,
     NbRadioModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NbTabsetModule
   ],
   providers: [
     PatronService,
