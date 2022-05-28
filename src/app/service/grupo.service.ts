@@ -28,4 +28,8 @@ export class GrupoService {
   public save(dto: GrupoDTO): Observable<GrupoDTO> {
     return this.http.post<GrupoDTO>(`${AppContants.URL_API_GRUPO_PROFE}/save`, dto);
   }
+
+  public getByParam(): Observable<GrupoDTO[]> {
+    return this.http.get<GrupoDTO[]>(`${AppContants.URL_API_GRUPO_ALL}/autocomplete`);
+  }
 }

@@ -2,7 +2,6 @@ import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Outpu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { UsuarioDTO } from 'src/app/models/usuario/usuario-dto';
 
 @Component({
   selector: 'app-generic-autocomplete',
@@ -21,6 +20,8 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
   @Input() service: any;
   @Input() param: string | undefined;
   @Input() transformFunction: Function | undefined;
+  @Input() multiple: boolean = false;
+  @Input() selected: number[] = [];
 
   @ViewChild('autoInput') input: any;
 
@@ -33,22 +34,28 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
   constructor() { }
 
   ngOnInit(): void {
-    this.form.addControl(this.formName, new FormControl());
+    let formControl = new FormControl(this.multiple ? [] : undefined);
+    this.form.addControl(this.formName, formControl);
+
     if (this.required) {
       this.form.controls[this.formName].setValidators(Validators.required);
     }
+
+    this.formInput.addControl('auto', new FormControl(undefined));
+
     if (this.defaultValue) {
       this.formInput.controls['auto'].setValue(this.defaultValue);
       this.filteredOptions$ = this.getFilteredOptions(this.defaultValue);
     }
-
-    this.formInput.addControl('auto', new FormControl(undefined));
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.defaultValue && changes.defaultValue.currentValue) {
       this.formInput.controls['auto'].setValue(changes.defaultValue.currentValue);
-      this.filteredOptions$ = this.getFilteredOptions(changes.defaultValue.currentValue);
+      this.filteredOptions$ = this.getFilteredOptions(changes.defaultValue.currentValue.trim());
+    }
+    if (changes.selected && changes.selected.currentValue) {
+      this.setItemFromList();
     }
   }
 
@@ -62,6 +69,7 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
           this.options = data;
           this.filteredOptions$ = of(data);
           this.filteredOptions$ = this.getFilteredOptions(this.defaultValue);
+          this.setItemFromList();
         }
       })
     }
@@ -77,9 +85,22 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
   }
 
   getFilteredOptions(value: any): Observable<any[]> {
-    return of(value).pipe(
-      map(filterString => this.filter(filterString)),
-    );
+    let list = of(value).pipe(
+      map(filterString => this.filter(filterString)));
+    if (!this.multiple) {
+      return list;
+    } else {
+      return list.pipe(map(filterString => this.filterWithList(filterString)));
+    }
+  }
+
+  private filterWithList(values: any[]): any[] {
+    let form = this.form.controls[this.formName];
+    if (form.value instanceof Array) {
+      return values.filter(value => !form.value.includes(value));
+    } else {
+      return values;
+    }
   }
 
   onInput() {
@@ -89,9 +110,56 @@ export class GenericAutocompleteComponent implements OnInit, AfterViewInit, OnCh
   onSelectionChange(event: any) {
     if (event.label) {
       this.filteredOptions$ = this.getFilteredOptions(event.label);
-      this.form.controls[this.formName].setValue(event);
-      this.formInput.controls['auto'].setValue(event.label);
+      let form = this.form.controls[this.formName];
+
+      if (!this.multiple) {
+        form.setValue(event);
+        this.formInput.controls['auto'].setValue(event.label);
+      } else {
+        if (form.value instanceof Array) {
+          form.value.push(event)
+          form.setValue(form.value);
+        } else {
+          form.setValue([event]);
+        }
+        
+        this.formInput.controls['auto'].setValue('');
+        this.onInput();
+      }
     }
   }
 
+  clearMultipleList(): void {
+    this.form.controls[this.formName].setValue([]);
+    this.formInput.controls['auto'].setValue('');
+    this.onInput();
+  }
+
+  deleteItemFromList(value: never): void {
+    let form = this.form.controls[this.formName];
+    let index = form.value.indexOf(value);
+    if (index != -1) {
+      form.value.splice(index, 1)
+      form.setValue(form.value);
+    }
+    
+    // this.formInput.controls['auto'].setValue('');
+    this.onInput();
+  }
+
+  setItemFromList() {
+    if (this.selected) {
+      let items: any[] = [];
+
+      this.options.forEach(option => {
+        this.selected.forEach(id => {
+          if (option && option.id === id) {
+            items.push(option);
+          }
+        });
+      });
+  
+      this.form.controls[this.formName].setValue(items);
+    }
+  }
 }

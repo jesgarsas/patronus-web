@@ -31,4 +31,8 @@ export class LoginService {
   public logout() {
     this.cookies.deleteAll("usuario");
   }
+
+  public getGrupos(): Observable<number[]> {
+    return this.http.get<number[]>(`${AppContants.URL_API_USUARIO_ALL}/grupos`);
+  }
 }

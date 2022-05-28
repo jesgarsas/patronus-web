@@ -1,5 +1,5 @@
-<nb-card status="default" class="stretch">
-  <nb-card-header>Estadisticas del ejercicio: </nb-card-header>
+<nb-card status="default" class="stretch" [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>Estadisticas del ejercicio: {{ estadisticas ? estadisticas.nombre! : '-'}}</nb-card-header>
   <nb-card-body>
     <p>A continuación se detallan las estdísticas del ejercicio <strong>{{ estadisticas ? estadisticas.nombre! :
         '-'}}</strong>.
@@ -7,32 +7,71 @@
     </p>
 
     <nb-accordion class="margin-b25">
-      <nb-accordion-item>
+      <nb-accordion-item expanded>
         <nb-accordion-item-header class="header-blue">
           <nb-icon icon="funnel-outline"></nb-icon>Opciones
         </nb-accordion-item-header>
         <nb-accordion-item-body>
+          <ng-container *ngIf="form">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <app-generic-autocomplete #gruposAuto label="Grupo" [form]="form" [formName]="grupoFormName" [service]="grupoService"
+                [readOnly]="false" [param]="' '" [defaultValue]="''" [multiple]="true" [selected]="userGroups">
+              </app-generic-autocomplete>
+            </div>
+
+            <!-- Mostrar grupos seleccionados -->
+            <ng-container *ngIf="showGruposSelec()">
+              <div class="col-12 grupos-filter-box">
+                <div id="header">
+                  <span class="header-section">Grupos seleccionados </span>
+                </div>
+                <div id="body">
+                  <div id="tags">
+                    <nb-tag-list (tagRemove)="onTagRemove($event)">
+                      <nb-tag *ngFor="let item of this.form.controls[grupoFormName].value" [title]="'grupo.' + item.id" [text]="item.label" [removable]="true" status="info"></nb-tag>
+                    </nb-tag-list>
+                  </div>
+                  <div id="clear-tags">
+                    <button nbButton shape="round" size="small" status="danger" (click)="clearTags()"><nb-icon icon="close-outline"></nb-icon></button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+          </ng-container>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
 
-    <ng-container *ngIf="estadisticas">
-      <ng-container *ngIf="estSerie">
-        <ng-container *ngIf="showGrupos.length < 2; else listC">
-          <app-generic-pie-chart class="chart" [serie]="estSerie!.serie" [total]="estadisticas!.grupos![0].total"
-            [title]="'Gráfica del grupo ' + estadisticas!.grupos![0].nombre"></app-generic-pie-chart>
+    <!-- Estadisticas -->
+    <div class="stats-block">
+      <ng-container *ngIf="estadisticas!.grupos!.length > 0; else noResult">
+        <ng-container *ngIf="estSerie">
+          <ng-container *ngIf="showGrupos.length < 2; else listC">
+            <app-generic-pie-chart class="chart" [serie]="estSerie!.serie" [total]="estadisticas!.grupos![0].total"
+              [title]="'Gráfica del grupo ' + estadisticas!.grupos![0].nombre" [simple]="false"></app-generic-pie-chart>
+          </ng-container>
+          <ng-template #listC>
+            <div style="display: flex;">
+              <ng-container *ngFor="let item of estSeries; let index = index">
+                <app-generic-pie-chart class="chart" [serie]="item.serie" [total]="estadisticas!.grupos![index].total"
+                  [title]="'Grupo ' + estadisticas!.grupos![index].nombre"></app-generic-pie-chart>
+              </ng-container>
+            </div>
+          </ng-template>
         </ng-container>
-        <ng-template #listC>
-          <div style="display: flex;">
-            <ng-container *ngFor="let item of estSeries; let index = index">
-              <app-generic-pie-chart class="chart" [serie]="item.serie" [total]="estadisticas!.grupos![index].total"
-                [title]="'Grupo ' + estadisticas!.grupos![index].nombre"></app-generic-pie-chart>
-            </ng-container>
-          </div>
-        </ng-template>
       </ng-container>
-    </ng-container>
-    <div style="width: 100%;">
+    </div>
+
+    <ng-template #noResult>
+      <div id="noResult">
+        <span class="header-section">
+          <nb-icon icon="alert-circle-outline" status="danger"></nb-icon>
+          No se han encontrado resultados con los filtros seleccionados</span>
+      </div>
+    </ng-template>
+
+    <div style="width: 100%;" *ngIf="estadisticas!.grupos!.length > 0">
       <nb-accordion class="margin-b25 vista-detallada">
         <nb-accordion-item expanded>
           <nb-accordion-item-header class="header-blue">
@@ -41,7 +80,7 @@
           <nb-accordion-item-body>
             <ng-container *ngIf="estadisticas">
               <nb-tabset>
-                <nb-tab *ngFor="let grupo of estadisticas.grupos" [tabTitle]="grupo.nombre!">
+                <nb-tab *ngFor="let grupo of estadisticas.grupos; let index = index" [tabTitle]="grupo.nombre!" [active]="index === 0 ? true : false">
                   <app-ejercicio-estadisticas-details [grupo]="grupo" [detalles]="estadisticas!"></app-ejercicio-estadisticas-details>
                 </nb-tab>
               </nb-tabset>
