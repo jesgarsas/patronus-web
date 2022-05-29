@@ -1,0 +1,20 @@
+<div class="full-page">
+  <div class="expand-all">
+    <div class="grid">
+      <div *ngFor="let button of buttons" class="key">
+        <ng-container *ngTemplateOutlet="buttonTemp; context: button"></ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #buttonTemp let-name="name" let-icon="icon" let-id="id">
+  <div class="home-button background-div" (click)="onClickButton(id)">
+    <div id="icon-b">
+      <nb-icon [icon]="icon"></nb-icon>
+    </div>
+    <div>
+      <span class="button-text">{{ name }}</span>
+    </div>
+  </div>
+</ng-template>

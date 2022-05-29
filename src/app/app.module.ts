@@ -52,6 +52,9 @@ import { EjercicioEstadisticasComponent } from './feature/ejercicio/ejercicio-ma
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { GenericPieChartComponent } from './component/generic-pie-chart/generic-pie-chart.component';
 import { EjercicioEstadisticasDetailsComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-estadisticas/ejercicio-estadisticas-details/ejercicio-estadisticas-details.component';
+import { HomeComponent } from './feature/home/home.component';
+import { HomeProfesorComponent } from './feature/home/home-profesor/home-profesor.component';
+import { HomeAlumnoComponent } from './feature/home/home-alumno/home-alumno.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +96,9 @@ import { EjercicioEstadisticasDetailsComponent } from './feature/ejercicio/ejerc
     EjercicioEstadisticasComponent,
     GenericPieChartComponent,
     EjercicioEstadisticasDetailsComponent,
+    HomeComponent,
+    HomeProfesorComponent,
+    HomeAlumnoComponent,
   ],
   imports: [
     BrowserModule,

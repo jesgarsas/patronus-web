@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { Component, OnInit } from '@angular/core';
+import { NbMenuItem } from '@nebular/theme';
 import { LoginService } from 'src/app/service/login.service';
 import { NotifierService } from 'src/app/service/notifier.service';
 import { AppContants } from 'src/app/utils/app-constants';
@@ -16,8 +15,14 @@ export class SidebarComponent implements OnInit {
 
   public optionsAlumnos: NbMenuItem[] = [
     {
+      title: 'Página principal',
+      icon: 'home-outline',
+      link: AppContants.HOME_PATH,
+      pathMatch: "full"
+    },    
+    {
       title: 'Ver patrones',
-      icon: 'book-open-outline',
+      icon: 'search-outline',
       link: AppContants.BUSCADOR_PATH,
       pathMatch: "full"
     }
@@ -33,13 +38,13 @@ export class SidebarComponent implements OnInit {
     },
     {
       title: 'Administrar ejercicios',
-      icon: 'folder-outline',
+      icon: 'book-open-outline',
       link: AppContants.EJERCICIO_ADMINISTRAR_PATH,
       pathMatch: "full"
     },
     {
       title: 'Administrar grupos',
-      icon: 'folder-outline',
+      icon: 'people-outline',
       link: AppContants.GRUPO_ADMINISTRAR_PATH,
       pathMatch: "full"
     }
@@ -49,7 +54,7 @@ export class SidebarComponent implements OnInit {
     ...this.optionsProfesores,
     {
       title: 'Administrar usuarios',
-      icon: 'folder-outline',
+      icon: 'person-outline',
       link: AppContants.USUARIO_ADMINISTRAR_PATH,
       pathMatch: "full"
     }
@@ -59,8 +64,7 @@ export class SidebarComponent implements OnInit {
   public admin: number | boolean | undefined;
 
   constructor(private notifierService: NotifierService,
-    private loginService: LoginService,
-    private menuService: NbMenuService) { }
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.setMenuItems();

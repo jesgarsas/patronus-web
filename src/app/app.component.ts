@@ -43,8 +43,9 @@ export class AppComponent {
       this.userLogged = true;
       this.user = this.loginService.getUser();
       this.userRol = this.rolService.translateRol(this.user?.rolId!);
-      if (window.location.pathname === AppContants.LOGIN_PATH) {
-        this.router.navigate([AppContants.BUSCADOR_PATH]);
+      if (window.location.pathname === AppContants.LOGIN_PATH
+        || window.location.pathname === '/') {
+        this.router.navigate([AppContants.HOME_PATH]);
       }
     }
 

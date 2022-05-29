@@ -5,6 +5,7 @@ export class AppContants {
     public static minWidthPhone: number = 1140;
 
     // Routes
+    public static HOME_PATH = '/home';
     public static LOGIN_PATH = '/login';
     public static LOGOUT_PATH = '/logout';
     public static NO_PERMISION_PATH = '/no-permision'

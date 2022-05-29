@@ -7,6 +7,7 @@ import { Usuario } from 'src/app/models/usuario/usuario';
 import { LoginService } from 'src/app/service/login.service';
 import { NotifierService } from 'src/app/service/notifier.service';
 import { ToastService } from 'src/app/service/toast.service';
+import { AppContants } from 'src/app/utils/app-constants';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.loginService.setUser(user);
         this.toastService.showConfirmation('Éxito', 'Se ha iniciado sesión de forma exitosa');
         this.notifierService.emitUserLogged(true);
-        this.router.navigate(['/patron/buscador']);
+        this.router.navigate([AppContants.HOME_PATH]);
         this.loading = false;
       }, (error) => {
         if (error.status === 404) {

@@ -6,6 +6,7 @@ import { EjercicioManageCreationComponent } from './feature/ejercicio/ejercicio-
 import { EjercicioManageComponent } from './feature/ejercicio/ejercicio-manage/ejercicio-manage.component';
 import { GrupoManageCreationComponent } from './feature/grupo/grupo-manage/grupo-manage-creation/grupo-manage-creation.component';
 import { GrupoManageComponent } from './feature/grupo/grupo-manage/grupo-manage.component';
+import { HomeComponent } from './feature/home/home.component';
 import { LoginComponent } from './feature/login/login.component';
 import { LogoutComponent } from './feature/logout/logout.component';
 import { NoPermisionComponent } from './feature/no-permision/no-permision.component';
@@ -18,7 +19,9 @@ import { UsuarioManageComponent } from './feature/usuario/usuario-manage/usuario
 import { AuthGuardService as AuthGuard} from './guard/auth-guard.service';
 import { AppContants } from './utils/app-constants';
 
-const routes: Routes = [
+const routes: Routes = [ 
+  { path: AppContants.HOME_PATH.substr(1), component: HomeComponent },
+  { path: AppContants.BUSCADOR_PATH.substr(1), component: PatronSearchComponent },
   { path: AppContants.BUSCADOR_PATH.substr(1), component: PatronSearchComponent },
   { path: AppContants.PATRON_DETALLES_PATH.substr(1), component: PatronDetailsComponent },
   { path: AppContants.PATRON_ADMINISTRAR_PATH.substr(1), component: PatronManageComponent, canActivate: [AuthGuard], data: { expectedRole: AppContants.ROL_PROFESOR } },

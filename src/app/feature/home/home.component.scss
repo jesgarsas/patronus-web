@@ -1,0 +1,22 @@
+.title-icon {
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.title-icon > nb-icon {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 10px;
+}
+
+.body-home {
+  width: 100%;
+  height: 100%;
+}
+
+.flex-box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
