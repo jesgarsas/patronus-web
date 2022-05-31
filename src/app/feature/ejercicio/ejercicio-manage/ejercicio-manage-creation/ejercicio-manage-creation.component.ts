@@ -101,7 +101,6 @@ export class EjercicioManageCreationComponent implements OnInit {
   }
 
   onSave() {
-    console.log(this.form)
     if (this.form.valid) {
       let dto: EjercicioDTO = this.transformDTO();
       this.ejercicioService.save(dto).pipe(take(1)).subscribe((patronId) => {

@@ -13,6 +13,7 @@ import { PatronService } from 'src/app/service/patron.service';
 import { ResultadoService } from 'src/app/service/resultado.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { VisitadoService } from 'src/app/service/visitado.service';
 import { AppContants } from 'src/app/utils/app-constants';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
 
@@ -45,7 +46,8 @@ export class PatronDetailsComponent implements OnInit {
     private loginService: LoginService,
     private router: Router,
     private toastService: ToastService,
-    private resultadoService: ResultadoService
+    private resultadoService: ResultadoService,
+    private visitadoService: VisitadoService
   ) { }
 
   @HostListener('window:resize', ['$event'])
@@ -72,6 +74,8 @@ export class PatronDetailsComponent implements OnInit {
 
     this.route.queryParams.pipe(take(1)).subscribe(params => {
       this.idPatron = params.id;
+      // Put as visited the group
+      this.visitadoService.save(this.idPatron).pipe(take(1)).subscribe((_) => { });
     });
 
     this.patronService.getByIdAndLocale(this.idPatron, 1).pipe(take(1)).subscribe(data => {
@@ -87,7 +91,6 @@ export class PatronDetailsComponent implements OnInit {
   }
   
   public onEditEjercicio(row: any) {
-    console.log(row);
     this.router.navigate([AppContants.EJERCICIO_CREAR_PATH], {queryParams: { idPatron: this.idPatron, idEjercicio: row.id}});
   }
   

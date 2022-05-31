@@ -22,12 +22,14 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
   @Input() public sorting: boolean = false;
   @Input() public page: Page = new Page();
   @Input() public filter: FilterDto = new FilterDto();
+  @Input() public selectionType?: SelectionType = undefined; 
 
   @Output() public onEdit: EventEmitter<any> = new EventEmitter();
   @Output() public onDelete: EventEmitter<any> = new EventEmitter();
   @Output() public onPage: EventEmitter<any> = new EventEmitter();
   @Output() public onSort: EventEmitter<any> = new EventEmitter();
   @Output() public onShow: EventEmitter<any> = new EventEmitter();
+  @Output() public onSelect: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('acciones')
   public accionesTemplate!: TemplateRef<any>;
@@ -51,6 +53,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit {
       }
       this.setColumnsToTable();
     });
+  }
+
+  public onSelectClick(value: any) {
+    this.onSelect.emit(value);
   }
 
   public onPageClick(value: any) {

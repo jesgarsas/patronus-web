@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { GenericInputComponent } from '../generic-input/generic-input.component';
 
@@ -8,6 +8,8 @@ import { GenericInputComponent } from '../generic-input/generic-input.component'
   styleUrls: ['./generic-input-password.component.scss']
 })
 export class GenericInputPasswordComponent extends GenericInputComponent implements OnInit {
+
+  @Input() showRequired: boolean = true;
 
   hidePassword: boolean = true;
 

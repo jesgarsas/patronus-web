@@ -25,6 +25,12 @@ export class SidebarComponent implements OnInit {
       icon: 'search-outline',
       link: AppContants.BUSCADOR_PATH,
       pathMatch: "full"
+    },
+    {
+      title: 'Hidden menu item',
+      link: AppContants.PATRON_DETALLES_PATH,
+      hidden: true,
+      pathMatch: "full"
     }
   ];
 

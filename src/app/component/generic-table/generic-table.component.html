@@ -1,10 +1,10 @@
 <div style="width: 100% !important;">
     <ngx-datatable [count]="page.totalElements" [offset]="filter.pageNumber" [limit]="filter.size"(page)="onPageClick($event)" (sort)="onSortClick($event)" [externalPaging]="paging" [externalSorting]="sorting"  [loadingIndicator]="loading" [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50"
-        [limit]="size" [rowHeight]="50" [footerHeight]="heigthFooter">
+        [limit]="size" [rowHeight]="50" [footerHeight]="heigthFooter" [selectionType]="selectionType!" (select)="onSelectClick($event)">
         <ng-container *ngFor="let col of columns">
             <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
                 [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
-                headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate"
+                headerClass="header-blue" [cellClass]="!selectionType ? 'whithe-back' : 'whithe-back-select' " [cellTemplate]="col.cellTemplate"
                 [sortable]="col.sortable === null ? false : col.sortable!">
                 <ng-template #acciones let-row="row">
                     <div style="display: inline;">

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { EstSerieItem } from 'src/app/models/estadisticas/est-serie';
 import { ColorScheme } from './models/color-scheme';
 
@@ -7,7 +7,7 @@ import { ColorScheme } from './models/color-scheme';
   templateUrl: './generic-pie-chart.component.html',
   styleUrls: ['./generic-pie-chart.component.scss']
 })
-export class GenericPieChartComponent implements OnInit, OnChanges {
+export class GenericPieChartComponent implements OnInit {
 
   @Input() title?: string = '';
   @Input() total?: number = 100;
@@ -29,12 +29,6 @@ export class GenericPieChartComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.series && changes.series.currentValue) {
-      console.log(changes.series.currentValue);
-    }
   }
 
   onSelect(data: any): void {

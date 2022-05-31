@@ -49,6 +49,8 @@ export class AppContants {
     public static URL_API_RESULTADO_ALL = `${AppContants.RESULTADO_PATH}/alumno`;
     public static URL_API_RESULTADO_PROFE = `${AppContants.RESULTADO_PATH}/profesor`;
     public static URL_API_RESULTADO_ADMIN = `${AppContants.RESULTADO_PATH}/administrador`;
+    public static URL_API_VISITADO = `${AppContants.URL_API}/visitado`;
+    public static URL_API_VISITADO_ALL = `${AppContants.URL_API_VISITADO}/alumno`;
 
     // Configurations
     public static editorConfig: AngularEditorConfig = {

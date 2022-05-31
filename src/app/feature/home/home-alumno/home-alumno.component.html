@@ -1,1 +1,17 @@
-<p>home-alumno works!</p>
+<div class="main-alumno">
+  <div class="main-alumno-item">
+    <span class="header-section"><nb-icon icon="pie-chart-2" status="basic"></nb-icon> Progreso del curso</span>
+  </div>
+  <div class="main-alumno-item results-container">
+    <div class="results-item box-shadow">
+      <span class="header-section"><nb-icon icon="search-outline" status="basic"></nb-icon> Patrones visitados</span>
+      <div class="div-body">
+        <app-generic-table [loading]="loadingPatrones" [columns]="columnsPatrones" [rows]="rowsPatrones" [selectionType]="selectionTypePatrones"
+          (onSelect)="onSelectPatron($event)"></app-generic-table>
+      </div>
+    </div>
+    <div class="results-item box-shadow">
+      <span class="header-section"><nb-icon icon="book-open-outline" status="basic"></nb-icon> Último ejercicio</span>
+    </div>
+  </div>
+</div>

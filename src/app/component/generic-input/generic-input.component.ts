@@ -17,6 +17,7 @@ export class GenericInputComponent implements OnInit {
   @Input() defaultValue: string | undefined;
   @Input() onlyNumbers: boolean = false;
   @Input() maxLength: string | null = null;
+  @Input() showRequired: boolean = true;
 
   @Output() onSubmit: EventEmitter<Boolean> = new EventEmitter();
 
