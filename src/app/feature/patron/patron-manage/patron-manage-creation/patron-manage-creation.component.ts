@@ -143,7 +143,10 @@ export class PatronManageCreationComponent implements OnInit {
     this.form.controls[this.contenidoFormName].setValue(this.patron.lecciones ? this.patron.lecciones[0].contenido : undefined);
 
     if (this.patron.proyectos) {
-      this.patron.proyectos.map(proyecto => { this.rows.push(proyecto); });
+      this.patron.proyectos.map(proyecto => { 
+        proyecto.size = proyecto.size ? Math.round(((proyecto.size! / 1024) + Number.EPSILON) * 100) / 100 : 0;
+        this.rows.push(proyecto); 
+      });
       this.rows = [...this.rows];
     }
   }
@@ -152,7 +155,7 @@ export class PatronManageCreationComponent implements OnInit {
     let proy = new ProyectoDTO();
     proy.pos = this.posFile;
     proy.name = file.name;
-    proy.size = file.size;
+    proy.size = file.size ? Math.round(((file.size! / 1024) + Number.EPSILON) * 100) / 100 : 0;
     proy.type = file.type;
     this.rows.push(proy);
   }
@@ -214,7 +217,7 @@ export class PatronManageCreationComponent implements OnInit {
     this.columns = [
       { prop: 'name', name: 'Nombre', resizeable: false, sortable: false, minWidth: 200, draggable: false, flexGrow: 2 },
       { prop: 'type', name: 'Tipo', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
-      { prop: 'size', name: 'Tamaño', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
+      { prop: 'size', name: 'Tamaño (Kb)', resizeable: false, sortable: false, draggable: false, flexGrow: 1 },
     ];
   }
 }

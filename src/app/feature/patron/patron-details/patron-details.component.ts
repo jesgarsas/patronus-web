@@ -80,6 +80,7 @@ export class PatronDetailsComponent implements OnInit {
 
     this.patronService.getByIdAndLocale(this.idPatron, 1).pipe(take(1)).subscribe(data => {
       this.patron = data;
+      this.transformProyectos();
     });
 
     this.getEjercicioTable();
@@ -159,6 +160,14 @@ export class PatronDetailsComponent implements OnInit {
         this.rows = data;
         this.transformData();
       });
+    }
+  }
+  
+  private transformProyectos() {
+    if (this.patron && this.patron.proyectos) {
+      this.patron.proyectos.map(proyecto => {
+        proyecto.size = proyecto.size ? Math.round(((proyecto.size! / 1024) + Number.EPSILON) * 100) / 100 : 0;
+      })
     }
   }
 }

@@ -13,7 +13,7 @@
                             <nb-icon icon="download-outline"></nb-icon>
                             Proyectos
                         </div>
-                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span>
+                        <ng-container *ngIf="!patron.proyectos || (patron.proyectos! && patron.proyectos!.length === 0)"><span class="text-autor">No hay proyectos</span>
                         </ng-container>
                         <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
                             <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
