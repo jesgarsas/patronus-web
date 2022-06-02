@@ -55,6 +55,7 @@ import { EjercicioEstadisticasDetailsComponent } from './feature/ejercicio/ejerc
 import { HomeComponent } from './feature/home/home.component';
 import { HomeProfesorComponent } from './feature/home/home-profesor/home-profesor.component';
 import { HomeAlumnoComponent } from './feature/home/home-alumno/home-alumno.component';
+import { GenericDialogInfoComponent } from './component/generic-dialog/generic-dialog-info/generic-dialog-info.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { HomeAlumnoComponent } from './feature/home/home-alumno/home-alumno.comp
     HomeComponent,
     HomeProfesorComponent,
     HomeAlumnoComponent,
+    GenericDialogInfoComponent,
   ],
   imports: [
     BrowserModule,

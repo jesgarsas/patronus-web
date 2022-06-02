@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 import { NbMenuItem, NbSidebarComponent, NbSidebarService } from '@nebular/theme';
+import { filter, map } from 'rxjs/operators';
 import { GenericSpinnerComponent } from './component/generic-spinner/generic-spinner.component';
 import { Usuario } from './models/usuario/usuario';
 import { LoginService } from './service/login.service';
@@ -33,7 +35,9 @@ export class AppComponent {
   constructor(private sidebarService: NbSidebarService,
     private router: Router, private loginService: LoginService,
     private notifierService: NotifierService,
-    private rolService: RolService) {
+    private rolService: RolService,
+    private titleService: Title,
+    private activatedRoute: ActivatedRoute) {
     // Set interface
     this.resizeInteface();
     if (!this.loginService.getUser()) {
@@ -60,6 +64,8 @@ export class AppComponent {
         this.userRol = '';
       }
     });
+
+    this.putTitleOnPage();
   }
 
   public toggleSideBar() {
@@ -87,5 +93,27 @@ export class AppComponent {
     if (this.sidebar) {
       this.sidebar.fixed = this.mobile;
     }
+  }
+
+  private putTitleOnPage() {
+    const appTitle = this.titleService.getTitle();
+    this.router
+      .events.pipe(
+        filter(event => event instanceof NavigationEnd),
+        map(() => {
+          let child = this.activatedRoute.firstChild;
+          if (child !== null) {
+            while (child.firstChild) {
+              child = child.firstChild;
+            }
+            if (child.snapshot.data['title']) {
+              return 'Patronus - ' + child.snapshot.data['title'];
+            }
+          }
+          return appTitle;
+        })
+      ).subscribe((ttl: string) => {
+        this.titleService.setTitle(ttl);
+      });
   }
 }

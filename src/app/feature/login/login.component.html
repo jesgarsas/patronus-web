@@ -1,7 +1,19 @@
 <div class="login-container">
     <div>
+
         <nb-card [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
-            <nb-card-header>Inicio de sesión</nb-card-header>
+            <nb-card-header>
+                <div class="login-header">
+                    <div>
+                        Inicio de sesión
+                    </div>
+                    <div class="login-header-icons">
+                        <nb-icon class="login-header-icon" nbTooltip="Ayuda credenciales" nbTooltipStatus="info" icon="alert-circle" 
+                            (click)="openHelpDialog()" status="info"></nb-icon>
+                    </div>
+                </div>
+               
+            </nb-card-header>
             <nb-card-body>
                 <form [formGroup]="form" class="login-form" (ngSubmit)="onSubmit()">
                     <app-generic-input [required]="true" (onSubmit)="onSubmit()" label="Nombre de usuario" [form]="form" formName="nick" [showRequired]="false"></app-generic-input>
@@ -11,4 +23,15 @@
             </nb-card-body>
         </nb-card>
     </div>
+</div>
+<div class="links">
+    <div class="links-iconos">
+        <div class="round-white-button" (click)="goToGit()">
+            <nb-icon icon="github-outline" status="control"></nb-icon>
+        </div>
+        <div class="round-white-button" (click)="goToLinkedin()">
+            <nb-icon icon="linkedin-outline" status="control"></nb-icon>
+        </div>
+    </div>
+    
 </div>

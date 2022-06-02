@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Md5 } from 'md5-typescript';
 import { take } from 'rxjs/operators';
+import { GenericDialogInfoComponent } from 'src/app/component/generic-dialog/generic-dialog-info/generic-dialog-info.component';
 import { Usuario } from 'src/app/models/usuario/usuario';
 import { LoginService } from 'src/app/service/login.service';
 import { NotifierService } from 'src/app/service/notifier.service';
@@ -19,16 +21,23 @@ export class LoginComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   loading: boolean = false;
 
+  private dialog?: NbDialogRef<GenericDialogInfoComponent>;
+
   constructor(private loginService: LoginService,
     private toastService: ToastService,
     private router: Router,
-    private notifierService: NotifierService) { }
+    private notifierService: NotifierService,
+    private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
     if (!this.loginService.getUser()) {
       this.notifierService.emitUserLogged(false);
+      if (!localStorage.getItem('visited')) {
+        this.openHelpDialog();
+        localStorage.setItem('visited', '1');
+      }
+      
     }
-
   }
 
   onSubmit() {
@@ -56,4 +65,19 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  goToGit() {
+    window.open('https://github.com/jesgarsas/patronus-web');
+    window.open('https://github.com/jesgarsas/patronus-api');
+  }
+
+  goToLinkedin() {
+    window.open('https://es.linkedin.com/in/jesús-garcía-sastre-718724196');
+  }
+
+  openHelpDialog() {
+    this.dialog = this.dialogService.open(GenericDialogInfoComponent, {
+      context: {
+      }
+    });
+  } 
 }
