@@ -17,14 +17,16 @@ export class GenericPieChartComponent implements OnInit {
   @Input() colorScheme: ColorScheme | any = {
     domain: ['#7FDD69', '#DE3C25', '#808080']
   };
+  @Input() home: boolean = false;
   view: any = [200, 200];
 
   // options
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-
-  
+  colorSchemeHome: ColorScheme | any = {
+    domain: ['#7FDD69', '#DE3C25']
+  };
 
   constructor() {}
 

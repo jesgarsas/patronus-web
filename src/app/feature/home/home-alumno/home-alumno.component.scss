@@ -56,3 +56,50 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.leyenda {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.leyenda > div {
+}
+
+.leyenda-item {
+  text-align: end;
+  padding-right: 25px;
+}
+
+.leyenda-number {
+  color: var(--card-header-text-color) !important;
+  font-family: var(--card-header-text-font-family) !important;
+  font-size: var(--card-header-text-font-size) !important;
+  line-height: var(--card-header-text-line-height) !important;
+}
+
+.leyenda-col > div {
+  margin-bottom: 15px;
+}
+
+.leyenda-colors {
+  width: 15px !important;
+}
+
+.leyenda-colors > div {
+  margin-bottom: 15px;
+  height: 24px;
+}
+
+.leyenda-verde {
+  border-left: 5px solid #7FDD69;
+}
+
+.leyenda-rojo {
+  border-left: 5px solid #DE3C25;
+}
+
+.leyenda-gris {
+  border-left: 5px solid #808080;
+}
