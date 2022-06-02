@@ -26,11 +26,14 @@
 </div>
 <div class="links">
     <div class="links-iconos">
-        <div class="round-white-button" (click)="goToGit()">
-            <nb-icon icon="github-outline" status="control"></nb-icon>
+        <div class="round-white-button" (click)="goToMail()" nbTooltip="Correo electrónico">
+            <nb-icon icon="email-outline" status="control"></nb-icon>
         </div>
-        <div class="round-white-button" (click)="goToLinkedin()">
-            <nb-icon icon="linkedin-outline" status="control"></nb-icon>
+        <div class="round-white-button" (click)="goToGit()" nbTooltip="Repositorios de la aplicación">
+            <nb-icon icon="github" status="control"></nb-icon>
+        </div>
+        <div class="round-white-button" (click)="goToLinkedin()" nbTooltip="LinkedIn">
+            <nb-icon icon="linkedin" status="control"></nb-icon>
         </div>
     </div>
     

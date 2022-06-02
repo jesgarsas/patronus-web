@@ -74,6 +74,10 @@ export class LoginComponent implements OnInit {
     window.open('https://es.linkedin.com/in/jesús-garcía-sastre-718724196');
   }
 
+  goToMail() {
+    window.open('mailto:jesgarsas@gmail.com');
+  }
+
   openHelpDialog() {
     this.dialog = this.dialogService.open(GenericDialogInfoComponent, {
       context: {
