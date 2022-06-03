@@ -1,0 +1,24 @@
+<nb-card status="default" class="stretch" [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>Lista de patrones</nb-card-header>
+    <nb-card-body>
+        <!-- Buscador -->
+        <div class="width100" style="height: 100% !important;">
+            <div class="margin-b25" style="display: flex; flex-direction: row; justify-content: center;">
+                <input type="text" (input)="setFilter($event)" class="width75" nbInput fieldSize="large"
+                    placeholder="Buscar por nombre..." (keyup)="handleInput($event)">
+                <button nbButton (click)="filterList()" type=submit size="large" status="primary"><nb-icon icon="search-outline"></nb-icon></button>
+            </div>
+            <!-- Lista patrones -->
+            <nb-list class="list-flex center" style="display: inline;">
+                <nb-list-item *ngFor="let item of page.content!" class="hoverItem">
+                    <app-patron-listitem class="patron-item-search" [item]=item (click)="goToDetails(item.id!)"></app-patron-listitem>
+                </nb-list-item>
+            </nb-list>
+            <div style="display: flex; justify-content: center;" class="width100, margin25" >
+                <div style="display: flex; flex-direction: row;" *ngFor="let item of numPages">
+                    <button nbButton (click)="onPage(item)" [status]="statusPage[item-1]">{{ item }}</button>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

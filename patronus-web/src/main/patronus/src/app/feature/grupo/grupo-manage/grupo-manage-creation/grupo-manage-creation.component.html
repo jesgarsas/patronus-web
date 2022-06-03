@@ -1,0 +1,58 @@
+<nb-card status="default" class="stretch">
+    <nb-card-header>{{ headerTitle }}</nb-card-header>
+    <nb-card-body [ngClass]="{'hide-body': loading}">
+        <div class="row" style="gap: 20px;">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <app-generic-input label="Nombre" [form]="form" [formName]="nombreFormName" [required]="true" [readOnly]="isReadOnly">
+                </app-generic-input>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <app-generic-autocomplete label="Profesor" [form]="form" [formName]="profesorFormName" [required]="true"
+                    param="2,3" [service]="usuarioService" [transformFunction]="transformProfesores" [readOnly]="isReadOnly"
+                    [defaultValue]="profesorLabel">
+                </app-generic-autocomplete>
+            </div>
+            <div class="col-lg-1 col-md-2 col-sm-2">
+                <ng-container *ngIf="isReadOnly">
+                    <button (click)="onEdit()" nbButton class="button-lowercase" status="primary">Editar información</button>
+                </ng-container>
+            </div>
+        </div>
+        <div style="margin-top: 25px;">
+            <ng-container *ngIf="grupo.id && isReadOnly">
+                <span class="header-section">Alumnos</span>
+                <div class="margin-t20 margin-b20 row">
+                    <div class="margin-r20 col-2" style="width: 150px;">
+                        <button (click)="onAddAlumno()" nbButton class="button-lowercase" status="basic">Añadir alumno</button>
+                    </div>
+                    <div class="col-2" style="width: 200px;">
+                        <button (click)="fileUpload.click()" nbButton class="button-lowercase" status="basic">Importar desde excel
+                            <input type="file" id="file" accept=".xlsx" #fileUpload style="display: none;"
+                                (change)="handleFileInput($event.target)">
+                        </button>
+                        
+                    </div>
+                    <div class="col-1">
+                        <nb-icon style="margin-top: 10px;" icon="question-mark-circle" status="info" [nbTooltip]="toolTipText"
+                            nbTooltipPlacement="right" nbTooltipStatus="info" (click)="onDownloadPlantilla()">
+                        </nb-icon>
+                    </div>
+                </div>
+                <app-generic-table [page]="page" (onSort)="onSort($event)" (onPage)="onPage($event)" [paging]="true"
+                    [loading]="loading" [actionsColumn]="true" [configActions]="configActions" [columns]="columns"
+                    [rows]="page.content" [paginator]="true" (onDelete)="onDelete($event)" (onEdit)="onEditAlumno($event)">
+                </app-generic-table>
+            </ng-container>
+        </div>
+
+        <ng-container *ngIf="!isReadOnly">
+            <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+                <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
+                <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Cancelar</button>
+            </div>
+        </ng-container>
+
+    </nb-card-body>
+</nb-card>
+
+<app-generic-spinner [loading]="loading"></app-generic-spinner>

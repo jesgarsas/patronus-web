@@ -1,0 +1,34 @@
+<div style="width: 100% !important;">
+    <ngx-datatable [count]="page.totalElements" [offset]="filter.pageNumber" [limit]="filter.size"(page)="onPageClick($event)" (sort)="onSortClick($event)" [externalPaging]="paging" [externalSorting]="sorting"  [loadingIndicator]="loading" [swapColumns]="false" columnMode="flex" [rows]="rows" class="material" [headerHeight]="50"
+        [limit]="size" [rowHeight]="50" [footerHeight]="heigthFooter" [selectionType]="selectionType!" (select)="onSelectClick($event)">
+        <ng-container *ngFor="let col of columns">
+            <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
+                [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
+                headerClass="header-blue" [cellClass]="!selectionType ? 'whithe-back' : 'whithe-back-select' " [cellTemplate]="col.cellTemplate"
+                [sortable]="col.sortable === null ? false : col.sortable!">
+                <ng-template #acciones let-row="row">
+                    <div style="display: inline;">
+                        <ng-container *ngIf="configActions.show">
+                            <button (click)="onShowClick(row)" nbButton ghost status="info"
+                                style="padding: 0px !important; margin-right: 15px;">
+                                <nb-icon icon="arrow-right-outline"></nb-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="configActions.edit">
+                            <button (click)="onEditClick(row)" nbButton ghost status="primary"
+                                style="padding: 0px !important; margin-right: 15px;">
+                                <nb-icon icon="edit-outline"></nb-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="configActions.delete">
+                            <button (click)="onDeleteClick(row)" nbButton ghost status="danger"
+                                style="padding: 0px !important;">
+                                <nb-icon icon="trash-2-outline"></nb-icon>
+                            </button>
+                        </ng-container>
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+        </ng-container>
+    </ngx-datatable>
+</div>

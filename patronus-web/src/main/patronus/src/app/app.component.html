@@ -1,0 +1,42 @@
+<nb-layout>
+
+  <nb-layout-header fixed>
+    <!-- Logo&Text -->
+    <nb-layout-column class="margin10" *ngIf="mobile">
+      <ng-container *ngIf="userLogged">
+        <button nbButton (click)="toggleSideBar()">
+          <nb-icon icon="menu-outline"></nb-icon>
+        </button>
+      </ng-container>
+    </nb-layout-column>
+    <nb-layout-column class="margin10">
+      <img onclick="javascript:window.location='/';" class="pointCursor" src="../assets/images/Logo100x100.png">
+    </nb-layout-column>
+    <nb-layout-column>
+      <h3><a href="/login" class="no-decor">Patronus</a></h3>
+    </nb-layout-column>
+    <nb-layout-column class="width100" style="display: flex; justify-content: flex-end;">
+      <ng-container *ngIf="user">
+        <nb-user [name]="user.email!" [picture]="imageProfile" [title]="userRol" [nbContextMenu]="profileOptions"
+          nbContextMenuTag="Opciones">
+        </nb-user>
+      </ng-container>
+    </nb-layout-column>
+
+  </nb-layout-header>
+
+  <!-- Sidear -->
+  <nb-sidebar *ngIf="userLogged" #sidebar tag="left">
+    <app-sidebar></app-sidebar>
+  </nb-sidebar>
+
+  <nb-layout-column [ngClass]="{'page-mobile': mobile}">
+    <!-- Body -->
+    <router-outlet></router-outlet>
+  </nb-layout-column>
+
+  <nb-layout-footer>
+    <span center>Proyecto por Jesús García Sastre - UPV</span>
+  </nb-layout-footer>
+
+</nb-layout>

@@ -9,13 +9,6 @@
 
 # dependencies
 /node_modules
-/patronus-web/src/main/patronus/node_modules
-/patronus-web/src/main/patronus/dist
-/patronus-web/src/main/patronus/bazel-out
-/patronus-web/src/main/patronus/tmp
-/patronus-web/src/main/patronus/out-tsc
-/patronus-web/.settings
-/patronus-web/target
 
 # profiling files
 chrome-profiler-events*.json
@@ -28,7 +21,6 @@ chrome-profiler-events*.json
 *.launch
 .settings/
 *.sublime-workspace
-*.war
 
 # IDE - VSCode
 .vscode/*

@@ -1,0 +1,23 @@
+<nb-card status="default" class="stretch" [nbSpinner]="loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>Bienvenido{{ user ? ' ' + user!.nick : '' | titlecase }}</nb-card-header>
+  <nb-card-body>
+    <div class="flex-box">
+      <span class="title-icon">
+        <nb-icon icon="briefcase-outline" status="basic"></nb-icon>
+        <h4>¿Qué quieres realizar hoy?</h4>
+      </span>
+      <div>
+        <ng-container *ngIf="rolId === rolAlumno">
+          <app-home-alumno></app-home-alumno>
+        </ng-container>
+        <ng-container *ngIf="rolId === rolProfesor">
+          <app-home-profesor></app-home-profesor>
+        </ng-container>
+        <ng-container *ngIf="rolId === rolAdmin">
+          <app-home-profesor></app-home-profesor>
+        </ng-container>
+      </div>
+    </div>
+    
+  </nb-card-body>
+</nb-card>

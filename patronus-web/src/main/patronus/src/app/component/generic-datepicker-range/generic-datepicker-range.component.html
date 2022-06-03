@@ -1,0 +1,14 @@
+<form [formGroup]="form">
+    <div class="header-section">{{ label }}</div>
+    <div style="display: flex; gap: 10px; flex-direction: row;">
+        <div>
+            <input nbInput (change)="onChange('ini')" formControlName="dateIni" fullWidth placeholder="Desde" [nbDatepicker]="desdeDatePicker">
+            <nb-datepicker [max]="form.value['dateFin']" format="DD/MM/yyyy" #desdeDatePicker></nb-datepicker>
+        </div>
+        <div style="padding-top: 10px; font-weight: bold;"> - </div>
+        <div>
+            <input nbInput (change)="onChange('fin')" formControlName="dateFin" fullWidth placeholder="Hasta" [nbDatepicker]="hastaDatePicker">
+            <nb-datepicker [min]="form.value['dateIni']" format="DD/MM/yyyy" #hastaDatePicker></nb-datepicker>
+        </div>
+    </div>
+</form>

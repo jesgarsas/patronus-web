@@ -1,0 +1,22 @@
+<nb-card status="primary" style="width: 40%; min-width: 400px;">
+    <nb-card-header>{{ label }}</nb-card-header>
+    <nb-card-body>
+        <div class="margin-b20">
+            <app-generic-input label="Nombre de usuario" formName="nick" [form]="form" [required]="true"></app-generic-input>
+        </div>
+        <div class="margin-b20">
+            <app-generic-input class="margin-b20" label="Email" formName="email" [form]="form" [required]="true">
+            </app-generic-input>
+        </div>
+        <div *ngIf="rol && rol > 1" class="margin-b20">
+            <app-generic-input-password class="margin-b20" label="Contraseña" formName="password" [form]="form" [required]="true">
+            </app-generic-input-password>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="footer-right">
+            <button nbButton class="button-lowercase" status="primary" (click)="accept()">Confirmar</button>
+            <button nbButton class="button-lowercase" (click)="close()">Cancelar</button>
+        </div>
+    </nb-card-footer>
+</nb-card>

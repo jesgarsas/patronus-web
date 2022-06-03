@@ -1,0 +1,50 @@
+<div class="info-container">
+  <nb-card status="info" class="info-dialog">
+    <nb-card-header>¿Qué credenciales usar?</nb-card-header>
+    <nb-card-body>
+      <p>
+        Hola invitado, te agradezco que inviertas parte de tu tiempo en probar
+        <strong>Patronus</strong>. La plataforma web se pensó como un sistema cerrado y
+        controlado.
+      </p>
+      <p>
+        Pero para poder realizar las pruebas con la aplicación, se requiere al menos de dos
+        tipos de usuario: <strong>profesor</strong> y <strong>alumno</strong>. Ambos tienen sus privilegios y funciones dentro
+        de la aplicación.
+      </p>
+      <p>
+        Espero que disfrutes de mi aplicación tanto como yo, mientras la creaba! 😄
+      </p>
+      <div class="container-cred">
+        <div class="container-cred-item">
+          <div class="header-cred">
+            <span>Alumno</span>
+          </div>
+          <div>
+            <strong>Usuario: </strong> alumno
+          </div>
+          <div>
+            <strong>Contraseña: </strong> patronus
+          </div>
+        </div>
+        <div class="container-cred-item">
+          <div class="header-cred">
+            <span>Profesor</span>
+          </div>
+          <div>
+            <strong>Usuario: </strong> profesor
+          </div>
+          <div>
+            <strong>Contraseña: </strong> patronus
+          </div>
+        </div>
+      </div>
+  
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="footer-right">
+            <button class="button-lowercase" nbButton status="info" (click)="accept()">Cerrar</button>
+        </div>
+    </nb-card-footer>
+  </nb-card>
+</div>

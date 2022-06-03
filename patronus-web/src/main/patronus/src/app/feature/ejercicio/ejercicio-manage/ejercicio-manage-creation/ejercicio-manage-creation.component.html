@@ -1,0 +1,92 @@
+<nb-card status="default" class="stretch">
+    <nb-card-header>{{ headerTitle }}</nb-card-header>
+    <nb-card-body>
+        <div class="row" style="gap: 20px;">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <app-generic-input label="Nombre" maxLength="100" [form]="form" [formName]="nombreFormName"
+                    [required]="true">
+                </app-generic-input>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <app-generic-input label="Patrón" [form]="form" [formName]="patronFormName" [required]="true"
+                    [readOnly]="true"></app-generic-input>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <app-generic-input label="Intentos" [form]="form" [onlyNumbers]="true" [formName]="intentosFormName">
+                </app-generic-input>
+            </div>
+        </div>
+        <div class="mt-4">
+            <span class=label-form>Preguntas</span>
+        </div>
+        <nb-list *ngIf="anyPreguntas()" style="list-style: decimal; list-style-position: inside;">
+            <nb-list-item style="margin-top: 20px;" *ngFor="let pregunta of getPreguntasForm(); let indexP = index">
+                <form [formGroup]="pregunta" style="width: 100% !important;">
+                    <span><b>Tipo de pregunta</b>
+                        <button nbButton ghost (click)="deletePregunta(indexP)">
+                            <nb-icon icon="trash-2-outline" status="danger"></nb-icon>
+                        </button>
+                    </span>
+                    <div>
+                        <div class="mt-2">
+                            <textarea style="resize: vertical;" placeholder="Cuerpo de la pregunta" nbInput fullWidth
+                                [formControlName]="textoFormName" status="basic"></textarea>
+                        </div>
+                        <div>
+                            <ul style="list-style-type: lower-alpha; gap: 10px;">
+                                <li
+                                    *ngFor="let opcion of pregunta.controls[this.opcionesFormName].controls; let indexO = index">
+                                    <ng-container *ngIf="true">
+                                        <nb-checkbox status="success" [formControl]="opcion.controls[correcta]">
+                                        </nb-checkbox> Marcar como correcta
+                                        <button nbButton ghost (click)="deleteOpcion(pregunta, indexO)">
+                                            <nb-icon icon="trash-2-outline" status="danger"></nb-icon>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="false">
+                                        <nb-radio status="success" [formControl]="opcion.controls[correcta]"></nb-radio>
+                                        Marcar como correcta
+                                        <button nbButton ghost (click)="deleteOpcion(pregunta, indexO)">
+                                            <nb-icon icon="trash-2-outline" status="danger"></nb-icon>
+                                        </button>
+                                    </ng-container>
+                                    <div>
+                                        <textarea style="resize: vertical;" placeholder="Cuerpo de la opción" nbInput
+                                            fullWidth [formControl]="opcion.controls[this.texto2FormName]"
+                                            status="basic"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-2" style="width: 250px; margin-left: 75px;">
+                            <button class="add-question-button"
+                                (click)="addOptionForm(pregunta.controls[opcionesFormName])">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button nbButton status="info" class="button-lowercase" shape="round"
+                                            size="tiny">
+                                            <nb-icon icon="plus"></nb-icon>
+                                        </button>
+                                    </div>
+                                    <div class="col-7"
+                                        style="margin-top: 3px; padding-left: 0px !important; padding-right: 0px !important;">
+                                        <span class=label-form style="font-size: 14px !important;">Añadir
+                                            opción</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </nb-list-item>
+        </nb-list>
+        <div class="mt-2" style="margin-left: 10px;">
+            <button nbButton status="primary" class="button-lowercase" size="small" (click)="addPregunta()">Añadir
+                pregunta</button>
+        </div>
+        <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+            <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
+            <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Cancelar</button>
+        </div>
+    </nb-card-body>
+</nb-card>

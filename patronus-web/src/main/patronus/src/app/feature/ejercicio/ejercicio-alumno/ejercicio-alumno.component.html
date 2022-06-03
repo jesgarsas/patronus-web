@@ -1,0 +1,49 @@
+<nb-card status="default" class="stretch">
+  <nb-card-header>Ejercicio: {{ ejercicio ? ejercicio.nombre : '' }}</nb-card-header>
+  <nb-card-body>
+    <div class="box justify">
+      <span>
+        A continuación tendrá que responder una serie de preguntas tipo test para completar el ejercicio. Los resultados
+        se calcularán
+        automáticamente cuando seleccione enviar. Podrá ver el resultado en la página del patrón donde se encuentra el
+        ejercicio. <br />
+        <strong>
+          ¡Mucha suerte! ^^
+        </strong>
+      </span>
+    </div>
+
+    <!-- Body de las preguntas-->
+    <nb-list style="list-style: decimal; list-style-position: inside;" *ngIf="ejercicio">
+      <nb-list-item class="justify" style="margin-top: 20px;"
+        *ngFor="let pregunta of ejercicio!.preguntas; let index = index">
+        <div class="justify">
+          <span>
+            <strong>{{ index + 1 }}.</strong>
+            {{ pregunta.pregunta }}
+          </span>
+          <div style="margin-top: 2em">
+            <table class="table-options" *ngIf="pregunta">
+              <tr *ngFor="let opcion of pregunta.opciones">
+                <th style="width: 28px;">
+                  <nb-checkbox (click)="onClickOption(opcion)">
+                  </nb-checkbox>
+                </th>
+                <th>
+                  <p>
+                    {{ opcion.texto }}
+                  </p>
+                </th>
+              </tr>
+
+            </table>
+          </div>
+        </div>
+      </nb-list-item>
+    </nb-list>
+    <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+      <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Enviar</button>
+      <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Atrás</button>
+    </div>
+  </nb-card-body>
+</nb-card>

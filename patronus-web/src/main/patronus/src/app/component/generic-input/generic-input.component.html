@@ -1,0 +1,29 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col">
+            <div>
+                <span class="header-section">{{ label }}
+                    <ng-container *ngIf="required && !readOnly"><span *ngIf="showRequired" style="color:orangered">*</span></ng-container>
+                </span>
+            </div>
+            <div> 
+                <ng-container *ngIf="!readOnly; else readTemplate">
+                    <input (keydown.enter)="onKeypress($event)" fullWidth nbInput [type]="getType()" [formControlName]="formName" [maxlength]="maxLength">
+                </ng-container>
+            </div>
+            
+            <ng-template #readTemplate>
+                <div>
+                    <ng-container *ngIf="form.controls[formName] && form.controls[formName].value; else noValue">
+                        <ng-container *ngIf="form.value[formName].length > 0; else noValue">
+                            <span>{{ form.value[formName] }}</span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <ng-template #noValue>
+        <span>-</span>
+    </ng-template>
+</form>

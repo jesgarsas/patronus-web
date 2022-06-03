@@ -1,0 +1,17 @@
+<div>
+    <ng-container *ngIf="!notAlumno">
+        <nb-menu [items]="optionsAlumnos">
+        </nb-menu>
+    </ng-container>
+    <ng-container *ngIf="notAlumno">
+        <ng-container *ngIf="!admin; else adminT">
+            <nb-menu [items]="optionsProfesores">
+            </nb-menu>
+        </ng-container>
+        <ng-template #adminT>
+            <nb-menu [items]="optionsAdmin">
+            </nb-menu>
+        </ng-template>
+    </ng-container>
+    
+</div>

@@ -1,0 +1,20 @@
+.box {
+  background-color: var(--color-primary-200);
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--color-primary-500);
+  padding: 0.75em;
+}
+
+.justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.table-options tr th {
+  vertical-align: top;
+}
+
+.table-options tr th nb-checkbox {
+  margin-top: 2px;
+}

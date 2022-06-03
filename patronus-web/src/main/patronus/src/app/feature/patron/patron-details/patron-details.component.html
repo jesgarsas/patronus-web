@@ -1,0 +1,63 @@
+<ng-container *ngIf="patron">
+    <nb-card status="default" class="stretch">
+        <nb-card-header>Patrón: {{ patron.nombre }}</nb-card-header>
+        <nb-card-body>
+            <div style="display: flex;">
+                <div class="width75">
+                    <span [innerHTML]="patron.lecciones![0].contenido"></span>
+                </div>
+                <!-- Proyectos PC -->
+                <ng-container *ngIf="!mobile">
+                    <div class="headerDivider" style="width: 25%!important; margin-top: 15px;">
+                        <div class="h-card" style="width: 150px;">
+                            <nb-icon icon="download-outline"></nb-icon>
+                            Proyectos
+                        </div>
+                        <ng-container *ngIf="!patron.proyectos || (patron.proyectos! && patron.proyectos!.length === 0)"><span class="text-autor">No hay proyectos</span>
+                        </ng-container>
+                        <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
+                            <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                                <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
+                                    }}
+                                    Kb)</span>
+                            </p>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <nb-accordion class="margin-t20">
+                <nb-accordion-item *ngIf="mobile">
+                    <nb-accordion-item-header class="header-blue">
+                        <nb-icon icon="file-outline" style="margin-right: 5px;"></nb-icon>
+                        Proyectos
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <ng-container *ngIf="!patron.proyectos!"><span class="text-autor">No hay proyectos</span>
+                        </ng-container>
+                        <div *ngFor="let proyecto of patron.proyectos!" style="margin-left: 15px;">
+                            <p>• <a [href]="proyecto.link" class="pointCursor">{{ proyecto.name | titlecase }}</a>
+                                <span class="text-autor" style="font-style: italic; font-size: 14px;"> ({{ proyecto.size
+                                    }}
+                                    Kb)</span>
+                            </p>
+                        </div>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+                <nb-accordion-item>
+                    <nb-accordion-item-header class="header-blue">
+                        <nb-icon icon="file-outline" style="margin-right: 5px;"></nb-icon>
+                        Ejercicios
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <div class="margin-b20" *ngIf="!isAlumno">
+                            <button nbButton class="button-lowercase" (click)="createEjercicio()" status="info"
+                            size="small">Crear Ejercicio</button>
+                        </div>
+                        <app-generic-table (onSort)="onSortEjercicio($event)" [loading]="loading" [columns]="columns" [rows]="rows" [actionsColumn]="true" [configActions]="configActions"
+                        (onEdit)="onEditEjercicio($event)" (onDelete)="onDeleteEjercicio($event)"  (onShow)="onShowEjercicio($event)"></app-generic-table>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+            </nb-accordion>
+        </nb-card-body>
+    </nb-card>
+</ng-container>

@@ -1,0 +1,10 @@
+<nb-card status="warning">
+    <nb-card-header>Confirmar cancelar</nb-card-header>
+    <nb-card-body>¿Está seguro que desea cancelar la operación? No se guardarán los cambios actuales.</nb-card-body>
+    <nb-card-footer>
+        <div class="footer-right">
+            <button nbButton status="warning" (click)="accept()">Confirmar</button>
+            <button nbButton (click)="close()">Cancelar</button>
+        </div>
+    </nb-card-footer>
+</nb-card>

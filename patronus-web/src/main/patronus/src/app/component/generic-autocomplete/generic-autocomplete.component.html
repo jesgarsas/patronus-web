@@ -1,0 +1,34 @@
+<form [formGroup]="formInput">
+    <div class="row">
+        <div class="col">
+            <div>
+                <span class="header-section">{{ label }} <ng-container *ngIf="required && !readOnly"><span style="color:orangered">*</span></ng-container></span>
+            </div>
+            <div>
+                <ng-container *ngIf="!readOnly; else readTemplate">
+                    <input #autoInput fullWidth nbInput type="text" formControlName="auto" [nbAutocomplete]="auto"  (input)="onInput()">
+                    <nb-autocomplete [activeFirst]="true" #auto (selectedChange)="onSelectionChange($event)">
+
+                        <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+                            {{ option.label }}
+                        </nb-option>
+
+                    </nb-autocomplete>
+                </ng-container>
+            </div>
+
+            <ng-template #readTemplate>
+                <div>
+                    <ng-container *ngIf="formInput.controls['auto'] && formInput.controls['auto'].value; else noValue">
+                        <ng-container *ngIf="formInput.value['auto'].length > 0; else noValue">
+                            <span>{{ formInput.value['auto'] }}</span>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <ng-template #noValue>
+        <span>-</span>
+    </ng-template>
+</form>

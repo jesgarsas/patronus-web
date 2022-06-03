@@ -1,0 +1,90 @@
+<nb-card nbSpinnerStatus="primary" [nbSpinner]="loading" nbSpinnerSize="large">
+    <nb-card-header>Perfil de usuario</nb-card-header>
+    <nb-card-body>
+        <div class="footer-right margin-r20">
+            <ng-container *ngIf="canResetPassword && !editMode">
+                <button (click)="onEdit()" nbButton class="button-lowercase" size="medium"
+                    status="primary">Editar</button>
+            </ng-container>
+        </div>
+        <div class="row">
+            <!-- <div class="col-lg-6 col-md-6 col-sm-12">
+                <img [src]="imageURI"/>
+            </div> -->
+            <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                <app-generic-input label="Nick" [readOnly]="!editMode" [defaultValue]="user.nick!" formName="nick"
+                    [form]="form"></app-generic-input>
+            </div>
+            <ng-container *ngIf="!editMode">
+                <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                    <div>
+                        <span class="header-section">Contraseña</span>
+                    </div>
+                    <ng-container *ngIf="user && user.id === loggedId; else resetP">
+                        <button (click)="onChangePassword()" nbButton class="button-lowercase" size="medium"
+                            status="primary">Cambiar contraseña</button>
+                    </ng-container>
+                    <ng-template #resetP>
+                        <ng-container *ngIf="canResetPassword">
+                            <button (click)="onResetPassword()" nbButton class="button-lowercase" size="medium"
+                                status="primary">Resetear contraseña</button>
+                        </ng-container>
+                    </ng-template>
+
+                </div>
+            </ng-container>
+            <div class="col-lg-3 col-md-6 col-sm-12 margin-b10">
+                <app-generic-input label="Email" [readOnly]="!editMode" [defaultValue]="user.email!" formName="email"
+                    [form]="form"></app-generic-input>
+            </div>
+            <ng-container *ngIf="!editMode">
+                <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                    <app-generic-input label="Rol" [readOnly]="true" formName="rol" [form]="form"></app-generic-input>
+                </div>
+            </ng-container>
+
+        </div>
+        <ng-container *ngIf="!editMode">
+            <div class="row margin-t20">
+                <ng-container *ngIf="isAlumno">
+                    <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                        <app-generic-input label="Grupo" [readOnly]="true" [defaultValue]="user.grupo!" formName="grupo"
+                            [form]="form"></app-generic-input>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                        <app-generic-input label="Profesor" [readOnly]="true" [defaultValue]="user.profesor!"
+                            formName="profesor" [form]="form"></app-generic-input>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 margin-b10">
+                        <app-generic-input label="Email del profesor" [readOnly]="true"
+                            [defaultValue]="user.profesorEmail!" formName="profesorEmail" [form]="form">
+                        </app-generic-input>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isProfesor">
+                    <div class="col-lg-3 col-md-3 col-sm-12 margin-b10">
+                        <div>
+                            <span class="header-section">Grupos</span>
+                        </div>
+                        <nb-card size="medium">
+                            <nb-list>
+                                <nb-list-item *ngFor="let grupo of user.grupos!">
+                                    {{ grupo }}
+                                </nb-list-item>
+                            </nb-list>
+                        </nb-card>
+
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="canResetPassword && editMode">
+            <div class="footer-right">
+                <button (click)="onSubmit()" nbButton class="button-lowercase" size="medium"
+                    status="primary">Guardar</button>
+                <button (click)="onCancelEdit()" nbButton class="button-lowercase" size="medium"
+                    status="basic">Cancel</button>
+            </div>
+        </ng-container>
+    </nb-card-body>
+</nb-card>

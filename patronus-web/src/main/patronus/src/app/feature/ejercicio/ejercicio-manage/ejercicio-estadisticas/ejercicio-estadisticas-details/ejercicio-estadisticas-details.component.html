@@ -1,0 +1,38 @@
+<div style="width: 100% !important;" *ngIf="detalles">
+  <ng-template #column let-column="column"> {{ column.name! }} <nb-icon icon="info" [nbTooltip]="getPreguntaText(column.name)"></nb-icon> </ng-template>
+  <ngx-datatable [count]="detalles!.grupos![0].alumnos!.length" [swapColumns]="false" columnMode="flex" [rows]="rows"
+    class="material" [headerHeight]="50" [rowHeight]="50" [footerHeight]="0" [sorts]="sorts">
+    <ng-container *ngFor="let col of columns">
+
+      <ng-container *ngIf="!isEjercicioColumn(col); else ejercicoCol">
+
+        <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
+          [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
+          headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate"
+          [sortable]="col.sortable === null ? false : col.sortable!">
+        </ngx-datatable-column>
+
+      </ng-container>
+
+      <ng-template #ejercicoCol>
+
+        <ngx-datatable-column [name]="col.name!" [prop]="col.prop!" [minWidth]="col.minWidth ? col.minWidth : 1"
+          [resizeable]="false" [draggable]="false" [flexGrow]="col.flexGrow ? col.flexGrow : 1"
+          headerClass="header-blue" cellClass="whithe-back" [cellTemplate]="col.cellTemplate"
+          [sortable]="col.sortable === null ? false : col.sortable!" [headerTemplate]="col.headerTemplate">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <ng-container *ngIf="isEjercicioColumn(col)">
+              <!-- <ng-container *ngIf="isEjercicioContestado(col, row); else noContestado"> -->
+                <nb-icon [icon]="isEjercicioCorrect(col, row)" [status]="isEjercicioColor(col, row)"></nb-icon>
+              <!-- </ng-container> -->
+              <ng-template #noContestado>
+                <span>{{ row[col.prop!] }}</span>
+              </ng-template>
+            </ng-container>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ng-template>
+    </ng-container>
+  </ngx-datatable>
+</div>

@@ -1,0 +1,40 @@
+<nb-card status="default" class="stretch">
+    <nb-card-header>{{ headerTitle }}</nb-card-header>
+    <nb-card-body [ngClass]="{'hide-body': loading}">
+        <form [formGroup]="form">
+            <div style="min-width: 300px;" class="width30">
+                <p class=label-form>Nombre</p>
+                <input type="text" style="width: 500px" [formControlName]="titleFormName" nbInput status="basic">
+            </div>
+            <div class="width100" style="padding-top: 20px;">
+                <p class=label-form>Descripción</p>
+                <textarea style="resize: vertical;" nbInput fullWidth [formControlName]="descripcionFormName"
+                    status="basic"></textarea>
+            </div>
+            <div class="width100" style="padding-top: 20px;">
+                <p class=label-form>Contenido de la lección</p>
+                <angular-editor [formControlName]="contenidoFormName" [config]="editorConfig"></angular-editor>
+            </div>
+            <div class="width100" style="padding-top: 20px;">
+                <div style="display: flex; gap: 20px;">
+                    <span class="label-form" style="padding-top: 5px;">Proyectos</span>
+                    <div class="margin-b20">
+                        <button nbButton class="button-lowercase" (click)="fileUpload.click()" status="info"
+                            size="small">Subir
+                            <input type="file" id="file" [accept]="fileConfig" #fileUpload style="display: none;"
+                                (change)="handleFileInput($event.target)">
+                        </button>
+                    </div>
+                </div>
+                <app-generic-table (onDelete)="onDelete($event)" [columns]="columns" [paginator]="false"
+                    [actionsColumn]="true" [configActions]="configActions" [rows]="rows"></app-generic-table>
+            </div>
+            <div class="button-create margin-t35" style="margin-bottom: 0px !important;">
+                <button (click)="onSave()" nbButton class="button-lowercase" status="primary">Guardar</button>
+                <button (click)="onBack()" nbButton class="button-lowercase margin-r30">Cancelar</button>
+            </div>
+        </form>
+    </nb-card-body>
+</nb-card>
+
+<app-generic-spinner [loading]="loading"></app-generic-spinner>
