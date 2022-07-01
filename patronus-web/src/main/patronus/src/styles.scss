@@ -259,7 +259,7 @@
   align-items: center !important;
 }
 
-.login-container div {
+.login-container > div {
   max-width: 50% !important;
   min-width: 340px;
 }
@@ -273,4 +273,8 @@
 
 .box-shadow {
   box-shadow: var(--shadow);
+}
+
+.user-input > div {
+  min-width: none !important;
 }

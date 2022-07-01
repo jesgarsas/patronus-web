@@ -71,7 +71,7 @@ export class EjercicioManageCreationComponent implements OnInit {
     this.route.queryParams.pipe(take(1)).subscribe((params: Params) => {
       this.patronId = params.idPatron;
       if (!this.patronId) {
-        this.router.navigate(['/']);
+        this.router.navigate([AppContants.BASE_PATH]);
       }
       this.getPatronTitulo();
       this.ejercioId = params.idEjercicio;
@@ -159,7 +159,7 @@ export class EjercicioManageCreationComponent implements OnInit {
         
         if (!this.patronId) {
           this.toastService.showError("Error", "El ejercicio no esxite");
-          this.router.navigate(['/']);
+          this.router.navigate([AppContants.BASE_PATH]);
         }
       }
     }, (error) => {
@@ -264,7 +264,7 @@ export class EjercicioManageCreationComponent implements OnInit {
       if (patron && patron.id) {
         this.form.controls[this.patronFormName].setValue(patron.nombre);
       } else {
-        this.router.navigate(['/']);
+        this.router.navigate([AppContants.BASE_PATH]);
       }
     });
   }

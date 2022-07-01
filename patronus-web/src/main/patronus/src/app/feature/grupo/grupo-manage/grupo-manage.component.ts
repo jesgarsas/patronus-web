@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppContants } from 'src/app/utils/app-constants';
 
 @Component({
   selector: 'app-grupo-manage',
@@ -14,7 +15,7 @@ export class GrupoManageComponent implements OnInit {
   }
 
   crearGrupo() {
-    this.router.navigate(['/grupo/administracion/crear']);
+    this.router.navigate([AppContants.GRUPO_CREAR_PATH]);
   }
 
 }

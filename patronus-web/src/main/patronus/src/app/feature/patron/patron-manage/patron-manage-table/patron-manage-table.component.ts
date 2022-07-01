@@ -12,6 +12,7 @@ import { PatronFilterDto } from 'src/app/models/patron/filters/patron-filter-dto
 import { PatronDTO } from 'src/app/models/patron/patron-dto';
 import { PatronService } from 'src/app/service/patron.service';
 import { ToastService } from 'src/app/service/toast.service';
+import { AppContants } from 'src/app/utils/app-constants';
 import { AppUtilities } from 'src/app/utils/app-uitilites';
 
 @Component({
@@ -100,7 +101,7 @@ export class PatronManageTableComponent implements OnInit {
   }
 
   public onEdit(value: PatronDTO) {
-    this.router.navigate(['/patron/administracion/crear'], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
+    this.router.navigate([AppContants.PATRON_CREAR_PATH], { queryParams: { id: value.id }, queryParamsHandling: "merge" });
   }
 
   private getPatrones() {

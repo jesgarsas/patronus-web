@@ -22,6 +22,8 @@ export class AppComponent {
   @ViewChild('spinner')
   public spinner!: GenericSpinnerComponent;
 
+  public homeUrl: string = AppContants.BASE_PATH;
+  public loginUrl: string = AppContants.LOGIN_PATH; 
   public mobile: boolean = false;
   public userLogged: boolean = true;
   public user: Usuario | undefined;

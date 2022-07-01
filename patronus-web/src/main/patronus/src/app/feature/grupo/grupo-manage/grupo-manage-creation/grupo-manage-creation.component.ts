@@ -193,12 +193,12 @@ export class GrupoManageCreationComponent implements OnInit {
       } else {
         this.toastService.showError('Error', 'No se ha podido cargar el patrón');
         this.loading = false;
-        this.router.navigate(['/grupo/administracion']);
+        this.router.navigate([AppContants.GRUPO_ADMINISTRAR_PATH]);
       }
     }, error => {
       this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
       this.loading = false;
-      this.router.navigate(['/grupo/administracion']);
+      this.router.navigate([AppContants.GRUPO_ADMINISTRAR_PATH]);
     })
   }
 

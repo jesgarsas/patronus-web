@@ -32,11 +32,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (!this.loginService.getUser()) {
       this.notifierService.emitUserLogged(false);
-      if (!localStorage.getItem('visited')) {
-        this.openHelpDialog();
-        localStorage.setItem('visited', '1');
-      }
+      try{
+        this.saveMethod();
+      } catch (_) {}
       
+    }
+  }
+
+  private saveMethod() {
+    if (!localStorage.getItem('visited')) {
+      this.openHelpDialog();
+      localStorage.setItem('visited', '1');
     }
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { LoginService } from '../service/login.service';
+import { AppContants } from '../utils/app-constants';
 import { AppUtilities } from '../utils/app-uitilites';
 
 @Injectable({
@@ -22,10 +23,10 @@ export class AuthGuardService implements CanActivate {
       if (AppUtilities.checkAuthority((tokenPayload as any).authorities) >= expectedRole) {
         return true;
       }
-      this.router.navigate(['/no-permision']);
+      this.router.navigate([AppContants.NO_PERMISION_PATH]);
       return false;
     }
-    this.router.navigate(['/login']);
+    this.router.navigate([AppContants.LOGIN_PATH]);
     return false;
   }
 }

@@ -96,7 +96,7 @@ export class PatronManageCreationComponent implements OnInit {
     this.dialog = this.dialogService.open(GenericDialogCancelComponent, {
       context: {
         accept: () => {
-          this.router.navigate(['/patron/administracion']);
+          this.router.navigate([AppContants.PATRON_ADMINISTRAR_PATH]);
           this.dialog!.close();
         }
       }
@@ -128,12 +128,12 @@ export class PatronManageCreationComponent implements OnInit {
       } else {
         this.toastService.showError('Error', 'No se ha podido cargar el patrón');
         this.loading = false;
-        this.router.navigate(['/patron/administracion']);
+        this.router.navigate([AppContants.PATRON_ADMINISTRAR_PATH]);
       }
     }, error => {
       this.toastService.showError('Error', 'No se ha podido conectar con el servidor');
       this.loading = false;
-      this.router.navigate(['/patron/administracion']);
+      this.router.navigate([AppContants.PATRON_ADMINISTRAR_PATH]);
     })
   }
 
@@ -185,7 +185,7 @@ export class PatronManageCreationComponent implements OnInit {
       if (data) {
         this.toastService.showConfirmation('Éxito', 'Se ha guardado con éxito');
         this.loading = false;
-        this.router.navigate(['/patron/administracion']);
+        this.router.navigate([AppContants.PATRON_ADMINISTRAR_PATH]);
       } else {
         this.toastService.showError('Error', 'No se ha podido guardar el patrón');
         this.loading = false;

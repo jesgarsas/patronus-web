@@ -17,6 +17,6 @@ export class PatronManageComponent implements OnInit {
   }
 
   crearPatron(): void {
-    this.router.navigate(['/patron/administracion/crear']);
+    this.router.navigate([AppContants.PATRON_CREAR_PATH]);
   }
 }

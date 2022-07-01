@@ -56,7 +56,7 @@ export class PatronSearchComponent implements OnInit {
    }
 
    public goToDetails(idPatron: number) {
-      this.router.navigate(['/patron/detalles'], { queryParams: { id: idPatron }, queryParamsHandling: 'merge' });
+      this.router.navigate([AppContants.PATRON_DETALLES_PATH], { queryParams: { id: idPatron }, queryParamsHandling: 'merge' });
    }
 
    public onPage(value: any) {

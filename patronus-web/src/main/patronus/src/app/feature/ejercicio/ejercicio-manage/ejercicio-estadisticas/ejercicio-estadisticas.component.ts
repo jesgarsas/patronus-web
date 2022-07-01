@@ -8,6 +8,7 @@ import { EstSerie, EstSerieItem } from 'src/app/models/estadisticas/est-serie';
 import { GrupoService } from 'src/app/service/grupo.service';
 import { LoginService } from 'src/app/service/login.service';
 import { ResultadoService } from 'src/app/service/resultado.service';
+import { AppContants } from 'src/app/utils/app-constants';
 
 @Component({
   selector: 'app-ejercicio-estadisticas',
@@ -78,7 +79,7 @@ export class EjercicioEstadisticasComponent implements OnInit {
     this.route.queryParams.pipe(take(1)).subscribe((params: Params) => {
       this.ejercicioId = params.ejercicioId;
       if (!this.ejercicioId) {
-        this.router.navigate(['/']);
+        this.router.navigate([AppContants.BASE_PATH]);
       } else {
         this.loginService.getGrupos().pipe().subscribe(list => {
           this.showGrupos = list;

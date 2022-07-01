@@ -5,7 +5,7 @@ export class AppContants {
     public static minWidthPhone: number = 1140;
 
     // Routes
-    public static BASE_PATH = '';
+    public static BASE_PATH = '/pages';
     public static HOME_PATH = `${AppContants.BASE_PATH}/home`;
     public static LOGIN_PATH = `${AppContants.BASE_PATH}/login`;
     public static LOGOUT_PATH = `${AppContants.BASE_PATH}/logout`;
@@ -29,7 +29,7 @@ export class AppContants {
     public static EJERCICIO_ESTADÍSTICAS_PATH = `${AppContants.EJERCICIO_PATH}/estadisticas`;
 
     // Apis URLS
-    public static URL_API = 'http://52.157.195.204:8080/patronus-api';
+    public static URL_API = 'http://jesgarsas.es/patronus-api';
 
     public static URL_API_PATRON = `${AppContants.URL_API}/patron`;
     public static URL_API_PATRON_ALL = `${AppContants.URL_API_PATRON}/alumno`

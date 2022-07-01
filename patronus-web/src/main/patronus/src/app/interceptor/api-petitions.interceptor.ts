@@ -8,6 +8,7 @@ import {
 } from '@angular/common/http';
 import { EMPTY, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AppContants } from '../utils/app-constants';
 
 @Injectable()
 export class ApiPetitionsInterceptor implements HttpInterceptor {
@@ -21,7 +22,7 @@ export class ApiPetitionsInterceptor implements HttpInterceptor {
       if (request.headers.get("login")) {
         return next.handle(request);
       }
-      this.router.navigate(['/login']);
+      this.router.navigate([AppContants.LOGIN_PATH]);
       return EMPTY;
       
     }

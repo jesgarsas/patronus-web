@@ -76,7 +76,7 @@ export class EjercicioAlumnoComponent implements OnInit {
     this.route.queryParams.pipe(take(1)).subscribe((params: Params) => {
       this.ejercicioId = params.ejercicioId;
       if (!this.ejercicioId) {
-        this.router.navigate(['/']);
+        this.router.navigate([AppContants.BASE_PATH]);
       } else {
         this.getEjercicio();
       }
@@ -87,7 +87,7 @@ export class EjercicioAlumnoComponent implements OnInit {
     this.respuestaService.checkIntentos(this.ejercicioId!).pipe(take(1)).subscribe((res) => {
       if (!res) {
         this.toastService.showError('Acceso no disponible', 'Ya has realizado el máximo de intentos');
-        this.router.navigate(['/']);
+        this.router.navigate([AppContants.BASE_PATH]);
       }
     });
     this.ejercicioService.getAsAlumnoById(this.ejercicioId!).pipe(take(1)).subscribe((ejercicio: EjercicioDTO) => {
